@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR/'.env')
 
@@ -25,14 +26,16 @@ load_dotenv(BASE_DIR/'.env')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('SECRET_KEY')
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # apps
+    'apps.settings',
+    'apps.secondary',
+    'apps.users',
 ]
 
 MIDDLEWARE = [
@@ -128,12 +134,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICBASE_DIRS = [BASE_DIR/'static/']
-STATIC_ROOT = BASE_DIR /'static'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATIC_ROOT = BASE_DIR /'static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -160,7 +166,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Администрация Сайта",  # Выходит на сайте вместо Django-admin.(Администрирование сайта)
     "welcome_sign": "Welcome to the Hich Shcool CRMSystem",  # Приветственный текст на экране входа
     "copyright": "CRMSystem",  # Авторское право (footer)
-    "search_model": ["auth.User", "apps.teachers"],
+    "search_model": ["auth.User",],
     # Для поиска пользователей или группы
 
     "topmenu_links": [
