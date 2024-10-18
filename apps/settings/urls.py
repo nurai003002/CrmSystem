@@ -21,4 +21,45 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
     path('shops/', views.shops, name='shops'),
     path('add-product/', views.add_product, name='add_product'),
+
+    # invoices
+    path('invoices/list/', views.invoice_list, name='invoice_list'),
+    path('invoices/detail/', views.list_detail, name='list_detail'),
+
+    # contacts
+    path('contacts/grid/', views.contact_grid, name='contacts_grid'),
+    path('contacts/list/', views.contact_list, name='contacts_list'),
+    path('contacts/profile/', views.contacts_profile, name='contacts_profile'),
+
+    # components/tables
+    path('components/basic-tables/', views.basic_table, name='basic_table'),
+    path('components/advanced-tables/', views.advanced_table, name='advanced_table'),
+
+    # components/charts
+    path('components/charts-apex/', views.charts_apex, name='charts_apex'),
+    path('components/charts-chartjs/', views.charts_chartjs, name='charts_chartjs'),
+    path('components/charts-tui/', views.charts_tui, name='charts_tui'),
+    
+    # maps
+    path('components/maps-google/', views.maps_google, name='maps_google'),
+
+    # pages/users
+    path('auth/login/', views.login, name='user_login'),
+    path('auth/register/', views.register, name='user_register'),
+    path('auth/logout/', views.logout, name='user_logout'),
+    
+    # pages/auth
+    path('auth/recoverpw/', views.recoverpw, name='recoverpw'),
+    path('auth/lock-screen/', views.lock_screen, name='lock_screen'),
+    path('auth/confirm_mail/', views.confirm_mail, name='confirm_mail'),
+    path('auth/verification/', views.verification, name='verification'),
+    path('auth/two-verification/', views.two_verification, name='two_verification'),
+
+    # pages/utility
+    path('utility/timeline/', views.timeline, name='timeline'),
+    path('utility/faqs/', views.faqs, name='faqs'),
+    path('utility/404/', views.pages_404, name='pages_404'),
+    path('utility/pages_500/', views.pages_500, name='pages_500'),
+    path('utility/pricing/', views.pricing, name='pricing'),
+
 ]

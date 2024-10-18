@@ -1,6 +1,5 @@
 {% load static %}
 <div id="sidebar-menu">
-    <!-- Left Menu Start -->
     <ul class="metismenu list-unstyled" id="side-menu">
         <li class="menu-title" data-key="t-menu">Панель управления</li>
 
@@ -12,18 +11,6 @@
         </li>
 
         <li class="menu-title" data-key="t-applications">Приложения</li>
-
-        <li>
-            <a href="javascript: void(0);" class="has-arrow">
-                <i class="bx bx-envelope icon nav-icon"></i>
-                <span class="menu-item" data-key="t-email">Email</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="email-inbox.html" data-key="t-inbox">Inbox</a></li>
-                <li><a href="email-read.html" data-key="t-read-email">Read Email</a></li>
-            </ul>
-        </li>
-
         <li>
             <a href="{% url 'calendar' %}">
                 <i class="bx bx-calendar-event icon nav-icon"></i>
@@ -54,7 +41,7 @@
         </li>
 
         <li>
-            <a href="{% url 'customers' %}" class="has-arrow">
+            <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-store icon nav-icon"></i>
                 <span class="menu-item" data-key="t-ecommerce">Торговля</span>
             </a>
@@ -73,23 +60,23 @@
         <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-receipt icon nav-icon"></i>
-                <span class="menu-item" data-key="t-invoices">Invoices</span>
+                <span class="menu-item" data-key="t-invoices">Счета</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="invoices-list.html" data-key="t-invoice-list">Invoice List</a></li>
-                <li><a href="invoices-detail.html" data-key="t-invoice-detail">Invoice Detail</a></li>
+                <li><a href="{% url 'invoice_list' %}" data-key="t-invoice-list">Список счетов</a></li>
+                <li><a href="{% url 'list_detail' %}" data-key="t-invoice-detail">Детали счетов</a></li>
             </ul>
         </li>
 
         <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-user-circle icon nav-icon"></i>
-                <span class="menu-item" data-key="t-contacts">Contacts</span>
+                <span class="menu-item" data-key="t-contacts">Контакты</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="contacts-grid.html" data-key="t-user-grid">User Grid</a></li>
-                <li><a href="contacts-list.html" data-key="t-user-list">User List</a></li>
-                <li><a href="contacts-profile.html" data-key="t-user-profile">Profile</a></li>
+                <li><a href="{% url 'contacts_grid' %}" data-key="t-user-grid">Пользователи</a></li>
+                <li><a href="{% url 'contacts_list' %}" data-key="t-user-list">Список пользователей</a></li>
+                <li><a href="{% url 'contacts_profile' %}" data-key="t-user-profile">Профиль</a></li>
             </ul>
         </li>
 
@@ -102,155 +89,69 @@
             </a>
         </li>
 
-        <li class="menu-title" data-key="t-components">Components</li>
-
-        <li>
-            <a href="javascript: void(0);" class="has-arrow">
-                <i class="bx bx-cube icon nav-icon"></i>
-                <span class="menu-item" data-key="t-ui-elements">UI Elements</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="ui-alerts.html" data-key="t-alerts">Alerts</a></li>
-                <li><a href="ui-buttons.html" data-key="t-buttons">Buttons</a></li>
-                <li><a href="ui-cards.html" data-key="t-cards">Cards</a></li>
-                <li><a href="ui-carousel.html" data-key="t-carousel">Carousel</a></li>
-                <li><a href="ui-dropdowns.html" data-key="t-dropdowns">Dropdowns</a></li>
-                <li><a href="ui-grid.html" data-key="t-grid">Grid</a></li>
-                <li><a href="ui-images.html" data-key="t-images">Images</a></li>
-                <li><a href="ui-lightbox.html" data-key="t-lightbox">Lightbox</a></li>
-                <li><a href="ui-modals.html" data-key="t-modals">Modals</a></li>
-                <li><a href="ui-offcanvas.html" data-key="t-offcanvas">Offcanvas</a></li>
-                <li><a href="ui-rangeslider.html" data-key="t-range-slider">Range Slider</a></li>
-                <li><a href="ui-progressbars.html" data-key="t-progress-bars">Progress Bars</a></li>
-                <li><a href="ui-sweet-alert.html" data-key="t-sweet-alert">Sweet-Alert</a></li>
-                <li><a href="ui-tabs-accordions.html" data-key="t-tabs-accordions">Tabs & Accordions</a></li>
-                <li><a href="ui-typography.html" data-key="t-typography">Typography</a></li>
-                <li><a href="ui-video.html" data-key="t-video">Video</a></li>
-                <li><a href="ui-general.html" data-key="t-general">General</a></li>
-                <li><a href="ui-colors.html" data-key="t-colors">Colors</a></li>
-                <li><a href="ui-rating.html" data-key="t-rating">Rating</a></li>
-                <li><a href="ui-notifications.html" data-key="t-notifications">Notifications</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a href="javascript: void(0);" class="has-arrow">
-                <i class="bx bx-layout icon nav-icon"></i>
-                <span class="menu-item" data-key="t-forms">Forms</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="form-elements.html" data-key="t-form-elements">Form Elements</a></li>
-                <li><a href="form-layouts.html" data-key="t-form-layouts">Form Layouts</a></li>
-                <li><a href="form-validation.html" data-key="t-form-validation">Form Validation</a></li>
-                <li><a href="form-advanced.html" data-key="t-form-advanced">Form Advanced</a></li>
-                <li><a href="form-editors.html" data-key="t-form-editors">Form Editors</a></li>
-                <li><a href="form-uploads.html" data-key="t-form-upload">Form File Upload</a></li>
-                <li><a href="form-wizard.html" data-key="t-form-wizard">Form Wizard</a></li>
-                <li><a href="form-mask.html" data-key="t-form-mask">Form Mask</a></li>
-            </ul>
-        </li>
-
+        <li class="menu-title" data-key="t-components">Составные части</li>
         <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-table icon nav-icon"></i>
-                <span class="menu-item" data-key="t-tables">Tables</span>
+                <span class="menu-item" data-key="t-tables">Столы</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="tables-basic.html" data-key="t-basic-tables">Basic Tables</a></li>
-                <li><a href="tables-advanced.html" data-key="t-advanced-tables">Advance Tables</a></li>
+                <li><a href="{% url 'basic_table' %}" data-key="t-basic-tables">Базовая таблица</a></li>
+                <li><a href="{% url 'advanced_table' %}" data-key="t-advanced-tables">Предварительные таблицы</a></li>
             </ul>
         </li>
 
         <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-pie-chart-alt-2 icon nav-icon"></i>
-                <span class="menu-item" data-key="t-charts">Charts</span>
+                <span class="menu-item" data-key="t-charts">Диаграммы</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="charts-apex.html" data-key="t-apex-charts">Apex Charts</a></li>
-                <li><a href="charts-chartjs.html" data-key="t-chartjs-charts">Chartjs Charts</a></li>
-                <li><a href="charts-tui.html" data-key="t-ui-charts">Toast UI Charts</a></li>
+                <li><a href="{% url 'charts_apex' %}" data-key="t-apex-charts"> Графики Apex </a></li>
+                <li><a href="{% url 'charts_chartjs' %}" data-key="t-chartjs-charts"> Диаграмма Chartjs </a></li>
+                <li><a href="{% url 'charts_tui' %}" data-key="t-ui-charts">Диаграмма Toast UI</a></li>
             </ul>
         </li>
-
-        <li>
-            <a href="javascript: void(0);" class="has-arrow">
-                <i class="bx bx-cuboid icon nav-icon"></i>
-                <span class="menu-item" data-key="t-icons">Icons</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="icons-evaicons.html" data-key="t-evaicons">Eva Icons</a></li>
-                <li><a href="icons-boxicons.html" data-key="t-boxicons">Boxicons</a></li>
-                <li><a href="icons-materialdesign.html" data-key="t-material-design">Material Design</a></li>
-                <li><a href="icons-fontawesome.html" data-key="t-font-awesome">Font Awesome 5</a></li>
-            </ul>
-        </li>
-
         <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-map-alt icon nav-icon"></i>
-                <span class="menu-item" data-key="t-maps">Maps</span>
+                <span class="menu-item" data-key="t-maps">Карты</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="maps-google.html" data-key="t-google">Google</a></li>
-                <li><a href="maps-vector.html" data-key="t-vector">Vector</a></li>
-                <li><a href="maps-leaflet.html" data-key="t-leaflet">Leaflet</a></li>
+                <li><a href="{% url 'maps_google' %}" data-key="t-google">Google</a></li>
             </ul>
-        </li>
-
-        <li class="menu-title" data-key="t-pages">Pages</li>
-
+        </li> 
+        <li class="menu-title" data-key="t-pages">Страницы</li>
         <li>
             <a href="javascript: void(0);">
                 <i class="bx bx-user-pin icon nav-icon"></i>
-                <span class="menu-item" data-key="t-authentication">Authentication</span>
+                <span class="menu-item" data-key="t-authentication">Авторизация</span>
                 <span class="badge rounded-pill bg-info">8</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="auth-login.html" data-key="t-login">Login</a></li>
-                <li><a href="auth-register.html" data-key="t-register">Register</a></li>
-                <li><a href="auth-recoverpw.html" data-key="t-recover-password">Recover Password</a></li>
-                <li><a href="auth-lock-screen.html" data-key="t-lock-screen">Lock Screen</a></li>
-                <li><a href="auth-logout.html" data-key="t-logout">Logout</a></li>
-                <li><a href="auth-confirm-mail.html" data-key="t-confirm-mail">Confirm Mail</a></li>
-                <li><a href="auth-email-verification.html" data-key="t-email-verification">Email Verification</a></li>
-                <li><a href="auth-two-step-verification.html" data-key="t-two-step-verification">Two Step Verification</a></li>
+                <li><a href="{% url 'user_login' %}" data-key="t-login">Войти</a></li>
+                <li><a href="{% url 'user_register' %}" data-key="t-register">Регистрация</a></li>
+                <li><a href="{% url 'recoverpw' %}" data-key="t-recover-password">Восстановить пароль</a></li>
+                <li><a href="{% url 'lock_screen' %}" data-key="t-lock-screen">Экран блокировки</a></li>
+                <li><a href="{% url 'user_logout' %}" data-key="t-logout">Выйти</a></li>
+                <li><a href="{% url 'confirm_mail' %}" data-key="t-confirm-mail">Подтвердите почту</a></li>
+                <li><a href="{% url 'verification' %}" data-key="t-email-verification">Проверка электронной почты</a></li>
+                <li><a href="{% url 'two_verification' %}" data-key="t-two-step-verification">Двухэтапная проверка</a></li>
             </ul>
         </li>
 
         <li>
             <a href="javascript: void(0);" class="has-arrow">
                 <i class="bx bx-file icon nav-icon"></i>
-                <span class="menu-item" data-key="t-utility">Utility</span>
+                <span class="menu-item" data-key="t-utility">Полезность</span>
             </a>
             <ul class="sub-menu" aria-expanded="false">
-                <li><a href="pages-starter.html" data-key="t-starter-page">Starter Page</a></li>
-                <li><a href="pages-maintenance.html" data-key="t-maintenance">Maintenance</a></li>
-                <li><a href="pages-comingsoon.html" data-key="t-coming-soon">Coming Soon</a></li>
-                <li><a href="pages-timeline.html" data-key="t-timeline">Timeline</a></li>
-                <li><a href="pages-faqs.html" data-key="t-faqs">FAQs</a></li>
-                <li><a href="pages-pricing.html" data-key="t-pricing">Pricing</a></li>
-                <li><a href="pages-404.html" data-key="t-error-404">Error 404</a></li>
-                <li><a href="pages-500.html" data-key="t-error-500">Error 500</a></li>
+                <li><a href="{% url 'timeline' %}" data-key="t-timeline">График</a></li>
+                <li><a href="{% url 'faqs' %}" data-key="t-faqs">FAQs</a></li>
+                <li><a href="{% url 'pricing' %}" data-key="t-pricing">Ценообразование</a></li>
+                <li><a href="{% url 'pages_404' %}" data-key="t-error-404">Error 404</a></li>
+                <li><a href="{% url 'pages_500' %}" data-key="t-error-500">Error 500</a></li>
             </ul>
         </li>
-
-        <li>
-            <a href="javascript: void(0);" class="has-arrow">
-                <i class="bx bx-share-alt icon nav-icon"></i>
-                <span class="menu-item" data-key="t-multi-level">Multi Level</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="true">
-                <li class="disabled"><a href="#" data-key="t-disabled-item">Disabled Item</a></li>
-                <li><a href="javascript: void(0);" data-key="t-level-1.1">Level 1.1</a></li>
-                <li><a href="javascript: void(0);" class="has-arrow" data-key="t-level-1.2">Level 1.2</a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-2.1">Level 2.1</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-2.2">Level 2.2</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
     </ul>
 </div>
