@@ -10,18 +10,7 @@ urlpatterns = [
     path('todo/', views.todo, name='todo'),
     path('manager/', views.manager, name='manager'),
     path('chat/', views.chat, name='chat'),
-
-    # ecommerce
-    path('products/', views.products, name='products'),
-    path('product-detail/', views.product_detail, name='product_detail'),
-    path('orders/', views.orders, name='orders'),
-    path('checkout/', views.checkout, name='checkout'),
-    path('customers/', views.customers, name='customers'),
-    path('cart/', views.cart, name='cart'),
-    path('checkout/', views.checkout, name='checkout'),
-    path('shops/', views.shops, name='shops'),
-    path('add-product/', views.add_product, name='add_product'),
-
+    
     # invoices
     path('invoices/list/', views.invoice_list, name='invoice_list'),
     path('invoices/detail/', views.list_detail, name='list_detail'),
@@ -62,4 +51,4 @@ urlpatterns = [
     path('utility/pages_500/', views.pages_500, name='pages_500'),
     path('utility/pricing/', views.pricing, name='pricing'),
 
-]
+]   

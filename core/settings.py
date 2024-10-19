@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     # apps
     'apps.settings',
     'apps.secondary',
+    'apps.products',
     'apps.users',
+    'apps.cms',
 ]
 
 MIDDLEWARE = [

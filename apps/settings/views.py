@@ -23,34 +23,6 @@ def manager(request):
 def chat(request):
     return render(request, 'applications/app/apps-chat.html', locals())
 
-# ecommerce
-def products(request):
-    return render(request, 'applications/ecommerce/products.html', locals())
-
-def product_detail(request):
-    return render(request, 'applications/ecommerce/product-detail.html', locals())
-
-def orders(request):
-    return render(request, 'applications/ecommerce/orders.html', locals())
-
-def checkout(request):
-    return render(request, 'applications/ecommerce/checkout.html', locals())
-
-def customers(request):
-    return render(request, 'applications/ecommerce/customers.html', locals())
-
-def cart(request):
-    return render(request, 'applications/ecommerce/cart.html', locals())
-
-def checkout(request):
-    return render(request, 'applications/ecommerce/checkout.html', locals())
-
-def shops(request):
-    return render(request, 'applications/ecommerce/shops.html', locals())
-
-def add_product(request):
-    return render(request, 'applications/ecommerce/add-product.html', locals())
-
 # invoices
 def invoice_list(request):
     return render(request, 'applications/invoices/list.html', locals())

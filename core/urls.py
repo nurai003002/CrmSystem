@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("apps.settings.urls")),
     path('user/', include("apps.users.urls")),
+    path('products/', include("apps.products.urls")),
+    path('cms/', include("apps.cms.urls")),
     path('secondary/', include("apps.secondary.urls")),
 
     # users
