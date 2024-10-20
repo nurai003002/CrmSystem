@@ -7,6 +7,8 @@ from apps.cms.models import Slider
 # ecommerce
 def products(request):
     product = models.Products.objects.all()
+    big_categories = models.BigCategory.objects.all()
+    categories = models.Category.objects.all()
     slider = Slider.objects.all()
     title = 'Продукты'  
     return render(request, 'applications/products/products.html', locals())

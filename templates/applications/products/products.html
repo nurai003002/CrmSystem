@@ -556,27 +556,26 @@
                                             <h5 class="font-size-14 mb-0"><a href="#categories-collapse" class="text-body d-block" data-bs-toggle="collapse">Категории <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
                                          
                                             <div class="collapse show mt-4" id="categories-collapse">
+                                                
                                                 <div class="categories-group-card">
+                                                    {% for big_category in big_categories %}
                                                     <a href="#collapseOne" class="text-body fw-semibold pb-3 d-block collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseOne">
-                                                        <i class="bx bx-desktop font-size-16 align-middle me-2"></i> Electronic
+                                                        <i class="bx bx-desktop font-size-16 align-middle me-2"></i> {{big_category.title}}
                                                         <i class="mdi mdi-chevron-up float-end accor-down-icon"></i>
                                                     </a>
-                            
+                                                    {% endfor  %}
                                                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                                                         <div class="card p-2 border shadow-none">
                                                             <ul class="list-unstyled categories-list mb-0">
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Mobile</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Cemera</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Mobile accessories</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Computers</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Laptops</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Speakers</a></li>
+                                                                {% for category in categories %}
+                                                                <li><a href="/category/{{ category.id }}"><i class="mdi mdi-circle-medium me-1"></i> {{category.title}}</a></li>
+                                                                {% endfor %}
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
-        
-                                                <div class="categories-group-card">
+                                                <!-- 2категория -->
+                                                <!-- <div class="categories-group-card">
                                                     <a href="#collapseTwo" class="text-body fw-semibold pb-3 d-block" data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapseTwo">
                                                         <i class="bx bx-radar font-size-16 align-middle me-2"></i> Furniture
                                                         <i class="mdi mdi-chevron-up float-end accor-down-icon"></i>
@@ -591,57 +590,20 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                </div>
-        
-                                                <div class="categories-group-card">
-                                                    <a href="#collapseThree" class="text-body fw-semibold pb-3 d-block collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseThree">
-                                                        <i class="bx bx-command font-size-16 align-middle me-2"></i> Baby & Kids
-                                                        <i class="mdi mdi-chevron-up float-end accor-down-icon"></i>
-                                                    </a>
-                                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                                        <div class="card p-2 border shadow-none">
-                                                            <ul class="list-unstyled categories-list mb-0">
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Clothing</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Footwear</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Toys</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Baby care</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-        
-                                                <div class="categories-group-card">
-                                                    <a href="#collapseFour" class="text-body fw-semibold pb-3 d-block collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseFour">
-                                                        <i class="bx bx-dumbbell font-size-16 align-middle me-2"></i> Fitness
-                                                        <i class="mdi mdi-chevron-up float-end accor-down-icon"></i>
-                                                    </a>
-                                                    <div id="collapseFour" class="collapse" data-parent="#accordion">
-                                                        <div class="card p-2 border shadow-none">
-                                                            <ul class="list-unstyled categories-list mb-0">
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Gym equipment</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Yoga mat</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Dumbbells</a></li>
-                                                                <li><a href="#"><i class="mdi mdi-circle-medium me-1"></i> Protein supplements</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </div> -->
+                                               
                                             </div>
-                                            
                                         </div>
-
                                         <div class="p-4 border-top">
                                             <div>
                                                 <h5 class="font-size-14 mb-3">Price</h5>
                                                 <div id="priceslider" class="mb-4"></div>
                                             </div>
                                         </div>
-
                                         <div class="custom-accordion">
                                             <div class="p-4 border-top">
                                                 <div>
                                                     <h5 class="font-size-14 mb-0"><a href="#filtersizes-collapse" class="text-body d-block" data-bs-toggle="collapse">Sizes <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
-        
                                                     <div class="collapse show" id="filtersizes-collapse">
                                                         <div class="mt-4">
                                                             <div class="d-flex align-items-center">
@@ -663,14 +625,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                             <div class="p-4 border-top">
                                                 <div>
                                                     <h5 class="font-size-14 mb-0"><a href="#filterprodductcolor-collapse" class="text-body d-block" data-bs-toggle="collapse">Colors <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
-        
                                                     <div class="collapse show" id="filterprodductcolor-collapse">
                                                         <div class="mt-4">
                                                             <div class="form-check mt-2">
@@ -707,7 +666,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
 
@@ -774,7 +732,6 @@
 
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>    
@@ -785,27 +742,25 @@
                                     <div class="card-body p-0">
                                         <div class="swiper-container slider rounded overflow-hidden">
                                             <div class="swiper-wrapper" dir="ltr">
+                                                {% for slider in slider %}
                                                 <div class="swiper-slide rounded overflow-hidden ecommerce-slied-bg">
                                                     <div class="row justify-content-center">
                                                         <div class="col-xl-11 col-lg-11">
                                                            <div class="row align-items-center">
                                                             <div class="col-md-6">
                                                                 <div class="p-4 p-xl-0">
-                                                                 <img src="{% static 'assets/images/product/img-8.png' %}" class="img-fluid" alt="">
+                                                                 <img src="{{slider.image.url}}" class="img-fluid" alt="">
                                                                 </div>
                                                              </div>
         
                                                              <div class="col-md-6">
                                                                <div class="p-4 p-xl-0">
-                                                                    <h3 class="mb-2 text-truncate"><a href="ecommerce-product-detail.html">Tuition Classes Chair Crime </a></h3>
-                                                                    <h5 class="fw-normal font-size-16 mt-1 text-truncate">SKU: Fluid HB - Lite - AN White</h5>
-                                                                    <ul class="list-unstyled px-0 mb-0 mt-4">
-                                                                        <li><p class="text-muted mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle me-1"></i> 3 Year Warranty and Stock Available</p></li>
-                                                                        <li><p class="text-muted mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle me-1"></i> Material : Steel + PVC Leather + Sponge</p></li>
-                                                                        </ul>
-                                                                    <h2 class="mb-0 mt-4 text-truncate"><span class="font-size-20">Form</span><b> $2,360</b> <span class="text-muted me-2"><del class="font-size-20 fw-normal">$3500</del></span></h2>
+                                                                    <h3 class="mb-2 text-truncate"><a href="ecommerce-product-detail.html">{{slider.title}}</a></h3>
+                                                                    <h5 class="fw-normal font-size-16 mt-1 text-truncate">{{slider.description|safe}}</h5>
+                                                                    <p> {{slider.feature|safe}}</p>
+                                                                    <h2 class="mb-0 mt-4 text-truncate"><span class="font-size-20">От</span><b> {{slider.price}}сом</b> <span class="text-muted me-2"><del class="font-size-20 fw-normal">{{slider.old_price}}сом</del></span></h2>
                                                                     <div class="mt-4">
-                                                                        <button type="button" class="btn btn-success w-lg waves-effect waves-light">Buy Now</button>
+                                                                        <button type="button" class="btn btn-success w-lg waves-effect waves-light">Купить</button>
                                                                     </div>
                                                                </div>
                                                             </div>
@@ -813,65 +768,7 @@
                                                         </div>
                                                    </div>
                                                 </div>
-                                                <div class="swiper-slide rounded overflow-hidden ecommerce-slied-bg">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-xl-11 col-lg-11">
-                                                           <div class="row align-items-center">
-                                                            <div class="col-md-6">
-                                                                <div class="p-4 p-xl-0">
-                                                                 <img src="{% static 'assets/images/product/img-4.png' %}" class="img-fluid" alt="">
-                                                                </div>
-                                                             </div>
-        
-                                                             <div class="col-md-6">
-                                                               <div class="p-4 p-xl-0">
-                                                                    <h3 class="mb-2 text-truncate"><a href="ecommerce-product-detail.html">Home & Office Chair Crime </a></h3>
-                                                                    <h5 class="fw-normal font-size-16 mt-1 text-truncate">SKU: Fluid HB - Lite - AN Grey</h5>
-
-                                                                    <ul class="list-unstyled px-0 mb-0 mt-4">
-                                                                        <li><p class="text-muted mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle me-1"></i> Material : Steel + PVC Leather + Sponge</p></li>
-                                                                        <li><p class="text-muted mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle me-1"></i> Overall Dimention : 16.5" x 19.5" x 24.3" (L x W x H)</p></li>
-                                                                    </ul>
-                                                                    
-                                                                    <h2 class="mb-0 mt-4 text-truncate"><span class="font-size-20">Form</span><b> $2,360</b> <span class="text-muted me-2"><del class="font-size-20 fw-normal">$3500</del></span></h2>
-                                                                    <div class="mt-4">
-                                                                        <button type="button" class="btn btn-success w-lg waves-effect waves-light">Buy Now</button>
-                                                                    </div>
-                                                               </div>
-                                                            </div>
-                                                           </div>
-                                                        </div>
-                                                   </div>
-                                                </div>
-
-                                                <div class="swiper-slide rounded overflow-hidden ecommerce-slied-bg">
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-xl-11 col-lg-11">
-                                                           <div class="row align-items-center">
-                                                            <div class="col-md-6">
-                                                                <div class="p-4 p-xl-0">
-                                                                 <img src="{% static 'assets/images/product/img-6.png' %}" class="img-fluid" alt="">
-                                                                </div>
-                                                             </div>
-        
-                                                             <div class="col-md-6">
-                                                               <div class="p-4 p-xl-0">
-                                                                    <h3 class="mb-2 text-truncate"><a href="ecommerce-product-detail.html">Hotel Dining Table And Chair</a></h3>
-                                                                    <h5 class="fw-normal font-size-16 mt-1 text-truncate">SKU: Fluid HB - Lite - AN Dark</h5>
-                                                                    <ul class="list-unstyled px-0 mb-0 mt-4">
-                                                                        <li><p class="text-muted mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle me-1"></i> Choose From Standard , Express Or Assembled Services</p></li>
-                                                                        <li><p class="text-muted mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle me-1"></i> 3 Year Warranty and Stock Available</p></li>
-                                                                    </ul>
-                                                                    <h2 class="mb-0 mt-4 text-truncate"><span class="font-size-20">Form</span><b> $2,360</b> <span class="text-muted me-2"><del class="font-size-20 fw-normal">$3500</del></span></h2>
-                                                                    <div class="mt-4">
-                                                                        <button type="button" class="btn btn-success w-lg waves-effect waves-light">Buy Now</button>
-                                                                    </div>
-                                                               </div>
-                                                            </div>
-                                                           </div>
-                                                        </div>
-                                                   </div>
-                                                </div>
+                                                {% endfor %}
                                             </div>
         
                                             <div class="d-none d-lg-block">
@@ -900,7 +797,7 @@
                                                     <div class="form-inline float-md-end">
                                                         <div class="search-box ms-2">
                                                             <div class="position-relative">
-                                                                <input type="text" class="form-control bg-light border-light rounded" placeholder="Search...">
+                                                                <input type="text" class="form-control bg-light border-light rounded" placeholder="Искать...">
                                                                 <i class="bx bx-search search-icon"></i>
                                                             </div>
                                                         </div>
@@ -910,7 +807,7 @@
 
                                             <ul class="nav nav-tabs nav-tabs-custom mt-3 mb-2 ecommerce-sortby-list">
                                                 <li class="nav-item">
-                                                    <a class="nav-link disabled fw-medium" href="#" tabindex="-1" aria-disabled="true">Sort by:</a>
+                                                    <a class="nav-link disabled fw-medium" href="#" tabindex="-1" aria-disabled="true">Фильтровать:</a>
                                                   </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link active" data-bs-toggle="tab" href="#popularity" role="tab" href="#">Popularity</a>
@@ -933,8 +830,8 @@
                                                                     <div class="pricing-badge">
                                                                         <span class="badge">New</span>
                                                                     </div>
-                                                                    <div class="product-img bg-light p-3 rounded">
-                                                                        <img src="{{product.image.url}}" alt="" class="img-fluid mx-auto d-block">
+                                                                    <div class="product-img bg-light p-3 rounded" style="width: 200px; height: 200px;">
+                                                                        <img src="{{product.image.url}}" alt="" class="img-fluid mx-auto d-block" style="width: 100%; height: 100%; object-fit: cover;">
                                                                     </div>
                                                                     <div class="product-content pt-3">
                                                                         <p class="text-muted font-size-13 mb-0">{{product.color}}</p>
@@ -949,7 +846,7 @@
                                                                         <a href="" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Add To Cart">
                                                                             <i class="mdi mdi-cart-outline text-white font-size-16"></i>
                                                                         </a>
-                                                                        <h5 class="font-size-20 text-primary mt-3 mb-0">{{product.price}} <del class="text-muted font-size-15 fw-medium ps-1">{{product.old_price}}</del></h5>     
+                                                                        <h5 class="font-size-20 text-primary mt-3 mb-0">{{product.price}}сом <del class="text-muted font-size-15 fw-medium ps-1">{{product.old_price}}сом</del></h5>     
                                                                     </div>
                                                                 </div>
                                                             </div>
