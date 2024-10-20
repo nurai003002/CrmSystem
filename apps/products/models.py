@@ -21,6 +21,13 @@ class BigCategory(models.Model):
         verbose_name_plural = 'Главная категория'
 
 class Category(models.Model):
+    big_category = models.ForeignKey(
+        BigCategory, 
+        related_name="big_category_category",
+        on_delete=models.SET_NULL,
+        verbose_name="Выбрать главную категорию",
+        blank=True, null=True)
+    
     title = models.CharField(
         max_length = 255,
         verbose_name = 'Название категория'
