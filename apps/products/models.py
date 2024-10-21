@@ -23,7 +23,7 @@ class BigCategory(models.Model):
 class Category(models.Model):
     big_category = models.ForeignKey(
         BigCategory, 
-        related_name="big_category_category",
+        related_name="categories",
         on_delete=models.SET_NULL,
         verbose_name="Выбрать главную категорию",
         blank=True, null=True)
@@ -76,6 +76,7 @@ class Products(models.Model):
         default="BLACK",
         blank=True, null=True
     )
+    is_new = models.BooleanField(default=False)
     image = ResizedImageField(
         force_format="WEBP", 
         quality=100, default='no_image.jpg',
