@@ -36,3 +36,41 @@ class Slider(models.Model):
     class Meta:
         verbose_name = 'Слайдер'
         verbose_name_plural = 'Слайдеры'
+
+class Services(models.Model):
+    title_1 = models.CharField(
+        max_length = 255,
+        verbose_name = 'Название (доставка)'
+    )
+    description_1 = models.TextField(
+        verbose_name = 'Описание (доставка)'
+    )
+    title_2 = models.CharField(
+        max_length = 255,
+        verbose_name = 'Название (Возврат)'
+    )
+    description_2 = models.TextField(
+        verbose_name = 'Описание (Возврат)'
+    )
+    title_3 = models.CharField(
+        max_length = 255,
+        verbose_name = 'Название (Поддержка)'
+    )
+    description_3 = models.TextField(
+        verbose_name = 'Описание (Поддержка)'
+    )
+    title_4 = models.CharField(
+        max_length = 255,
+        verbose_name = 'Название (Оплата)'
+    )
+    description_4 = models.TextField(
+        verbose_name = 'Описание (Оплата)'
+    )
+
+    def __str__(self):
+        return self.title_1
+    
+    class Meta:
+        verbose_name = 'Сервис'
+        verbose_name_plural = 'Сервисы'
+        

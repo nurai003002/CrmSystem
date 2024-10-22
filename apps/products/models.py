@@ -171,4 +171,7 @@ class ProductsFeature(models.Model):
 
 
 
-    
+# rating = models.PositiveSmallIntegerField(
+#         choices=[(i, str(i)) for i in range(1, 6)],
+#         verbose_name="Звезды", default=0
+#     )

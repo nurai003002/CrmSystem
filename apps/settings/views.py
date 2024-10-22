@@ -30,16 +30,6 @@ def invoice_list(request):
 def list_detail(request):
     return render(request, 'applications/invoices/detail.html', locals())
 
-# contacts
-def contact_grid(request):
-    return render(request, 'applications/contacts/grid.html', locals())
-
-def contact_list(request):
-    return render(request, 'applications/contacts/list.html', locals())
-
-def contacts_profile(request):
-    return render(request, 'applications/contacts/profile.html', locals())
-
 
 #components/tables
 def basic_table(request):
@@ -65,15 +55,6 @@ def charts_tui(request):
 def maps_google(request):
     return render(request, 'components/maps/google.html', locals())
 
-# pages/users
-def login(request):
-    return render(request, 'pages/users/login.html', locals())
-
-def register(request):
-    return render(request, 'pages/users/register.html', locals())
-
-def logout(request):
-    return render(request, 'pages/users/logout.html', locals())
 
 # pages/auth
 def recoverpw(request):

@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # apps
-    'apps.settings',
+    'apps.users',
     'apps.secondary',
     'apps.products',
-    'apps.users',
+    'apps.settings',
+    'apps.cart',
     'apps.cms',
 ]
 
@@ -206,6 +207,7 @@ JAZZMIN_UI_TWEAKS = {
     #"theme": "slate",    # темный (серьезный , полностью)
 
 }
+AUTH_USER_MODEL = 'users.User'
 
 EMAIL_USE_TLS = True  # Использовать TLS для защищенного соединения
 EMAIL_HOST = 'smtp.gmail.com'  # Адрес SMTP сервера Gmail
