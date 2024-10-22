@@ -568,75 +568,73 @@
                                         <div class="custom-accordion">
                                             <div class="p-4 border-top">
                                                 <div>
-                                                    <h5 class="font-size-14 mb-0"><a href="#filtersizes-collapse" class="text-body d-block" data-bs-toggle="collapse">Sizes <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
-                                                    <div class="collapse show" id="filtersizes-collapse">
-                                                        <div class="mt-4">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="flex-grow-1">
-                                                                    <h5 class="font-size-15 mb-0">Select Sizes</h5>
-                                                                </div>
-                                                                <div class="w-xs">
-                                                                    <select class="form-select">
-                                                                        <option value="1">3</option>
-                                                                        <option value="2">4</option>
-                                                                        <option value="3">5</option>
-                                                                        <option value="4">6</option>
-                                                                        <option value="5" selected>7</option>
-                                                                        <option value="6">8</option>
-                                                                        <option value="7">9</option>
-                                                                        <option value="8">10</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="p-4 border-top">
-                                                <div>
-                                                    <h5 class="font-size-14 mb-0"><a href="#filterprodductcolor-collapse" class="text-body d-block" data-bs-toggle="collapse">Colors <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
+                                                    <h5 class="font-size-14 mb-0">
+                                                        <a href="#filterprodductcolor-collapse" class="text-body d-block" data-bs-toggle="collapse">
+                                                            Цвета <i class="mdi mdi-chevron-up float-end accor-down-icon"></i>
+                                                        </a>
+                                                    </h5>
                                                     <div class="collapse show" id="filterprodductcolor-collapse">
                                                         <div class="mt-4">
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck1">
-                                                                <label class="form-check-label" for="productcolorCheck1"><i class="mdi mdi-circle text-body mx-1"></i> Black</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck2">
-                                                                <label class="form-check-label" for="productcolorCheck2"><i class="mdi mdi-circle text-light mx-1"></i> White</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck3">
-                                                                <label class="form-check-label" for="productcolorCheck3"><i class="mdi mdi-circle text-secondary mx-1"></i> Gray</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck4">
-                                                                <label class="form-check-label" for="productcolorCheck4"><i class="mdi mdi-circle text-primary mx-1"></i> Blue</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck5">
-                                                                <label class="form-check-label" for="productcolorCheck5"><i class="mdi mdi-circle text-success mx-1"></i> Green</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck6">
-                                                                <label class="form-check-label" for="productcolorCheck6"><i class="mdi mdi-circle text-danger mx-1"></i> Red</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck7">
-                                                                <label class="form-check-label" for="productcolorCheck7"><i class="mdi mdi-circle text-warning mx-1"></i> Yellow</label>
-                                                            </div>
-                                                            <div class="form-check mt-2">
-                                                                <input type="checkbox" class="form-check-input" id="productcolorCheck8">
-                                                                <label class="form-check-label" for="productcolorCheck8"><i class="mdi mdi-circle text-purple mx-1"></i> Purple</label>
-                                                            </div>
+                                                            <form method="GET" action="" id="colorFilterForm">
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck1" name="color" value="BLACK">
+                                                                    <label class="form-check-label" for="productcolorCheck1">
+                                                                        <i class="mdi mdi-circle text-body mx-1"></i> Black
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck2" name="color" value="WHITE">
+                                                                    <label class="form-check-label" for="productcolorCheck2">
+                                                                        <i class="mdi mdi-circle text-light mx-1"></i> White
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck3" name="color" value="GRAY">
+                                                                    <label class="form-check-label" for="productcolorCheck3">
+                                                                        <i class="mdi mdi-circle text-secondary mx-1"></i> Gray
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck4" name="color" value="BLUE">
+                                                                    <label class="form-check-label" for="productcolorCheck4">
+                                                                        <i class="mdi mdi-circle text-primary mx-1"></i> Blue
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck5" name="color" value="GREEN">
+                                                                    <label class="form-check-label" for="productcolorCheck5">
+                                                                        <i class="mdi mdi-circle text-success mx-1"></i> Green
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck6" name="color" value="RED">
+                                                                    <label class="form-check-label" for="productcolorCheck6">
+                                                                        <i class="mdi mdi-circle text-danger mx-1"></i> Red
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck7" name="color" value="YELLOW">
+                                                                    <label class="form-check-label" for="productcolorCheck7">
+                                                                        <i class="mdi mdi-circle text-warning mx-1"></i> Yellow
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check mt-2">
+                                                                    <input type="checkbox" class="form-check-input" id="productcolorCheck8" name="color" value="PURPLE">
+                                                                    <label class="form-check-label" for="productcolorCheck8">
+                                                                        <i class="mdi mdi-circle text-purple mx-1"></i> Purple
+                                                                    </label>
+                                                                </div>
+                                            
+                                                                <!-- Кнопка для применения фильтров -->
+                                                                <button type="submit" class="btn btn-primary mt-3">Применить</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="p-4 border-top">
                                                 <div>
-                                                    <h5 class="font-size-14 mb-0"><a href="#filterproduct-color-collapse" class="text-body d-block" data-bs-toggle="collapse">Customer Rating <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
+                                                    <h5 class="font-size-14 mb-0"><a href="#filterproduct-color-collapse" class="text-body d-block" data-bs-toggle="collapse">Рейтинг клиентов <i class="mdi mdi-chevron-up float-end accor-down-icon"></i></a></h5>
         
                                                     <div class="collapse show" id="filterproduct-color-collapse">
                                                         <div class="mt-4">
@@ -718,7 +716,7 @@
                                                              </div>
                                                              <div class="col-md-6">
                                                                <div class="p-4 p-xl-0">
-                                                                    <h3 class="mb-2 text-truncate"><a href="ecommerce-product-detail.html">{{slider.title}}</a></h3>
+                                                                    <h3 class="mb-2 text-truncate"><a>{{slider.title}}</a></h3>
                                                                     <h5 class="fw-normal font-size-16 mt-1 text-truncate">{{slider.description|safe}}</h5>
                                                                     <p> {{slider.feature|safe}}</p>
                                                                     <h2 class="mb-0 mt-4 text-truncate"><span class="font-size-20">От</span><b> {{slider.price}}сом</b> <span class="text-muted me-2"><del class="font-size-20 fw-normal">{{slider.old_price}}сом</del></span></h2>
@@ -733,7 +731,6 @@
                                                 </div>
                                                 {% endfor %}
                                             </div>
-        
                                             <div class="d-none d-lg-block">
                                                 <div class="swiper-button-next"></div>
                                                 <div class="swiper-button-prev"></div>
@@ -805,12 +802,12 @@
                                                                 </div>
                                                                 {% endif %}
                                                                 <div class="product-img bg-light p-3 rounded" style="width: 200px; height: 200px;">
-                                                                    <img src="{{ product.image.url }}" alt="" class="img-fluid mx-auto d-block" style="width: 100%; height: 100%; object-fit: cover;">
+                                                                    <a  href="{% url 'product_detail' product.id %}" ><img  src="{{ product.image.url }}" alt="" class="img-fluid mx-auto d-block" style="width: 100%; height: 100%; object-fit: cover;"></a>
                                                                 </div>
                                                                 <div class="product-content pt-3">
                                                                     <p class="text-muted font-size-13 mb-0">{{ product.color }}</p>
                                                                     <h5 class="mt-1 mb-0">
-                                                                        <a href="#" class="text-body font-size-16">{{ product.title }}</a>
+                                                                        <a href="{% url 'product_detail' product.id %}" class="text-body font-size-16">{{ product.title }}</a>
                                                                     </h5>
                                                                     <p class="text-muted mb-0">
                                                                         <i class="bx bxs-star text-warning font-size-12"></i>

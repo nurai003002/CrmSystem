@@ -14,12 +14,7 @@ urlpatterns = [
     # invoices
     path('invoices/list/', views.invoice_list, name='invoice_list'),
     path('invoices/detail/', views.list_detail, name='list_detail'),
-
-    # contacts
-    path('contacts/grid/', views.contact_grid, name='contacts_grid'),
-    path('contacts/list/', views.contact_list, name='contacts_list'),
-    path('contacts/profile/', views.contacts_profile, name='contacts_profile'),
-
+    
     # components/tables
     path('components/basic-tables/', views.basic_table, name='basic_table'),
     path('components/advanced-tables/', views.advanced_table, name='advanced_table'),
@@ -32,11 +27,6 @@ urlpatterns = [
     # maps
     path('components/maps-google/', views.maps_google, name='maps_google'),
 
-    # pages/users
-    path('auth/login/', views.login, name='user_login'),
-    path('auth/register/', views.register, name='user_register'),
-    path('auth/logout/', views.logout, name='user_logout'),
-    
     # pages/auth
     path('auth/recoverpw/', views.recoverpw, name='recoverpw'),
     path('auth/lock-screen/', views.lock_screen, name='lock_screen'),
