@@ -1,11 +1,12 @@
 from django.db import models
 from django_resized import ResizedImageField
 from ckeditor.fields import RichTextField
-
 from django.contrib.auth import get_user_model
 
+from apps.users.models import User
+
 # Create your models here.
-User = get_user_model()
+# User = get_user_model()
 
 class BigCategory(models.Model):
     title = models.CharField(
@@ -167,11 +168,33 @@ class ProductsFeature(models.Model):
         verbose_name = "Характиристика торава"
         verbose_name_plural = "Характиристики товаров"
 
-
-
-
-
 # rating = models.PositiveSmallIntegerField(
 #         choices=[(i, str(i)) for i in range(1, 6)],
 #         verbose_name="Звезды", default=0
 #     )
+        
+class ProductReview(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name="user_reviews",
+        verbose_name="Пользователь"
+    )
+    product = models.ForeignKey(
+        Products, on_delete=models.CASCADE,
+        related_name='reviews',
+        verbose_name="Название товара"
+    )
+    text = models.TextField(
+        verbose_name="Текст для отзыва"
+    )
+    created_at = models.DateField(
+        auto_now_add=True,
+        verbose_name='Дата создания'
+    )
+
+    def __str__(self):
+        return f"Отзыв с {self.user.username} для {self.product.title}"
+
+    class Meta:
+        verbose_name = "Отзыв товара"
+        verbose_name_plural = "Отзывы товаров"
