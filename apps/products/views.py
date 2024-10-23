@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 
@@ -42,6 +42,22 @@ def product_detail(request, product_id):
     products = models.Products.objects.all()
     products_detail = get_object_or_404(models.Products, id=product_id)
     service = Services.objects.latest('id')
+    reviews = models.ProductReview.objects.all()
+    review_amount = reviews.count()
+    
+    if request.method == 'POST' :
+        if 'review_button' in request.POST:
+            text = request.POST.get('text')
+
+            if text:
+                new_comment = models.ProductReview.objects.create(
+                    product=products_detail, 
+                    text=text, 
+                    user=request.user
+                )
+                new_comment.save()
+                return redirect('product_detail', id=product_id)
+
     return render(request, 'applications/products/detail.html', locals())
 
 def orders(request):

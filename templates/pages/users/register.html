@@ -26,69 +26,94 @@
                                     <p class="text-muted">Получите бесплатную учетную запись веб-администратора прямо сейчас.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form method="POST">
-                                        {% csrf_token %}
-                                        <div class="mb-3">
+                                    <form method="POST" id="registrationForm">
+                                        <div id="emailError" class="text-danger" style="display:none;"></div>
                                             <label class="form-label" for="useremail">Почта</label>
                                             <div class="position-relative input-custom-icon">
-                                                <input type="email" class="form-control" id="useremail" name="email" placeholder="Введите почту">  
+                                                <input type="email" class="form-control" id="useremail" name="email" placeholder="Введите почту">
                                                 <span class="bx bx-mail-send"></span>
-                                            </div>     
-                                        </div>
-        
-                                        <div class="mb-3">
-                                            <label class="form-label" for="username">Имя пользователя</label>
-                                            <div class="position-relative input-custom-icon">
-                                                <input type="text" class="form-control" id="username" name="username" placeholder="Введите username">
-                                                 <span class="bx bx-user"></span>
                                             </div>
                                         </div>
-                
+                                        <div class="mb-3">
+                                            <div id="usernameError" class="text-danger" style="display:none;"></div>
+                                            <label class="form-label" for="username">Имя пользователя</label>
+                                             <div class="position-relative input-custom-icon">
+                                                <input type="text" class="form-control" id="username" name="username" placeholder="Введите username">
+                                                <span class="bx bx-user"></span>
+                                            </div>
+                                        </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="userpassword">Пароль</label>
                                             <div class="position-relative auth-pass-inputgroup input-custom-icon">
                                                 <span class="bx bx-lock-alt"></span>
                                                 <input type="password" class="form-control" id="password-input" name="password" placeholder="Введите пароль">
                                             </div>
+                                            <div id="passwordError" class="text-danger" style="display:none; margin-top: 5px;"></div>
                                         </div>
-
                                         <div class="form-check py-1">
                                             <input type="checkbox" class="form-check-input" id="auth-terms-condition-check">
-                                            <label class="form-check-label" for="auth-terms-condition-check">Я согласен <a href="javascript: void(0);" class="text-body">Условия и положения</a></label>
+                                            <label class="form-check-label" for="auth-terms-condition-check">Я согласен <a href="javascript: void(0);" class="text-body">yсловия и положения</a></label>
                                         </div>
-                                        
                                         <div class="mt-3">
                                             <button name="register_button" class="btn btn-primary w-100 waves-effect waves-light" type="submit">Зарегистрироваться</button>
                                         </div>
-
-                                        <div class="mt-4 text-center">
-                                            <div class="signin-other-title">
-                                                <h5 class="font-size-14 mb-3 mt-2 title">Войти с</h5>
-                                            </div>
-            
-                                            <ul class="list-inline mt-2">
-                                                <li class="list-inline-item">
-                                                    <a href="javascript:void()" class="social-list-item bg-primary text-white border-primary">
-                                                        <i class="bx bxl-facebook"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="javascript:void()" class="social-list-item bg-info text-white border-info">
-                                                        <i class="bx bxl-linkedin"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a href="javascript:void()" class="social-list-item bg-danger text-white border-danger">
-                                                        <i class="bx bxl-google"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="mt-4 text-center">
-                                            <p class="mb-0">Already have an account ? <a href="auth-login.html" class="fw-medium text-primary"> Login</a></p>
-                                        </div>
                                     </form>
+                                    <script>
+                                    const form = document.getElementById('registrationForm');
+                                        form.addEventListener('submit', (event) => {
+                                            event.preventDefault(); // Останавливаем стандартное поведение формы
+                                        
+                                            const formData = new FormData(form);
+                                        
+                                            fetch('/register', { 
+                                                method: 'POST',
+                                                body: JSON.stringify({
+                                                    email: formData.get('email'),
+                                                    username: formData.get('username'),
+                                                    password: formData.get('password')
+                                                }),
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'X-Requested-With': 'XMLHttpRequest',
+                                                },
+                                            })
+                                            .then(response => response.json()) 
+                                            .then(data => {
+                                                document.getElementById('emailError').style.display = 'none';
+                                                document.getElementById('usernameError').style.display = 'none';
+                                                document.getElementById('passwordError').style.display = 'none';
+                                        
+                                                if (!data.success) {
+                                                    if (data.errors) { 
+                                                        if (data.errors.email) {
+                                                            const emailError = document.getElementById('emailError');
+                                                            emailError.textContent = data.errors.email; 
+                                                            emailError.style.display = 'block';
+                                                        }
+                                        
+                                                        if (data.errors.username) {
+                                                            const usernameError = document.getElementById('usernameError');
+                                                            usernameError.textContent = data.errors.username;
+                                                            usernameError.style.display = 'block';
+                                                        }
+                                        
+                                                        if (data.errors.password) {
+                                                            const passwordError = document.getElementById('passwordError');
+                                                            passwordError.textContent = data.errors.password;
+                                                            passwordError.style.display = 'block';
+                                                        }
+                                                    } else {
+                                                        console.error(data.message); 
+                                                    }
+                                                } else {
+                                                    window.location.href = '/'; 
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                            });
+                                        });
+                                        </script>
                                 </div>
             
                             </div>

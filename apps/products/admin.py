@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from apps.products.models import (Products, ProductImage, ProductsFeature,
-                                  BigCategory, Category)
+                                  BigCategory, Category, ProductReview)
 # Register your models here.
 
 class ImageTabularInline(admin.TabularInline):
@@ -12,11 +12,15 @@ class FeatureTabularInline(admin.TabularInline):
     model = ProductsFeature
     extra = 2
 
+class ProductReviewTabularInline(admin.TabularInline):
+    model = ProductReview
+    extra = 1
+
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'description')
     list_filter = ('id', 'title')
-    inlines = (ImageTabularInline, FeatureTabularInline)
+    inlines = (ImageTabularInline, FeatureTabularInline, ProductReviewTabularInline)
 
 @admin.register(BigCategory)
 class BigCategoryAdmin(admin.ModelAdmin):
