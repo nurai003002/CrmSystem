@@ -74,3 +74,16 @@ class Services(models.Model):
         verbose_name = 'Сервис'
         verbose_name_plural = 'Сервисы'
         
+class Calendar(models.Model):
+    event_name = models.CharField(
+        max_length = 500,
+        verbose_name = 'Название событии'
+    )
+
+    def __str__(self):
+        return self.event_name
+    
+    class Meta:
+        verbose_name = 'Календарь'
+        verbose_name_plural = 'Календарь'
+        

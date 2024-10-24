@@ -12,15 +12,16 @@ class FeatureTabularInline(admin.TabularInline):
     model = ProductsFeature
     extra = 2
 
-class ProductReviewTabularInline(admin.TabularInline):
-    model = ProductReview
-    extra = 1
-
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'description')
     list_filter = ('id', 'title')
-    inlines = (ImageTabularInline, FeatureTabularInline, ProductReviewTabularInline)
+    inlines = (ImageTabularInline, FeatureTabularInline)
+
+@admin.register(ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    list_display = ('id', 'text')
+    list_filter = ('id', 'text')
 
 @admin.register(BigCategory)
 class BigCategoryAdmin(admin.ModelAdmin):
