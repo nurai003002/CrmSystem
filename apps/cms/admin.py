@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.cms.models import Slider, Services
+from apps.cms.models import Slider, Services, Calendar
 # Register your models here.
 
 @admin.register(Slider)
@@ -13,3 +13,7 @@ class ServicesAdmin(admin.ModelAdmin):
     list_display = ('id', 'title_1', 'description_1')
     list_filter = ('id', 'title_1')
 
+@admin.register(Calendar)
+class CalendarAdmin(admin.ModelAdmin):
+    list_display = ('id', 'event_name')
+    list_filter = ('id', 'event_name')

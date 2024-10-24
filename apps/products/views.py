@@ -37,27 +37,26 @@ def products(request):
 
     return render(request, 'applications/products/products.html', locals())
 
-def product_detail(request, product_id):
+def product_detail(request, id):
     title = 'Информация о товаре'
     products = models.Products.objects.all()
-    products_detail = get_object_or_404(models.Products, id=product_id)
+    products_detail = get_object_or_404(models.Products, id=id)
     service = Services.objects.latest('id')
-    reviews = models.ProductReview.objects.all()
+    reviews = models.ProductReview.objects.filter(product=id).order_by('-created_at')
     review_amount = reviews.count()
     
-    if request.method == 'POST' :
-        if 'review_button' in request.POST:
-            text = request.POST.get('text')
+    if request.method == 'POST':
+        text = request.POST.get('text')
 
-            if text:
-                new_comment = models.ProductReview.objects.create(
-                    product=products_detail, 
-                    text=text, 
-                    user=request.user
-                )
-                new_comment.save()
-                return redirect('product_detail', id=product_id)
-
+        if text:
+            new_comment = models.ProductReview.objects.create(
+                product=products_detail,
+                text=text,
+                user=request.user
+            )
+            new_comment.save()
+            return redirect('product_detail', id=id)
+        
     return render(request, 'applications/products/detail.html', locals())
 
 def orders(request):

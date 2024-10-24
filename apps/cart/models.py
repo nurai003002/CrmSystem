@@ -2,11 +2,12 @@ from django.db import models
 from django_resized import ResizedImageField
 
 from apps.products.models import Products
+from apps.users.models import User
 
 # Create your models here.
 
 class CartItem(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
     product = models.ForeignKey(Products, on_delete=models.CASCADE,blank=True, null=True)
     session_key = models.CharField(
         max_length=40,
