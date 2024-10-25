@@ -540,7 +540,6 @@
                                                         <i class="bx bx-desktop font-size-16 align-middle me-2"></i> {{ big_category.title }}
                                                         <i class="mdi mdi-chevron-up float-end accor-down-icon"></i>
                                                     </a>
-                                                
                                                     <div id="collapseBigCategory{{ big_category.id }}" class="collapse" data-parent="#accordion{{ big_category.id }}">
                                                         <div class="card p-2 border shadow-none">
                                                             <ul class="list-unstyled categories-list mb-0">
@@ -556,7 +555,6 @@
                                                     </div>
                                                     {% endfor %}
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                         <div class="p-4 border-top">
@@ -816,7 +814,7 @@
                                                                         <i class="bx bxs-star text-warning font-size-12"></i>
                                                                         <i class="bx bxs-star-half text-warning font-size-12"></i>
                                                                     </p>
-                                                                    <a href="" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart">
+                                                                    <a  href="{% url 'add_to_cart' product.id %}?quantity=1" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart">
                                                                         <i class="mdi mdi-cart-outline text-white font-size-16"></i>
                                                                     </a>
                                                                     <h5 class="font-size-20 text-primary mt-3 mb-0">{{ product.price }} сом 

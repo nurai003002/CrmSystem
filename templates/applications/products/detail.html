@@ -642,7 +642,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="row">
                                                             <div class="col-lg-6 col-sm-8">
                                                                 <div class="product-desc-color mt-3">
@@ -664,16 +663,13 @@
                                                                             </a>
                                                                         </li>
                                                                     </ul>
-                                                                    
                                                                 </div>
-
-
                                                                 <div class="row text-center mt-4 pt-1">
                                                                     <div class="col-sm-6">
                                                                         <div class="d-grid">
-                                                                            <button type="button" class="btn btn-primary waves-effect waves-light mt-2 me-1">
+                                                                            <a href="{% url 'add_to_cart' products_detail.id %}?quantity=1" class="btn btn-primary waves-effect waves-light mt-2 me-1">
                                                                                 <i class="bx bx-cart me-2"></i> В корзину
-                                                                            </button>
+                                                                            </a>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
