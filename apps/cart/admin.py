@@ -5,5 +5,5 @@ from apps.cart.models import CartItem
 
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title')
-    list_filter = ('id', 'title')
+    list_display = ('id', 'quantity')
+    list_filter = ('id', 'quantity')

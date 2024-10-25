@@ -13,32 +13,32 @@ class CartItem(models.Model):
         max_length=40,
         null=True, blank=True
     )
-    image = ResizedImageField(
-        force_format="WEBP", 
-        quality=100, 
-        upload_to='image/',
-        verbose_name="Фото изделий",
-        blank=True, null=True
-    )
-    title = models.CharField(
-        max_length = 255,
-        verbose_name = "Название"
-    )
-    price = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        verbose_name='Цена сейчас'
-    )
-    color = models.CharField(
-        max_length=255,
-        verbose_name='Цвета',
-        blank=True, null=True
-    )
-    size = models.CharField(
-        max_length=100, verbose_name="Размер товара",
-        default="S",
-        blank=True, null=True
-    )
+    # image = ResizedImageField(
+    #     force_format="WEBP", 
+    #     quality=100, 
+    #     upload_to='image/',
+    #     verbose_name="Фото изделий",
+    #     blank=True, null=True
+    # )
+    # title = models.CharField(
+    #     max_length = 255,
+    #     verbose_name = "Название"
+    # )
+    # price = models.DecimalField(
+    #     max_digits=10,
+    #     decimal_places=2,
+    #     verbose_name='Цена сейчас'
+    # )
+    # color = models.CharField(
+    #     max_length=255,
+    #     verbose_name='Цвета',
+    #     blank=True, null=True
+    # )
+    # size = models.CharField(
+    #     max_length=100, verbose_name="Размер товара",
+    #     default="S",
+    #     blank=True, null=True
+    # )
     quantity = models.IntegerField(
         verbose_name = 'Количество заказанного продукта',
         blank=True, null=True
