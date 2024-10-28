@@ -24,12 +24,13 @@ def cart(request):
             })
 
     cart_items_count = len(cart_items)
+    total_price_first = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
     total_price = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
-
     if total_price < 15000:
         total_price += delivery_cost
     else:
         free_delivery = True
+    
     return render(request, 'applications/products/cart.html', locals())
 
 
@@ -74,7 +75,6 @@ def remove_from_cart(request, cart_item_id):
     cart_item = get_object_or_404(CartItem, pk=cart_item_id)
     cart_item.delete()
     return redirect('cart')
-
 
 # @require_POST
 # def update_cart_quantity(request):

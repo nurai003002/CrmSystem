@@ -114,6 +114,10 @@ class Products(models.Model):
         verbose_name = 'Количество продукта',
         blank=True, null=True
     )
+    manufacturer = models.CharField(
+        max_length = 255,
+        verbose_name = 'Производитель'
+    )
     discount = models.PositiveIntegerField(
         verbose_name="Скидка на продукт",
         blank=True, null=True
