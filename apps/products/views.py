@@ -75,4 +75,30 @@ def shops(request):
     return render(request, 'applications/products/shops.html', locals())
 
 def add_product(request):
+    title = "Добавить товар"
+    categories = models.Category.objects.all()
+    if request.method == "POST" and 'add_products' in request.POST:
+        data = {
+            'title': request.POST.get('title'),
+            'category': models.Category.objects.get(id=request.POST.get('choices_category')) if request.POST.get('choices_category') else None,
+            'description': request.POST.get('description'),
+            'color': request.POST.get('color'),
+            'status': request.POST.get('status'),
+            'is_new': request.POST.get('is_new') == 'on',
+            'brand': request.POST.get('brand'),
+            'image': request.FILES.get('image'),  
+            'material': request.POST.get('material'),
+            'cost_price': request.POST.get('cost_price'),
+            'price': request.POST.get('price'),
+            'old_price': request.POST.get('old_price'),
+            'quantity': request.POST.get('quantity'),
+            'manufacturer': request.POST.get('manufacturer'),
+            'discount': request.POST.get('discount') or None
+        }
+        
+        product = models.Products(**data)
+        product.save()
+        return redirect('index')
+
+        
     return render(request, 'applications/products/add-product.html', locals())

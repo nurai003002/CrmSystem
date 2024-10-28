@@ -83,7 +83,7 @@
                                                 <tbody>
                                                     {% for cart_item in cart_items %}
                                                         <tr>
-                                                            <th><img src="{{ cart_item.product.image.url }}" alt="" class="avatar-lg rounded p-1"></th>
+                                                            <th><img src="{{ cart_item.product.image.url }}" alt="" class="avatar-lg rounded p-1" ></th>
                                                             <td> 
                                                                 <div>
                                                                     <h5 class="text-truncate font-size-16"><a href="ecommerce-product-detail.html" class="text-body">{{ cart_item.product.title }}</a></h5>
@@ -128,7 +128,7 @@
                                 <!-- end card -->
                                 <div class="row my-4">
                                     <div class="col-sm-6">
-                                        <a href="ecommerce-products.html" class="btn btn-link text-muted">
+                                        <a href="{% url 'products' %}" class="btn btn-link text-muted">
                                             <i class="mdi mdi-arrow-left me-1"></i>Продолжить покупки </a>
                                     </div> <!-- end col -->
                                     <div class="col-sm-6">
@@ -143,16 +143,15 @@
                                 <div class="mt-5 mt-lg-0">
                                     <div class="card">
                                         <div class="card-header bg-transparent border-bottom py-3 px-4">
-                                            <h5 class="font-size-16 mb-0">Сводка заказа <span class="float-end">#MN0124</span></h5>
+                                            <h5 class="font-size-16 mb-0">Сводка заказа <span class="float-end"></span></h5>
                                         </div>
                                         <div class="card-body p-4 pt-2">
-
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
                                                     <tbody>
                                                         <tr>
                                                             <td>Общая сумма :</td>
-                                                            <td class="text-end">{{total_price}} сом</td>
+                                                            <td class="text-end">{{total_price_first}} сом</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Скидка : </td>
@@ -160,13 +159,13 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Доставка :</td>
-                                                            <td class="text-end">$ 25</td>
+                                                            <td class="text-end">{{delivery_cost}} сом</td>
                                                         </tr>
                                                         <tr class="bg-light">
                                                             <th>Итог :</th>
                                                             <td class="text-end">
                                                                 <span class="fw-bold">
-                                                                    $ 745.2
+                                                                    {{total_price}} сом
                                                                 </span>
                                                             </td>
                                                         </tr>
