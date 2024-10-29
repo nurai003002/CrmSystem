@@ -5,6 +5,7 @@ from apps.products import views
 urlpatterns = [
     # ecommerce
     path('product/', views.products, name='products'),
+    path('product_list/', views.products_list, name='products_list'),
     path('<int:id>/', views.product_detail, name='product_detail'),
     path('orders/', views.orders, name='orders'),
     path('checkout/', views.checkout, name='checkout'),

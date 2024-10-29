@@ -115,39 +115,35 @@
                                             </div>
                                             <div class="mb-0">
                                                 <label class="form-label" for="productdesc">Описание </label>
-                                                <textarea class="form-control" id="productdesc" name="description" placeholder="Введите описание*  " rows="4"></textarea>
+                                                <textarea class="form-control" id="productdesc" name="description" placeholder="Введите описание*" rows="4"></textarea>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-specifications" class="form-label">Цвета
-                                                </label>
-                                                <select class="form-control" data-trigger name="color" id="choices-single-specifications">
-                                                    <option value="HI" selected>BLACK</option>
-                                                    <option value="LE" selected>GREEN</option>
-                                                    <option value="NO">WHITE</option>
-                                                    <option value="SI">PURPLE</option>
-                                                    <option value="DI">BLUE</option>
-                                                    <option value="DI">GRAY</option>
-                                                    <option value="DI">RED</option>
-                                                    <option value="DI">YELLOW</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-specifications" class="form-label">Статус
-                                                </label>
-                                                <select class="form-control" data-trigger name="status" id="choices-single-specifications">
-                                                    <option value="HI" selected>В наличии</option>
-                                                    <option value="LE" selected>Нет в наличии</option>
-                                                </select>
-                                            </div>
+                                            <br>
                                             <div class="mb-3 form-check">
                                                 <label class="form-check-label" for="is_new">Is new</label>
                                                 <input type="checkbox" class="form-check-input" id="is_new" name="is_new">
                                             </div>
                                             <div class="mb-3">
+                                                <label for="choices-single-default" class="form-label">Статус</label>
+                                                <select class="form-control" data-trigger name="status" id="choices-single-category">
+                                                    <option value="">Выбрать</option>
+                                                    <option value="">В начилии</option>
+                                                    <option value="">Нет в начилии</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label class="form-label" for="manufacturerbrand">Бренд</label>
                                                 <input id="manufacturerbrand" name="brand" placeholder="Введите бренд*" type="text" class="form-control">
                                             </div>
-                                            <div class="fallback" style="margin-top: 20px; margin-bottom: 20px;" >
+                                            <div class="mb-3">
+                                                <label for="color" class="form-label">Цвета</label>
+                                                <select class="form-control" name="color" id="color">
+                                                    {% for color_value, color_name in color_choices %}
+                                                        <option value="{{ color_value }}">{{ color_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="form-label" style="margin-top: 20px; margin-bottom: 20px;" >
                                                 <input name="image" type="file" multiple="multiple">
                                             </div>
                                             <div class="mb-3">
@@ -178,11 +174,10 @@
                                                 <label class="form-label" for="discount">Скидка на продукт (необязательно)</label>
                                                 <input id="discount" name="discount" placeholder="Введите скидку на продукт" type="text" class="form-control">
                                             </div>
-                                            <br>
                                             <div class="col text-end">
                                                 <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Удалить </a>
                                                 <button href="" class="btn btn-success"  name="add_products" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
-                                            </div> <!-- end col -->
+                                            </div> 
                                         </form>
                                     </div>
                                 </div>

@@ -16,7 +16,6 @@ def calendar(request):
 def todo(request):
     return render(request, 'applications/app/apps-todo.html', locals())
 
-
 def manager(request):
     return render(request, 'applications/app/apps-file-manager.html', locals())
 
