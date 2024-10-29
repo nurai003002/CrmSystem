@@ -1,0 +1,235 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Invoice List | webadmin - Admin & Dashboard Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesdesign" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+        <!-- gridjs css -->
+        <link rel="stylesheet" href="{% static 'assets/libs/gridjs/theme/mermaid.min.css' %}">
+
+        <!-- flatpickr css -->
+        <link href="{% static 'assets/libs/flatpickr/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
+
+        <!-- Bootstrap Css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    
+    <body>
+
+    <!-- <body data-layout="horizontal"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+            {% include 'include/header.html' %}
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+
+                <!-- LOGO -->
+                <div class="navbar-brand-box">
+                    <a href="index.html" class="logo logo-dark">
+                        <span class="logo-sm">
+                            <img src="{% static 'assets/images/logo-dark-sm.png' %}" alt="" height="26">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="{% static 'assets/images/logo-dark.png' %}" alt="" height="28">
+                        </span>
+                    </a>
+
+                    <a href="index.html" class="logo logo-light">
+                        <span class="logo-lg">
+                            <img src="{% static 'assets/images/logo-light.png' %}" alt="" height="30">
+                        </span>
+                        <span class="logo-sm">
+                            <img src="{% static 'assets/images/logo-light-sm.png' %}" alt="" height="26">
+                        </span>
+                    </a>
+                </div>
+                <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn">
+                    <i class="bx bx-menu align-middle"></i>
+                </button>
+                <div data-simplebar class="sidebar-menu-scroll">
+                    <!--- Sidemenu -->
+                    {% include 'include/sidebar.html' %}
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-nowrap mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th><input type="checkbox" id="select-all"></th>
+                                                <th>Order ID</th>
+                                                <th>Product Name</th>
+                                                <th>quantity</th>
+                                                <th>Date</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for product in product_list %}
+                                            <tr data-id="DS0215">
+                                                <td><input type="checkbox" class="select-item"></td>
+                                                <td><a href="/invoice-details/DS0215" class="text-decoration-none">{{product.id}}</a></td>
+                                                <td>{{product.title}}</td>
+                                                <td>{{product.quantity}}</td>
+                                                <td>{{product.created_at}}</td>
+                                                <td>{{product.price}}сом</td>
+                                                <td>
+                                                    {% if product.status == "в наличии" %}
+                                                        <span class="badge bg-success">{{ product.status }}</span>
+                                                    {% elif product.status == "нет в наличии" %}
+                                                        <span class="badge bg-danger">{{ product.status }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary">{{ product.status }}</span> 
+                                                    {% endif %}
+                                                </td>
+                                                <style>
+                                                    .badge {
+                                                        padding: 0.5em 1em;
+                                                        font-size: 0.875em;
+                                                    }
+                                                </style>
+                                                <td><button class="btn btn-link text-body"><i class="bx bx-dots-horizontal-rounded"></i></button></td>
+                                            </tr>
+                                            <!-- Добавьте больше строк при необходимости -->
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="addInvoiceModal" tabindex="-1" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addInvoiceModalLabel">Add Invoice</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="customer-name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer-name" placeholder="Enter customer name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="invoice-amount" class="form-label">Amount</label>
+                                    <input type="number" class="form-control" id="invoice-amount" placeholder="Enter amount">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="invoice-date" class="form-label">Invoice Date</label>
+                                    <input type="date" class="form-control" id="invoice-date">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Invoice</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // Скрипт для выделения всех чекбоксов
+                document.getElementById('select-all').addEventListener('click', function(event) {
+                    const checkboxes = document.querySelectorAll('.select-item');
+                    checkboxes.forEach(checkbox => checkbox.checked = event.target.checked);
+                });
+            </script>
+            
+            <div class="modal fade" id="addInvoiceModal" tabindex="-1" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addInvoiceModalLabel">Add Invoice</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="customer-name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer-name" placeholder="Enter customer name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="invoice-amount" class="form-label">Amount</label>
+                                    <input type="number" class="form-control" id="invoice-amount" placeholder="Enter amount">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="invoice-date" class="form-label">Invoice Date</label>
+                                    <input type="date" class="form-control" id="invoice-date">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Invoice</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.getElementById('select-all').addEventListener('click', function(event) {
+                    const checkboxes = document.querySelectorAll('.select-item');
+                    checkboxes.forEach(checkbox => checkbox.checked = event.target.checked);
+                });
+            </script>
+             
+        </div>
+        <a href="#" class="right-bar-toggle layout-setting-btn" id="right-bar-toggle">
+            <i class="bx bx-cog icon-sm font-size-18"></i> <span>Settings</span>
+        </a>
+        <div class="rightbar-overlay"></div>
+
+        <!-- chat offcanvas -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivity" aria-labelledby="offcanvasActivityLabel">
+            <div class="offcanvas-header border-bottom">
+              <h5 id="offcanvasActivityLabel">Offcanvas right</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              ...
+            </div>
+        </div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/libs/metismenujs/metismenujs.min.js' %}"></script>
+        <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'assets/libs/eva-icons/eva.min.js' %}"></script>
+
+        <!-- gridjs js -->
+        <script src="{% static 'assets/libs/gridjs/gridjs.umd.js' %}"></script>
+
+        <!-- flatpickr js -->
+        <script src="{% static 'assets/libs/flatpickr/flatpickr.min.js' %}"></script>
+        <!-- invoice-list init -->
+        <script src="{% static 'assets/js/pages/invoice-list.init.js' %}"></script>
+
+        <script src="{% static 'assets/js/app.js' %}"></script>
+
+    </body>
+
+</html>

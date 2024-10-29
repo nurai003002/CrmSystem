@@ -43,16 +43,16 @@ class Category(models.Model):
 
 
 class Products(models.Model):
-    COLOR_CHOICES = (
-        ('BLACK', 'BLACK'),
-        ('GREEN', 'GREEN'),
-        ('WHITE', 'WHITE'),
-        ('PURPLE', 'PURPLE'),
-        ('BLUE', 'BLUE'),
-        ('GRAY', 'GRAY'),
-        ('RED', 'RED'),
-        ('YELLOW', 'YELLOW')
-    )
+    COLOR_CHOICES = [
+    ('BLACK', 'BLACK'),
+    ('GREEN', 'GREEN'),
+    ('WHITE', 'WHITE'),
+    ('PURPLE', 'PURPLE'),
+    ('BLUE', 'BLUE'),
+    ('GRAY', 'GRAY'),
+    ('RED', 'RED'),
+    ('YELLOW', 'YELLOW'),
+    ]
     STATUS_CHOICES = (
         ('в наличии', 'В наличии'),
         ('нет в наличии', 'нет в наличии'),
@@ -88,8 +88,7 @@ class Products(models.Model):
     status = models.CharField(
         max_length=255,
         choices=STATUS_CHOICES,
-        verbose_name='Статус',
-        blank=True, null=True
+        verbose_name='Статус'
     )
     brand = models.CharField(
         max_length = 255,

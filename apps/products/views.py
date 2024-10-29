@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 from apps.products import models
 from apps.cms.models import Slider, Services
@@ -77,16 +78,18 @@ def shops(request):
 def add_product(request):
     title = "Добавить товар"
     categories = models.Category.objects.all()
+    color = models.Products.objects.values_list('color', flat=True).distinct() 
+
     if request.method == "POST" and 'add_products' in request.POST:
         data = {
             'title': request.POST.get('title'),
             'category': models.Category.objects.get(id=request.POST.get('choices_category')) if request.POST.get('choices_category') else None,
             'description': request.POST.get('description'),
-            'color': request.POST.get('color'),
+            'color': request.POST.get('color'),  
             'status': request.POST.get('status'),
             'is_new': request.POST.get('is_new') == 'on',
-            'brand': request.POST.get('brand'),
-            'image': request.FILES.get('image'),  
+            'brand': request.POST.get('brand'), 
+            'image': request.FILES.get('image'),
             'material': request.POST.get('material'),
             'cost_price': request.POST.get('cost_price'),
             'price': request.POST.get('price'),
@@ -98,7 +101,21 @@ def add_product(request):
         
         product = models.Products(**data)
         product.save()
-        return redirect('index')
+        return redirect('products_list')
 
         
-    return render(request, 'applications/products/add-product.html', locals())
+    return render(request, 'applications/products/add-product.html', 
+                  {'title': title,
+                    'categories': categories,
+                    'color_choices': models.Products.COLOR_CHOICES})
+
+def delete_product(request, product_id):
+    product = get_object_or_404(models.Products, id=product_id)
+    product.delete()
+    messages.success(request, "Товар успешно удален.")
+    return redirect('index')
+
+def products_list(request):
+    title = "Список продуктов"
+    product_list = models.Products.objects.all()
+    return render(request, 'applications/products/products_list.html', locals())
