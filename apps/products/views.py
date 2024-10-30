@@ -78,36 +78,89 @@ def shops(request):
 def add_product(request):
     title = "Добавить товар"
     categories = models.Category.objects.all()
+    products = models.Products.objects.all()
     color = models.Products.objects.values_list('color', flat=True).distinct() 
+    status = models.Products.objects.values_list('status', flat=True).distinct() 
 
-    if request.method == "POST" and 'add_products' in request.POST:
-        data = {
-            'title': request.POST.get('title'),
-            'category': models.Category.objects.get(id=request.POST.get('choices_category')) if request.POST.get('choices_category') else None,
-            'description': request.POST.get('description'),
-            'color': request.POST.get('color'),  
-            'status': request.POST.get('status'),
-            'is_new': request.POST.get('is_new') == 'on',
-            'brand': request.POST.get('brand'), 
-            'image': request.FILES.get('image'),
-            'material': request.POST.get('material'),
-            'cost_price': request.POST.get('cost_price'),
-            'price': request.POST.get('price'),
-            'old_price': request.POST.get('old_price'),
-            'quantity': request.POST.get('quantity'),
-            'manufacturer': request.POST.get('manufacturer'),
-            'discount': request.POST.get('discount') or None
-        }
-        
-        product = models.Products(**data)
-        product.save()
-        return redirect('products_list')
+    if request.method == "POST" :
+        if 'add_products' in request.POST:
+            data = {
+                'title': request.POST.get('title'),
+                'category': models.Category.objects.get(id=request.POST.get('choices_category')) if request.POST.get('choices_category') else None,
+                'description': request.POST.get('description'),
+                'color': request.POST.get('color'),  
+                'status': request.POST.get('status'),
+                'is_new': request.POST.get('is_new') == 'on',
+                'brand': request.POST.get('brand'), 
+                'image': request.FILES.get('image'),
+                'material': request.POST.get('material'),
+                'cost_price': request.POST.get('cost_price'),
+                'price': request.POST.get('price'),
+                'old_price': request.POST.get('old_price'),
+                'quantity': request.POST.get('quantity'),
+                'manufacturer': request.POST.get('manufacturer'),
+                'discount': request.POST.get('discount') or None
+            }
+            
+            product = models.Products(**data)
+            product.save()
+            return redirect('products_list')
+    
+        if 'add_image' in request.POST:
+            data = {
+            'product': models.Products.objects.get(id=request.POST.get('choices_product')) if request.POST.get('choices_product') else None,
+            'image': request.FILES.get('image')}
 
+            products = models.ProductImage(**data)
+            products.save()
+
+            return redirect('products_list')
         
+        if 'add_feature' in request.POST:
+            data = {
+            'product': models.Products.objects.get(id=request.POST.get('choices_product')) if request.POST.get('choices_product') else None,
+            'feature': request.POST.get('feature')}
+
+            products = models.ProductsFeature(**data)
+            products.save()
+
+            return redirect('products_list')
+            
     return render(request, 'applications/products/add-product.html', 
                   {'title': title,
                     'categories': categories,
-                    'color_choices': models.Products.COLOR_CHOICES})
+                    'products': products,
+                    'color_choices': models.Products.COLOR_CHOICES,
+                    'status_choices': models.Products.STATUS_CHOICES,})
+
+def add_category(request):
+    title = 'Категории'
+    categories = models.Category.objects.all()
+    big_categories = models.BigCategory.objects.all()
+    if request.method == "POST" :
+        if 'add_big_catergory' in request.POST:
+            data = {
+                'title': request.POST.get('title'),
+            }
+            
+            big_category = models.BigCategory(**data)
+            big_category.save()
+            return redirect('add_product')
+
+        if 'add_catergory' in request.POST:
+            data = {
+                'big_category': models.BigCategory.objects.get(id=request.POST.get('choices_big_category')) if request.POST.get('choices_big_category') else None,
+                'title': request.POST.get('title'),
+            }
+            
+            category = models.Category(**data)
+            category.save()
+            return redirect('add_product')
+        
+    return render(request, 'applications/products/category.html',
+                  {'title': title,
+                    'categories': categories,
+                    'big_categories': big_categories,})
 
 def delete_product(request, product_id):
     product = get_object_or_404(models.Products, id=product_id)
