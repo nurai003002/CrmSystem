@@ -65,7 +65,6 @@
         </div>
     </div>
     <!-- Left Sidebar End -->
-
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
@@ -87,7 +86,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1 overflow-hidden">
-                                                <h5 class="font-size-16 mb-1">Информация о продукте</h5>
+                                                <h5 class="font-size-16 mb-1">Главная категория</h5>
                                                 <p class="text-muted text-truncate mb-0">Заполните всю информацию ниже</p>
                                             </div>
                                             <div class="flex-shrink-0">
@@ -98,85 +97,15 @@
                                 </a>
                                 <div id="addproduct-productinfo-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                                     <div class="p-4 border-top">
-                                        <form method="POST" enctype="multipart/form-data">
+                                        <form method="POST">
                                             {% csrf_token %}
                                             <div class="mb-3">
-                                                <label class="form-label" for="productname">Название продукта</label>
-                                                <input id="productname" name="title" placeholder="Введите название продукта*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-default" class="form-label">Категория</label>
-                                                <select class="form-control" data-trigger name="choices_category" id="choices-single-category">
-                                                    <option value="">Выбрать</option>
-                                                    {% for category in categories %}
-                                                    <option value="{{ category.id }}">{{category.title}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="mb-0">
-                                                <label class="form-label" for="productdesc">Описание </label>
-                                                <textarea class="form-control" id="productdesc" name="description" placeholder="Введите описание*" rows="4"></textarea>
-                                            </div>
-                                            <br>
-                                            <div class="mb-3 form-check">
-                                                <label class="form-check-label" for="is_new">Is new</label>
-                                                <input type="checkbox" class="form-check-input" id="is_new" name="is_new">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-default" class="form-label">Статус</label>
-                                                <select class="form-control" data-trigger name="status" id="choices-single-category">
-                                                    <option value="">Выбрать</option>
-                                                    {% for status_value, status_name in status_choices %}
-                                                    <option value="{{status_value}}">{{status_name}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="manufacturerbrand">Бренд</label>
-                                                <input id="manufacturerbrand" name="brand" placeholder="Введите бренд*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="color" class="form-label">Цвета</label>
-                                                <select class="form-control" name="color" id="color">
-                                                    {% for color_value, color_name in color_choices %}
-                                                        <option value="{{ color_value }}">{{ color_name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="form-label" style="margin-top: 20px; margin-bottom: 20px;">
-                                                <input name="image" type="file" multiple="multiple">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="material">Материал</label>
-                                                <input id="material" name="material" placeholder="Введите материал*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="cost_price">Себестоимость</label>
-                                                <input id="cost_price" name="cost_price" placeholder="Введите себестоимость*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="price">Цена</label>
-                                                <input id="price" name="price" placeholder="Введите цену*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="old_price">Старая цена</label>
-                                                <input id="old_price" name="old_price" placeholder="Введите старую цену*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="quantity">Количество</label>
-                                                <input id="quantity" name="quantity" placeholder="Введите количество*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="manufacturername">Название производителя</label>
-                                                <input id="manufacturername" name="manufacturer" placeholder="Введите название производителя*" type="text" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="discount">Скидка на продукт (необязательно)</label>
-                                                <input id="discount" name="discount" placeholder="Введите скидку на продукт" type="text" class="form-control">
+                                                <label class="form-label" for="category">Название категория</label>
+                                                <input id="category" name="title" placeholder="Введите название продукта*" type="text" class="form-control">
                                             </div>
                                             <div class="col text-end">
                                                 <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Удалить </a>
-                                                <button href="" class="btn btn-success"  name="add_products" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
+                                                <button href="" class="btn btn-success"  name="add_big_catergory" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
                                             </div> 
                                         </form>
                                     </div>
@@ -193,7 +122,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">
-                                                    <h5 class="font-size-16 mb-1">Дополнительные фотографии</h5>
+                                                    <h5 class="font-size-16 mb-1">Категория</h5>
                                                     <p class="text-muted text-truncate mb-0">Заполните всю информацию ниже</p>
                                                 </div>
                                                 <div class="flex-shrink-0">
@@ -202,81 +131,30 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div id="addproduct-img-collapse" class="collapse" data-bs-parent="#addproduct-accordion">
+                                    <div id="addproduct-img-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                                         <div class="p-4 border-top">
-                                            <form action="#" class="dropzone" method="POST" enctype="multipart/form-data">
+                                            <form method="POST">
                                                 {% csrf_token %}
                                                 <div class="mb-3">
-                                                    <label for="choices-single-default" class="form-label">Товар</label>
-                                                    <select class="form-control" data-trigger name="choices_product" id="choices-single-category">
+                                                    <label for="choices-single-default" class="form-label">Главная категория</label>
+                                                    <select class="form-control" data-trigger name="choices_big_category" id="choices-single-category">
                                                         <option value="">Выбрать</option>
-                                                        {% for product in products %}
-                                                        <option value="{{ product.id }}">{{product.title}}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="fallback">
-                                                    <input name="image" type="file" multiple="multiple">
-                                                </div>
-                                                <div class="dz-message needsclick">
-                                                    <div class="mb-3">
-                                                        <i class="display-4 text-muted mdi mdi-cloud-upload"></i>
-                                                    </div>
-                                                    <h4 class="mb-0">Перетащите сюда файл.</h4>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="quantity">Характеристика</label>
-                                                    <input id="quantity" name="feauture" placeholder="Введите характиристику*" type="text" class="form-control">
-                                                </div>
-                                                <div class="col text-end">
-                                                    <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Удалить </a>
-                                                    <button href="" class="btn btn-success"  name="add_image" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
-                                                </div> 
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <a href="#addproduct-img-collapse" class="text-body collbodyd" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-controls="addproduct-img-collapse">
-                                        <div class="p-4">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar">
-                                                        <div class="avatar-title rounded-circle bg-primary-subtle  text-primary">
-                                                            <h5 class="text-primary font-size-17 mb-0">03</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 overflow-hidden">
-                                                    <h5 class="font-size-16 mb-1">Характеристика товара</h5>
-                                                    <p class="text-muted text-truncate mb-0">Заполните всю информацию ниже</p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div id="addproduct-img-collapse" class="collapse" data-bs-parent="#addproduct-accordion">
-                                        <div class="p-4 border-top">
-                                            <form action="#" class="dropzone" method="POST" enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                <div class="mb-3">
-                                                    <label for="choices-single-default" class="form-label">Товар</label>
-                                                    <select class="form-control" data-trigger name="choices_product" id="choices-single-category">
-                                                        <option value="">Выбрать</option>
-                                                        {% for product in products %}
-                                                        <option value="{{ product.id }}">{{product.title}}</option>
+                                                        {% for category in big_categories %}
+                                                        <option value="{{ category.id }}">{{category.title}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="feature">Характеристика</label>
-                                                    <input id="feature" name="feature" placeholder="Введите характиристику*" type="text" class="form-control">
+                                                    <label class="form-label" for="category">Название категория</label>
+                                                    <input id="category" name="title" placeholder="Введите название продукта*" type="text" class="form-control">
                                                 </div>
+                                                <!-- <div class="mb-3">
+                                                    <label class="form-label" for="manufacturerbrand">Бренд</label>
+                                                    <input id="manufacturerbrand" name="brand" placeholder="Введите бренд*" type="text" class="form-control">
+                                                </div> -->
                                                 <div class="col text-end">
                                                     <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Удалить </a>
-                                                    <button href="" class="btn btn-success"  name="add_feature" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
+                                                    <button href="" class="btn btn-success"  name="add_catergory" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
                                                 </div> 
                                             </form>
                                         </div>

@@ -576,6 +576,11 @@
                                                     <div class="mt-4">
                                                         <div thumbsSlider="" class="swiper product-nav-slider mt-2 overflow-hidden">
                                                             <div class="swiper-wrapper">
+                                                                <div class="swiper-slide rounded">
+                                                                    <div class="nav-slide-item" style="height: 100px; width: 100px;"> 
+                                                                        <img src="{{products_detail.image.url}}" class="img-fluid p-1 d-block rounded" style="height: 100%; width: 100%; object-fit: cover;" />
+                                                                    </div>
+                                                                </div>
                                                                 {% for product in products_detail.product_image.all %}
                                                                 <div class="swiper-slide rounded">
                                                                     <div class="nav-slide-item" style="height: 100px; width: 100px;"> 
@@ -586,14 +591,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    
                                                 </div>
                                             </div>
                                             <div class="col-xl-8">
                                                 <div class="mt-3 mt-xl-3 ps-xl-5">
                                                     <h4 class="font-size-20 mb-3"><a href="" class="text-body">{{products_detail.title}}</a></h4>
-
                                                     <p class="text-muted mb-0">
                                                         <i class="bx bxs-star text-warning"></i>
                                                         <i class="bx bxs-star text-warning"></i>
@@ -601,7 +603,6 @@
                                                         <i class="bx bxs-star text-warning"></i>
                                                         <i class="bx bxs-star-half text-warning"></i>
                                                     </p>
-
                                                     <div class="text-muted mt-2">
                                                         <span class="badge bg-success font-size-14 me-1"><i class="mdi mdi-star"></i> 4.5</span> 234 Reviews
                                                     </div>
@@ -621,7 +622,6 @@
                                                                     </ul>
                                                                 </div>
                                                             </div>
-
                                                             <div class="col-md-6">
                                                                 <div class="mt-3">
                                                                     <h5 class="font-size-14">Сервисы :</h5>
