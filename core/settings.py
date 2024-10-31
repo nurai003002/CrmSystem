@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'mptt',
     'jazzmin',
     'ckeditor',
     'django.contrib.admin',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.secondary',
     'apps.products',
+    'apps.billings',
     'apps.settings',
     'apps.cart',
     'apps.cms',

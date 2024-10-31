@@ -5,6 +5,8 @@ from django.contrib import messages
 
 from apps.products import models
 from apps.cms.models import Slider, Services
+from apps.cart.models import CartItem
+from apps.billings.models import Billing, BillingProduct
 
 # ecommerce
 def products(request):
@@ -61,16 +63,43 @@ def product_detail(request, id):
     return render(request, 'applications/products/detail.html', locals())
 
 def orders(request):
+    title = "Заказы"
     return render(request, 'applications/products/orders.html', locals())
 
 def checkout(request):
+    title = "Заказать"
+    delivery_cost = 250
+    cart_items = CartItem.objects.all()
+    for item in cart_items:
+        item.item_price = item.product.price * item.quantity
+    total_price_first = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
+    total_price = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
+    if total_price < 15000:
+        total_price += delivery_cost
+    else:
+        free_delivery = True
+
+    if request.method == "POST" :
+        if 'checkout_oparation' in request.POST:
+            data = {
+                'first_name': request.POST.get('first_name'),
+                'email': request.POST.get('email'),
+                'phone': request.POST.get('phone'),  
+                'region': request.POST.get('region'),
+                'street': request.POST.get('street'),
+                'apartment': request.POST.get('apartment'),
+                'country': request.POST.get('country'),
+                'city': request.POST.get('city'), 
+                'zip_code': request.POST.get('zip_code'),
+            }
+            
+            product = Billing(**data)
+            product.save()
+            return redirect('orders')
     return render(request, 'applications/products/checkout.html', locals())
 
 def customers(request):
     return render(request, 'applications/products/customers.html', locals())
-
-def checkout(request):
-    return render(request, 'applications/products/checkout.html', locals())
 
 def shops(request):
     return render(request, 'applications/products/shops.html', locals())
