@@ -154,68 +154,106 @@
                             </div>
                         </div>
                         <div class="container">
-                            <h1>Order List</h1>
+                            <h1>Список заказов</h1>
                             <br><br>
-                        
                             <table>
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Order ID</th>
-                                        <th>Billing Name</th>
-                                        <th>Date</th>
-                                        <th>Total</th>
-                                        <th>Payment Status</th>
-                                        <th>Payment Method</th>
-                                        <th>View Details</th>
-                                        <th>Action</th>
+                                        <th>ID Заказа</th>
+                                        <th>Название биллинга</th>
+                                        <th>Дата</th>
+                                        <th>Итог</th>
+                                        <th>Статус оплаты</th>
+                                        <th>Метод оплаты</th>
+                                        <th>Детальный</th>
+                                        <th>Действия</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>#SK2540</td>
-                                        <td>Neal Matthews</td>
-                                        <td>07 Oct, 2021</td>
-                                        <td>$400</td>
-                                        <td><span class="badge badge-paid">Paid</span></td>
-                                        <td><i class="fas fa-credit-card"></i> Mastercard</td>
-                                        <td><a href="#" class="btn btn-blue">View Details</a></td>
-                                        <td>
-                                            <a href="#" class="btn-icon"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn-icon"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                    {% for billing in billings %}
+                                    <div id="billing-{{ billing.id }}">
+                                        <tr>
+                                            <td><input type="checkbox">
+                                                <td>{{ billing.formatted_id }}</td>
+                                                <td>{{billing.product.title}}</td>
+                                                <td>{{billing.created}}</td>
+                                                <td>{{total_price}}сом</td>
+                                                <td><span class="badge badge-paid">{{billing.billing_payment_status}}</span></td>
+                                                <td><i class="fas fa-credit-card"></i> {{billing.billing_payment}}</td>
+                                                <td><a href="#" class="btn btn-blue">View Details</a></td>
+                                                <td>
+                                                    <a href="#" class="btn-icon"><i class="fas fa-edit"></i></a>
+                                                    <a href="" class="btn-icon delete-billing" data-billing-id="{{ billing.id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                    {% endfor %}
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                    $(document).on('click', '.delete-billing', function(event) {
+                                        event.preventDefault();
+                                        const billingId = $(this).data('billing-id');
+
+                                        $.ajax({
+                                            url: `{% url 'delete_billing' billing_id=0 %}`.replace("0", billingId),
+                                            type: 'POST',
+                                            headers: {
+                                                'X-CSRFToken': '{{ csrf_token }}'
+                                            },
+                                            success: function(response) {
+                                                if (response.success) {
+                                                    $(`#billing-${billingId}`).remove();
+                                                } else {
+                                                    alert("Не удалось удалить биллинг.");
+                                                }
+                                            },
+                                            error: function() {
+                                                alert("Произошла ошибка. Попробуйте снова.");
+                                            }
+                                        });
+                                    });
+                                    </script>
                                     <!-- Repeat similar rows as needed -->
                                 </tbody>
                             </table>
-                        
                             <div class="row mt-4">
                                 <div class="col-sm-6">
-                                    <div>
-                                        <p class="mb-sm-0">Page 2 of 84</p>
-                                    </div>
+                                    <p class="mb-sm-0">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="float-sm-end">
-                                        <ul class="pagination pagination-rounded mb-sm-0">
+                                    <ul class="pagination pagination-rounded mb-sm-0 float-sm-end">
+                                        {% if page_obj.has_previous %}
+                                            <li class="page-item">
+                                                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
+                                                    <i class="mdi mdi-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                        {% else %}
                                             <li class="page-item disabled">
                                                 <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
                                             </li>
-                                            <li class="page-item active">
-                                                <a href="#" class="page-link">1</a>
+                                        {% endif %}
+                                        {% for num in page_obj.paginator.page_range %}
+                                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
                                             </li>
+                                        {% endfor %}
+                                        {% if page_obj.has_next %}
                                             <li class="page-item">
-                                                <a href="#" class="page-link">2</a>
+                                                <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+                                                    <i class="mdi mdi-chevron-right"></i>
+                                                </a>
                                             </li>
-                                            <li class="page-item">
-                                                <a href="#" class="page-link">3</a>
-                                            </li>
-                                            <li class="page-item">
+                                        {% else %}
+                                            <li class="page-item disabled">
                                                 <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
                                             </li>
-                                        </ul>
-                                    </div>
+                                        {% endif %}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -321,162 +359,7 @@
         </div>
         <!-- END layout-wrapper -->
 
-        <!-- Right Sidebar -->
-        <a href="#" class="right-bar-toggle layout-setting-btn" id="right-bar-toggle">
-            <i class="bx bx-cog icon-sm font-size-18"></i> <span>Settings</span>
-        </a>
-
-        <!-- Right Sidebar -->
-        <div class="right-bar">
-            <div data-simplebar class="h-100">
-                <div class="rightbar-title d-flex align-items-center bg-dark p-3">
-
-                    <h5 class="m-0 me-2 text-white">Theme Customizer</h5>
-
-                    <a href="javascript:void(0);" class="right-bar-toggle-close ms-auto">
-                        <i class="mdi mdi-close noti-icon"></i>
-                    </a>
-                </div>
-
-                <!-- Settings -->
-                <hr class="m-0" />
-
-                <div class="p-4">
-                    <h6 class="mb-3">Layout</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout"
-                            id="layout-vertical" value="vertical">
-                        <label class="form-check-label" for="layout-vertical">Vertical</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout"
-                            id="layout-horizontal" value="horizontal">
-                        <label class="form-check-label" for="layout-horizontal">Horizontal</label>
-                    </div>
-
-                    <h6 class="mt-4 mb-3">Layout Mode</h6>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-mode"
-                            id="layout-mode-light" value="light">
-                        <label class="form-check-label" for="layout-mode-light">Light</label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-mode"
-                            id="layout-mode-dark" value="dark">
-                        <label class="form-check-label" for="layout-mode-dark">Dark</label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-mode"
-                            id="layout-mode-bordered" value="bordered">
-                        <label class="form-check-label" for="layout-mode-bordered">Bordered</label>
-                    </div>
-
-                    <h6 class="mt-4 mb-3">Layout Width</h6>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-width"
-                            id="layout-width-fluid" value="fluid" onchange="document.body.setAttribute('data-layout-size', 'fluid')">
-                        <label class="form-check-label" for="layout-width-fluid">Fluid</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-width"
-                            id="layout-width-boxed" value="boxed" onchange="document.body.setAttribute('data-layout-size', 'boxed')">
-                        <label class="form-check-label" for="layout-width-boxed">Boxed</label>
-                    </div>
-
-                    <h6 class="mt-4 mb-3">Layout Position</h6>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-position"
-                            id="layout-position-fixed" value="fixed" onchange="document.body.setAttribute('data-layout-scrollable', 'false')">
-                        <label class="form-check-label" for="layout-position-fixed">Fixed</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-position"
-                            id="layout-position-scrollable" value="scrollable" onchange="document.body.setAttribute('data-layout-scrollable', 'true')">
-                        <label class="form-check-label" for="layout-position-scrollable">Scrollable</label>
-                    </div>
-
-                    <h6 class="mt-4 mb-3">Topbar Type</h6>
-
-            
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="topbar-color"
-                            id="topbar-color-light" value="light" onchange="document.body.setAttribute('data-topbar', 'light')">
-                        <label class="form-check-label" for="topbar-color-light">Light</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="topbar-color"
-                            id="topbar-color-dark" value="dark" onchange="document.body.setAttribute('data-topbar', 'dark')">
-                        <label class="form-check-label" for="topbar-color-dark">Dark</label>
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="topbar-color"
-                            id="topbar-type-hidden" value="hidden" onchange="document.body.setAttribute('data-topbar', 'hidden')">
-                        <label class="form-check-label" for="topbar-type-hidden">Hidden</label>
-                    </div>
-            
-
-                    <div id="sidebar-setting">
-                    <h6 class="mt-4 mb-3 sidebar-setting">Sidebar Size</h6>
-
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-size"
-                            id="sidebar-size-default" value="default" onchange="document.body.setAttribute('data-sidebar-size', 'lg')">
-                        <label class="form-check-label" for="sidebar-size-default">Default</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-size"
-                            id="sidebar-size-compact" value="compact" onchange="document.body.setAttribute('data-sidebar-size', 'md')">
-                        <label class="form-check-label" for="sidebar-size-compact">Compact</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-size"
-                            id="sidebar-size-small" value="small" onchange="document.body.setAttribute('data-sidebar-size', 'sm')">
-                        <label class="form-check-label" for="sidebar-size-small">Small (Icon View)</label>
-                    </div>
-
-                    <h6 class="mt-4 mb-3 sidebar-setting">Sidebar Color</h6>
-
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-color"
-                            id="sidebar-color-light" value="light" onchange="document.body.setAttribute('data-sidebar', 'light')">
-                        <label class="form-check-label" for="sidebar-color-light">Light</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-color"
-                            id="sidebar-color-dark" value="dark" onchange="document.body.setAttribute('data-sidebar', 'dark')">
-                        <label class="form-check-label" for="sidebar-color-dark">Dark</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-color"
-                            id="sidebar-color-brand" value="brand" onchange="document.body.setAttribute('data-sidebar', 'brand')">
-                        <label class="form-check-label" for="sidebar-color-brand">Brand</label>
-                    </div>
-                </div>
-
-                    <h6 class="mt-4 mb-3">Direction</h6>
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-direction"
-                            id="layout-direction-ltr" value="ltr">
-                        <label class="form-check-label" for="layout-direction-ltr">LTR</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-direction"
-                            id="layout-direction-rtl" value="rtl">
-                        <label class="form-check-label" for="layout-direction-rtl">RTL</label>
-                    </div>
-
-                </div>
-
-            </div> <!-- end slimscroll-menu-->
-        </div>
-        <!-- /Right-bar -->
+    
 
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>

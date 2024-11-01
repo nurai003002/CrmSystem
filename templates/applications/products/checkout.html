@@ -345,16 +345,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for cart_item in cart_items %}
-                                                    <tr>
-                                                        <th scope="row"><img src="{{cart_item.product.image.url}}" alt="product-img" title="product-img" class="avatar-md"></th>
-                                                        <td>
-                                                            <h5 class="font-size-15 text-truncate"><a href="{% url 'product_detail' cart_item.product.id %}" class="text-body">{{cart_item.product.title}}</a></h5>
-                                                            <p class="text-muted mb-0">{{cart_item.product.price}}сом х {{cart_item.quantity}}</p>
-                                                        </td>
-                                                        <td>{{ cart_item.item_price }} сом</td>
-                                                    </tr>
-                                                    {% endfor %}
+                                                    {% if cart_items %}
+                                                        {% for cart_item in cart_items %}                                                                                                                                  
+                                                        <tr>
+                                                            <th scope="row"><img src="{{cart_item.product.image.url}}" alt="product-img" title="product-img" class="avatar-md"></th>
+                                                            <td>
+                                                                <h5 class="font-size-15 text-truncate"><a href="{% url 'product_detail' cart_item.product.id %}" class="text-body">{{cart_item.product.title}}</a></h5>
+                                                                <p class="text-muted mb-0">{{cart_item.product.price}}сом х {{cart_item.quantity}}</p>
+                                                            </td>
+                                                            <td>{{ cart_item.item_price }} сом</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <p>У нас нету товаров в корзине</p>
+                                                        <a href="{% url 'products' %}">продолжить покупки</a>
+                                                    {% endif %}
                                                     <tr>
                                                         <td colspan="2">
                                                             <h5 class="font-size-14 m-0">Промежуточный итог :</h5>
@@ -379,7 +384,6 @@
                                                             {{delivery_cost}} сом
                                                         </td>
                                                     </tr>
-                                                        
                                                     <tr class="bg-light">
                                                         <td colspan="2">
                                                             <h5 class="font-size-14 m-0">Итог:</h5>
