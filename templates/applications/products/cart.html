@@ -86,7 +86,7 @@
                                                             <th><img src="{{ cart_item.product.image.url }}" alt="" class="avatar-lg rounded p-1" ></th>
                                                             <td> 
                                                                 <div>
-                                                                    <h5 class="text-truncate font-size-16"><a href="ecommerce-product-detail.html" class="text-body">{{ cart_item.product.title }}</a></h5>
+                                                                    <h5 class="text-truncate font-size-16"><a href="{% url 'product_detail' cart_item.product.id %}" class="text-body">{{ cart_item.product.title }}</a></h5>
                                                                     <p class="mb-0 mt-1">Цвет: <span class="fw-medium">{{ cart_item.product.color }}</span></p>
                                                                 </div>
                                                             </td>
@@ -133,7 +133,7 @@
                                     </div> <!-- end col -->
                                     <div class="col-sm-6">
                                         <div class="text-sm-end mt-2 mt-sm-0">
-                                            <a href="ecommerce-checkout.html" class="btn btn-success">
+                                            <a href="{% url 'checkout' %}" class="btn btn-success">
                                                 <i class="mdi mdi-cart-outline me-1"></i> Заказать </a>
                                         </div>
                                     </div> <!-- end col -->

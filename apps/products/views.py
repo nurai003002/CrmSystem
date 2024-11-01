@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from apps.products import models
 from apps.cms.models import Slider, Services
@@ -50,7 +52,6 @@ def product_detail(request, id):
     
     if request.method == 'POST':
         text = request.POST.get('text')
-
         if text:
             new_comment = models.ProductReview.objects.create(
                 product=products_detail,
@@ -59,27 +60,51 @@ def product_detail(request, id):
             )
             new_comment.save()
             return redirect('product_detail', id=id)
-        
     return render(request, 'applications/products/detail.html', locals())
 
 def orders(request):
-    title = "Заказы"
-    return render(request, 'applications/products/orders.html', locals())
-
-def checkout(request):
-    title = "Заказать"
+    title = "Биллинги"
     delivery_cost = 250
+    billings = Billing.objects.all()
     cart_items = CartItem.objects.all()
-    for item in cart_items:
-        item.item_price = item.product.price * item.quantity
-    total_price_first = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
+    for billing in billings:
+        billing.formatted_id = f"#SK{billing.id}"
     total_price = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
     if total_price < 15000:
         total_price += delivery_cost
     else:
         free_delivery = True
+    
+    paginator = Paginator(billings, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)  
+    
+    return render(request, 'applications/products/orders.html', locals())
 
-    if request.method == "POST" :
+@require_POST
+def delete_billing(request, billing_id):
+    print("Запрос на удаление получен для ID:", billing_id)  # Отладочное сообщение
+
+    billing = get_object_or_404(Billing, id=billing_id)
+    billing.delete()
+    print("Биллинг удален:", billing_id)  # Подтверждение удаления
+    return JsonResponse({"success": True})
+
+def checkout(request):
+    title = "Заказать"
+    delivery_cost = 250
+    cart_items = CartItem.objects.all()
+    
+    for item in cart_items:
+        item.item_price = item.product.price * item.quantity
+    total_price_first = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
+    total_price = sum(item.item_price for item in cart_items)  
+    if total_price < 15000:
+        total_price += delivery_cost
+    else:
+        free_delivery = True
+
+    if request.method == "POST":
         if 'checkout_oparation' in request.POST:
             data = {
                 'first_name': request.POST.get('first_name'),
@@ -95,6 +120,9 @@ def checkout(request):
             
             product = Billing(**data)
             product.save()
+            
+            cart_items.delete()  
+            
             return redirect('orders')
     return render(request, 'applications/products/checkout.html', locals())
 
