@@ -103,20 +103,45 @@
                                                                         <option value="7">7</option>
                                                                         <option value="8">8</option>
                                                                     </select> -->
-                                                                    <p>{{cart_item.quantity}}</p>
+                                                                    <span id="quantity-{{ product.id }}">{{ cart_item.quantity }}</span>
                                                                 </div>
                                                             </td>
                                                             <td>{{ cart_item.total }} сом</td>
                                                             <td>
                                                                 <ul class="list-inline mb-0">
                                                                     <li class="list-inline-item">
-                                                                        <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" class="px-2 text-danger" title="Delete" aria-label="Delete"><i class="bx bx-trash-alt font-size-18"></i></a>
+                                                                        <a href="javascript:void(0);" class="px-2 text-danger delete-cart-item" data-cart-item-id="{{ cart_item.id }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" aria-label="Delete">
+                                                                            <i class="bx bx-trash-alt font-size-18"></i>
+                                                                        </a>
                                                                     </li>
-                                                                    <li class="list-inline-item">
-                                                                        <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" class="px-2 text-primary" title="Like" aria-label="Like"><i class="bx bx-heart font-size-18"></i></a>
-                                                                    </li>
+                                                                    
                                                                 </ul>
                                                             </td>
+                                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                            <script>
+                                                            $(document).on('click', '.delete-cart-item', function(event) {
+                                                                event.preventDefault();
+                                                                const cartItemId = $(this).data('cart-item-id');
+
+                                                                $.ajax({
+                                                                    url: `{% url 'delete_cart_item' cart_item_id=0 %}`.replace("0", cartItemId),
+                                                                    type: 'POST',
+                                                                    headers: {
+                                                                        'X-CSRFToken': '{{ csrf_token }}'
+                                                                    },
+                                                                    success: function(response) {
+                                                                        if (response.success) {
+                                                                            location.reload(); // Перезагрузка страницы после успешного удаления из корзины
+                                                                        } else {
+                                                                            alert("Не удалось удалить элемент из корзины.");
+                                                                        }
+                                                                    },
+                                                                    error: function() {
+                                                                        alert("Произошла ошибка. Попробуйте снова.");
+                                                                    }
+                                                                });
+                                                            });
+                                                            </script>
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -179,7 +204,6 @@
                             </div>
                         </div>
                         <!-- end row -->
-
                     </div>
                     <!-- container-fluid -->
                 </div>

@@ -19,6 +19,7 @@ def products(request):
     category_id = request.GET.get('category_id')
     filter_type = request.GET.get('filter')
     color_filter = request.GET.getlist('color')
+    
 
     if category_id:
         products = models.Products.objects.filter(category_id=category_id)
@@ -34,7 +35,7 @@ def products(request):
     if color_filter:
         products = products.filter(color__in=color_filter)
 
-    paginator = Paginator(products, 9)  
+    paginator = Paginator(products, 1)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -75,19 +76,32 @@ def orders(request):
     else:
         free_delivery = True
     
-    paginator = Paginator(billings, 2)
+    paginator = Paginator(billings, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)  
     
     return render(request, 'applications/products/orders.html', locals())
 
 @require_POST
+def delete_cart_item(request, cart_item_id):
+    if request.user.is_authenticated: 
+        cart_item = get_object_or_404(CartItem, id=cart_item_id, user=request.user)
+        
+        try:
+            cart_item.delete() 
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    
+    return JsonResponse({'success': False, 'error': 'User not authenticated'})
+
+@require_POST
 def delete_billing(request, billing_id):
-    print("Запрос на удаление получен для ID:", billing_id)  # Отладочное сообщение
+    print("Запрос на удаление получен для ID:", billing_id)  
 
     billing = get_object_or_404(Billing, id=billing_id)
     billing.delete()
-    print("Биллинг удален:", billing_id)  # Подтверждение удаления
+    print("Биллинг удален:", billing_id)  
     return JsonResponse({"success": True})
 
 def checkout(request):
@@ -128,9 +142,6 @@ def checkout(request):
 
 def customers(request):
     return render(request, 'applications/products/customers.html', locals())
-
-def shops(request):
-    return render(request, 'applications/products/shops.html', locals())
 
 def add_product(request):
     title = "Добавить товар"
@@ -219,13 +230,18 @@ def add_category(request):
                     'categories': categories,
                     'big_categories': big_categories,})
 
+@require_POST
 def delete_product(request, product_id):
+    print("Запрос на удаление получен для ID:", product_id)  
+
     product = get_object_or_404(models.Products, id=product_id)
     product.delete()
-    messages.success(request, "Товар успешно удален.")
-    return redirect('index')
+    print("Товар удален:", product_id)  
+    return JsonResponse({"success": True})
 
 def products_list(request):
     title = "Список продуктов"
     product_list = models.Products.objects.all()
+    for product in product_list:
+        product.formatted_id = f"#SK{product.id}"
     return render(request, 'applications/products/products_list.html', locals())
