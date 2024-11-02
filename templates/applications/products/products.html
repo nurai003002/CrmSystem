@@ -17,6 +17,7 @@
 
         <!-- nouisliderribute css -->
         <link rel="stylesheet" href="{% static 'assets/libs/nouislider/nouislider.min.css' %}">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Bootstrap Css -->
         <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
@@ -820,9 +821,35 @@
                                                                         <i class="bx bxs-star text-warning font-size-12"></i>
                                                                         <i class="bx bxs-star-half text-warning font-size-12"></i>
                                                                     </p>
-                                                                    <a  href="{% url 'add_to_cart' product.id %}?quantity=1" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart">
+                                                                    <!-- Кнопка для добавления в корзину -->
+                                                                    <a href="{% url 'add_to_cart' product.id %}?quantity=1" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart" onclick="showModal(event)">
                                                                         <i class="mdi mdi-cart-outline text-white font-size-16"></i>
                                                                     </a>
+
+                                                                    <!-- Модальное окно -->
+                                                                    <div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="addToCartModalLabel">Товар добавлен в корзину</h5>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Товар  был успешно добавлен в вашу корзину.
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <script>
+                                                                    function showModal(event) {
+                                                                        event.preventDefault(); 
+                                                                        var modal = new bootstrap.Modal(document.getElementById('addToCartModal'));
+                                                                        modal.show();
+                                                                    }
+                                                                    </script>
                                                                     <h5 class="font-size-20 text-primary mt-3 mb-0">{{ product.price }} сом 
                                                                         {% if product.old_price %}
                                                                         <del class="text-muted font-size-15 fw-medium ps-1">{{ product.old_price }} сом</del>
@@ -1113,6 +1140,10 @@
         <script src="{% static 'assets/js/pages/product-filter-range.init.js' %}"></script>
 
         <script src="{% static 'assets/js/app.js' %}"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
 
     </body>
 

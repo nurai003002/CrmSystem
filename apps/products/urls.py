@@ -2,6 +2,7 @@ from django.urls import path
 
 from apps.products import views
 
+
 urlpatterns = [
     # ecommerce
     path('product/', views.products, name='products'),
@@ -10,8 +11,8 @@ urlpatterns = [
     path('orders/', views.orders, name='orders'),
     path('checkout/', views.checkout, name='checkout'),
     path('customers/', views.customers, name='customers'),
-    path('shops/', views.shops, name='shops'),
     path('add-product/', views.add_product, name='add_product'),
     path('add-category/', views.add_category, name='add_category'),
+    path('delete-product/<int:product_id>/', views.delete_product, name='delete_product'),
     
 ]

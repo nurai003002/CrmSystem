@@ -36,7 +36,14 @@ def cart(request):
 
 def add_to_cart(request, product_id):
     product_item = get_object_or_404(models.Products, pk=product_id)
+    quantity_to_add = int(request.GET.get('quantity', 1))
+    if product_item.quantity >= quantity_to_add:
+        product_item.quantity -= quantity_to_add
+        
+        product_item.save()
+         
     if request.user.is_authenticated:
+        
         cart_item, created = CartItem.objects.get_or_create(
             user=request.user,
             product=product_item,
@@ -68,6 +75,7 @@ def add_to_cart(request, product_id):
 
         request.session['cart'] = cart
         request.session.modified = True
+        
 
     return redirect('cart')
 

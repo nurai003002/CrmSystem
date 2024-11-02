@@ -197,7 +197,6 @@
                                     $(document).on('click', '.delete-billing', function(event) {
                                         event.preventDefault();
                                         const billingId = $(this).data('billing-id');
-
                                         $.ajax({
                                             url: `{% url 'delete_billing' billing_id=0 %}`.replace("0", billingId),
                                             type: 'POST',
@@ -206,7 +205,7 @@
                                             },
                                             success: function(response) {
                                                 if (response.success) {
-                                                    $(`#billing-${billingId}`).remove();
+                                                    location.reload(); // Перезагрузка страницы после успешного удаления
                                                 } else {
                                                     alert("Не удалось удалить биллинг.");
                                                 }
@@ -217,45 +216,40 @@
                                         });
                                     });
                                     </script>
-                                    <!-- Repeat similar rows as needed -->
                                 </tbody>
                             </table>
-                            <div class="row mt-4">
-                                <div class="col-sm-6">
-                                    <p class="mb-sm-0">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="pagination pagination-rounded mb-sm-0 float-sm-end">
-                                        {% if page_obj.has_previous %}
-                                            <li class="page-item">
-                                                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
-                                                    <i class="mdi mdi-chevron-left"></i>
-                                                </a>
-                                            </li>
-                                        {% else %}
-                                            <li class="page-item disabled">
-                                                <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                            </li>
-                                        {% endif %}
-                                        {% for num in page_obj.paginator.page_range %}
-                                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                                                <a href="?page={{ num }}" class="page-link">{{ num }}</a>
-                                            </li>
-                                        {% endfor %}
-                                        {% if page_obj.has_next %}
-                                            <li class="page-item">
-                                                <a href="?page={{ page_obj.next_page_number }}" class="page-link">
-                                                    <i class="mdi mdi-chevron-right"></i>
-                                                </a>
-                                            </li>
-                                        {% else %}
-                                            <li class="page-item disabled">
-                                                <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                            </li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            </div>
+                            <ul class="pagination pagination-rounded mb-sm-0 float-sm-end">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
+                                            <i class="mdi mdi-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                    </li>
+                                {% endif %}
+                                
+                                {% for num in page_obj.paginator.page_range %}
+                                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                        <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                                    </li>
+                                {% endfor %}
+                                
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+                                            <i class="mdi mdi-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                            
                         </div>
                         <!-- end row -->
                     </div>
@@ -356,7 +350,7 @@
             </div>
             <!-- end main content-->
 
-        </div>
+            </div>
         <!-- END layout-wrapper -->
 
     
