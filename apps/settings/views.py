@@ -13,9 +13,6 @@ def sales(request):
 def calendar(request):
     return render(request, 'applications/app/apps-calendar.html', locals())
 
-def todo(request):
-    return render(request, 'applications/app/apps-todo.html', locals())
-
 def manager(request):
     return render(request, 'applications/app/apps-file-manager.html', locals())
 

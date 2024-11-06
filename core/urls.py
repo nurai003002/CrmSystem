@@ -30,6 +30,7 @@ urlpatterns = [
     path('products/', include("apps.products.urls")),
     path('cart/', include("apps.cart.urls")),
     path('cms/', include("apps.cms.urls")),
+    path('crm/', include("apps.crm.urls")),
 
     # users
     path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
