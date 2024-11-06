@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.billings',
     'apps.settings',
     'apps.cart',
+    'apps.crm',
     'apps.cms',
 ]
 
