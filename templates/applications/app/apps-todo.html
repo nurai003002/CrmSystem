@@ -56,7 +56,7 @@
                                                                 <span class="bx bx-search font-size-18"></span>
                                                             </div>
                                                         </form>
-                                                    </div>
+                                                    </div> 
                                                 </div>
                                                 <div class="col-xl-9 col-md-12">
                                                     <div class="text-sm-end">
@@ -87,28 +87,30 @@
                                                         <td>
                                                             <p class="mb-0">{{task.task}}</p>
                                                         </td>
-                                                        {% if task.status == 'В ожидании' %}
-                                                        <td>
-                                                            <div class="text-center">
-                                                                <span class="badge rounded-pill bg-secondary-subtle text-secondary  font-size-11">В ожидании</span>
-                                                            </div>
-                                                        </td>
-                                                        {% endif %}
-                                                        {% if task.status == 'В работе' %}
-                                                        <td>
-                                                            <div class="text-center">
-                                                                <span class="badge rounded-pill bg-primary-subtle text-primary  font-size-11">В работе</span>
-                                                            </div>
-                                                        </td>
-                                                        {% endif %}
-                                                        {% if task.status == 'Завершено' %}
-                                                        <td>
-                                                            <div class="text-center">
-                                                                <span class="badge rounded-pill bg-success-subtle text-success  font-size-11">Завершено</span>
-                                                            </div>
-                                                        </td>
-                                                        {% endif %}
-                                                        <td>
+                                                        <div name="status">
+                                                            {% if task.status == 'В ожидании' %}
+                                                            <td>
+                                                                <div class="text-center" name="status">
+                                                                    <span class="badge rounded-pill bg-secondary-subtle text-secondary  font-size-11">В ожидании</span>
+                                                                </div>
+                                                            </td>
+                                                            {% endif %}
+                                                            {% if task.status == 'В работе' %}
+                                                            <td>
+                                                                <div class="text-center">
+                                                                    <span class="badge rounded-pill bg-primary-subtle text-primary  font-size-11">В работе</span>
+                                                                </div>
+                                                            </td>
+                                                            {% endif %}
+                                                            {% if task.status == 'Завершено' %}
+                                                            <td>
+                                                                <div class="text-center">
+                                                                    <span class="badge rounded-pill bg-success-subtle text-success  font-size-11">Завершено</span>
+                                                                </div>
+                                                            </td>
+                                                            {% endif %}
+                                                            <td>
+                                                        </div>
                                                             <div class="avatar-group">
                                                                 <div class="avatar-group-item">
                                                                     <a href="javascript: void(0);" class="d-inline-block">
@@ -229,7 +231,7 @@
             <!--  Extra Large modal example -->
             <div class="modal fade create-task" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="modal-content">
                             <div class="modal-header">
@@ -245,14 +247,17 @@
                                         </div>
                                     </div>
                                 <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label" name="users" for="CreateTask-Team-Member">Исполнитель</label>
-                                            <select class="form-select">
-                                                {% for user in users %}
-                                                <option value="{{user.id}}">{{user.username}}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label class="form-label"  for="CreateTask-Team-Member">Исполнитель</label>
+                                        <select class="form-select" name="users">
+                                            {% for user in users %}
+                                            <option value="{{ user.id }}">
+                                                <img src="{{ user.image.url }}" alt="{{ user.username }}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
+                                                {{ user.username }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -262,10 +267,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label" name="status" for="CreateTask-Category">Категория</label>
-                                            <select class="form-select">
+                                            <label class="form-label"  for="CreateTask-Category">Категория</label>
+                                            <select class="form-select" name="status">
                                                 {% for status_value, status_name in status_choices %}
-                                                <option value="{{status_value}}">{{status_name}}</option>
+                                                <option value="{{ status_value }}">{{ status_name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>

@@ -6,6 +6,7 @@ def todo(request):
     title = 'Задачи'
     tasks_list = crm_models.Todo.objects.all()
     users = User.objects.all()
+    status = crm_models.Todo.objects.values_list('status', flat=True).distinct() 
 
     if request.method == 'POST':
         if 'new_task' in request.POST:
@@ -14,16 +15,16 @@ def todo(request):
                 'description': request.POST.get('description'),
                 'status': request.POST.get('status'),
                 'date': request.POST.get('date'),
-                'user': crm_models.Todo.objects.get(id=request.POST.get('users')) if request.POST.get('users') else None,
-                }
+                'user': crm_models.User.objects.get(id=request.POST.get('users')) if request.POST.get('users') else None, 
+            }
 
             tasks = crm_models.Todo(**data)
             tasks.save()
-
             return redirect('todo')
-        
+            
     return render(request, 'applications/app/apps-todo.html', 
-                  {'status_choices': crm_models.Todo.STATUS_CHOICES,
+                  {'title': title,
+                    'status_choices': crm_models.Todo.STATUS_CHOICES,
                    'users': users,
                    'tasks_list': tasks_list,
                    })
