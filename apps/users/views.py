@@ -55,10 +55,6 @@ def logout_view(request):
     logout(request)
     return redirect('user_login')
 
-# def logout(request):
-#     title = "Выйти"
-#     return render(request, 'pages/users/logout.html', locals())
-
 def contact_grid(request):
     return render(request, 'applications/contacts/grid.html', locals())
 
