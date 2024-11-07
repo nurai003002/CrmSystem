@@ -21,8 +21,7 @@ class Todo(models.Model):
         choices=STATUS_CHOICES,
         blank=True,null=True
     )
-    date = models.DateTimeField(
-        auto_now_add = True,
+    date = models.DateField(
         verbose_name = 'Дата выполнения',
         blank=True,null=True
     )
@@ -33,7 +32,7 @@ class Todo(models.Model):
         blank=True,null=True
     )
 
-    def __str_(self): 
+    def __str__(self): 
         return f"{self.task} таск- {self.user.username} -исполнитель"
     
     class Meta:
