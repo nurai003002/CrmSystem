@@ -63,4 +63,3 @@ def contact_list(request):
 
 def contacts_profile(request):
     return render(request, 'applications/contacts/profile.html', locals())
-
