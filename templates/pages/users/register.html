@@ -28,19 +28,27 @@
                                 <div class="p-2 mt-4">
                                     <form method="POST" id="registrationForm">
                                         {% csrf_token %}
-                                        <div id="emailError" class="text-danger" style="display:none;"></div>
-                                            <label class="form-label" for="useremail">Почта</label>
-                                            <div class="position-relative input-custom-icon">
-                                                <input type="email" class="form-control" id="useremail" name="email" placeholder="Введите почту">
-                                                <span class="bx bx-mail-send"></span>
-                                            </div>
-                                        </div>
                                         <div class="mb-3">
                                             <div id="usernameError" class="text-danger" style="display:none;"></div>
                                             <label class="form-label" for="username">Имя пользователя</label>
                                              <div class="position-relative input-custom-icon">
                                                 <input type="text" class="form-control" id="username" name="username" placeholder="Введите username">
                                                 <span class="bx bx-user"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div id="usernameError" class="text-danger" style="display:none;"></div>
+                                            <label class="form-label" for="full_name">ФИО</label>
+                                             <div class="position-relative input-custom-icon">
+                                                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Введите ФИО">
+                                                <span class="bx bx-user"></span>
+                                            </div>
+                                        </div>
+                                        <div id="emailError" class="text-danger" style="display:none;"></div>
+                                            <label class="form-label" for="useremail">Почта</label>
+                                            <div class="position-relative input-custom-icon">
+                                                <input type="email" class="form-control" id="useremail" name="email" placeholder="Введите почту">
+                                                <span class="bx bx-mail-send"></span>
                                             </div>
                                         </div>
                                         <div class="mb-3">

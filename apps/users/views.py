@@ -13,6 +13,7 @@ def register(request):
             email = request.POST.get('email')
             username = request.POST.get('username')
             password = request.POST.get('password')
+            full_name = request.POST.get('full_name')
 
             errors = {}
 
@@ -28,7 +29,7 @@ def register(request):
             if errors: 
                 return JsonResponse({'success': False, 'errors': errors})
 
-            user = User(username=username, email=email)
+            user = User(username=username, full_name=full_name, email=email)
             user.password = make_password(password)
             user.save()
 
@@ -55,11 +56,3 @@ def logout_view(request):
     logout(request)
     return redirect('user_login')
 
-def contact_grid(request):
-    return render(request, 'applications/contacts/grid.html', locals())
-
-def contact_list(request):
-    return render(request, 'applications/contacts/list.html', locals())
-
-def contacts_profile(request):
-    return render(request, 'applications/contacts/profile.html', locals())

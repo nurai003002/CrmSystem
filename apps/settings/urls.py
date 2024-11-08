@@ -6,7 +6,7 @@ urlpatterns = [
     # applications
     path('', views.index, name='index'),
     path('sale/', views.sales, name='sales'),
-    path('calendar/', views.calendar, name='calendar'),
+    
     
     path('manager/', views.manager, name='manager'),
     path('chat/', views.chat, name='chat'),
