@@ -59,70 +59,11 @@
                                             <button name="register_button" class="btn btn-primary w-100 waves-effect waves-light" type="submit  ">Зарегистрироваться</button>
                                         </div>
                                     </form>
-                                    <!-- <script>
-                                    const form = document.getElementById('registrationForm');
-                                        form.addEventListener('submit', (event) => {
-                                            event.preventDefault(); // Останавливаем стандартное поведение формы
-                                        
-                                            const formData = new FormData(form);
-                                        
-                                            fetch('/register', { 
-                                                method: 'POST',
-                                                body: JSON.stringify({
-                                                    email: formData.get('email'),
-                                                    username: formData.get('username'),
-                                                    password: formData.get('password')
-                                                }),
-                                                headers: {
-                                                    'Content-Type': 'application/json',
-                                                    'X-Requested-With': 'XMLHttpRequest',
-                                                },
-                                            })
-                                            .then(response => response.json()) 
-                                            .then(data => {
-                                                document.getElementById('emailError').style.display = 'none';
-                                                document.getElementById('usernameError').style.display = 'none';
-                                                document.getElementById('passwordError').style.display = 'none';
-                                        
-                                                if (!data.success) {
-                                                    if (data.errors) { 
-                                                        if (data.errors.email) {
-                                                            const emailError = document.getElementById('emailError');
-                                                            emailError.textContent = data.errors.email; 
-                                                            emailError.style.display = 'block';
-                                                        }
-                                        
-                                                        if (data.errors.username) {
-                                                            const usernameError = document.getElementById('usernameError');
-                                                            usernameError.textContent = data.errors.username;
-                                                            usernameError.style.display = 'block';
-                                                        }
-                                        
-                                                        if (data.errors.password) {
-                                                            const passwordError = document.getElementById('passwordError');
-                                                            passwordError.textContent = data.errors.password;
-                                                            passwordError.style.display = 'block';
-                                                        }
-                                                    } else {
-                                                        console.error(data.message); 
-                                                    }
-                                                } else {
-                                                    window.location.href = '/'; 
-                                                }
-                                            })
-                                            .catch(error => {
-                                                console.error('Error:', error);
-                                            });
-                                        });
-                                        </script> -->
                                 </div>
-            
                             </div>
                         </div>
-
                     </div><!-- end col -->
                 </div><!-- end row -->
-
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center p-4">
