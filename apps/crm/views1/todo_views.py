@@ -30,7 +30,6 @@ def todo(request):
                    'tasks_list': tasks_list,
                    })
 
-
 def todo_detail(request, task_id):
     title = 'Детальный'
     task = get_object_or_404(crm_models.Todo, id=task_id)
