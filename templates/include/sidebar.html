@@ -17,7 +17,7 @@
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{% url 'contacts_grid' %}" data-key="t-user-grid">Пользователи</a></li>
                 <li><a href="{% url 'contacts_list' %}" data-key="t-user-list">Список пользователей</a></li>
-                <li><a href="{% url 'contacts_profile' %}" data-key="t-user-profile">Профиль</a></li>
+                <li><a href="{% url 'contacts_profile' user.id %}" data-key="t-user-profile">Профиль</a></li>
             </ul>
         </li>
         <li class="menu-title" data-key="t-applications">Приложения</li>

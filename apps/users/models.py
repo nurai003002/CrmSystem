@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 class User(AbstractUser):
@@ -30,6 +31,10 @@ class User(AbstractUser):
         verbose_name = 'Адрес',
         blank=True, null=True
     )
+    bio = RichTextField(
+        verbose_name = 'Биография',
+        blank=True, null=True
+    )
 
     def __str__(self):
         return self.username 
@@ -37,3 +42,61 @@ class User(AbstractUser):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"  
+
+class UserExperience(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name="user_experience",
+        verbose_name="Выбрать пользователя"
+    )
+
+    title = models.CharField(
+        max_length = 255,
+        verbose_name = 'Название технологии',
+        blank=True, null=True
+    )
+
+    def __str__(self):
+        return self.title 
+    
+    class Meta:
+        verbose_name = 'Опыт пользователя'
+        verbose_name_plural = 'Опыт пользователя'
+
+class UserProject(models.Model):
+    STATUS_CHOICES = (
+        ('Open', 'Open'),
+        ('Complete', 'Complete'),
+        ('Waiting', 'Waiting'),
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name="user_project",
+        verbose_name="Выбрать пользователя"
+    )
+    title = models.CharField(
+        max_length = 255,
+        verbose_name = 'Название проекта',
+        blank=True, null=True
+    )   
+    date = models.DateField(
+        verbose_name = 'Дата',
+        blank=True, null=True
+    )
+    budget = models.IntegerField(
+        verbose_name = 'Бюджет',
+        blank=True, null=True
+    )   
+    status = models.CharField(
+        max_length = 255,
+        choices=STATUS_CHOICES,
+        verbose_name = 'Статус',
+        blank=True, null=True
+    )
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
