@@ -94,7 +94,7 @@
                             </div>
                             <!-- end row -->
                             <div class="row mt-2">
-                                {% for user in users %}
+                                {% for user in page_obj  %}
                                 <div class="col-xl-3 col-sm-6">
                                     <div class="card" style="width: 280px; height: 325px; overflow: hidden;">
                                         <div class="card-body">
@@ -103,9 +103,8 @@
                                                     <i class="bx bx-dots-horizontal text-muted font-size-20"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Remove</a>
+                                                    <a class="dropdown-item" href="{% url 'grid_detail' user.id %}">Edit</a>
+                                                    <a class="dropdown-item" href="{% url 'delete_item' user.id %}">Delete</a>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center">
@@ -129,7 +128,9 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
-                                            <p class="text-muted mt-3 mb-0">Curabitur non magna lobortis tempus gravida ornare libero sed diam sed fringilla est.</p>
+                                            {% if user.bio %}
+                                            <p class="text-muted mt-3 mb-0">{{user.bio|safe|truncatewords:10}}</p>
+                                            {% endif %}
                                             <div class="mt-3 pt-1">
                                                 {% if user.phone %}
                                                 <p class="mb-0"><i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>{{user.phone}}</p>
@@ -148,7 +149,7 @@
                                                 {% endif %}
                                             </div>
                                             <div class="d-flex gap-2 pt-4">
-                                                <button type="button" class="btn btn-subtle-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Профиль</button>
+                                                <a type="button" href="{% url 'contacts_profile' user.id %}" class="btn btn-subtle-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Профиль</a>
                                                 <button type="button" class="btn btn-primary btn-sm w-50"><i class="bx bx-message-square-dots me-1"></i> Написать</button>
                                             </div>
                                         </div>
@@ -160,44 +161,49 @@
                             <!-- end row -->
                             <div class="row g-0 align-items-center pb-3">
                                 <div class="col-sm-6">
-                                    <div>
-                                        <p class="mb-sm-0">Showing 1 to 10 of 57 entries</p>
-                                    </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="float-sm-end">
                                         <ul class="pagination mb-sm-0">
-                                            <li class="page-item disabled">
-                                                <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a href="#" class="page-link">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="#" class="page-link">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="#" class="page-link">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="#" class="page-link">4</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="#" class="page-link">5</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                            </li>
+                                            {% if page_obj.has_previous %}
+                                                <li class="page-item">
+                                                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item disabled">
+                                                    <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                                </li>
+                                            {% endif %}
+                            
+                                            {% for page_num in page_obj.paginator.page_range %}
+                                                {% if page_obj.number == page_num %}
+                                                    <li class="page-item active">
+                                                        <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item">
+                                                        <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                            
+                                            {% if page_obj.has_next %}
+                                                <li class="page-item">
+                                                    <a href="?page={{ page_obj.next_page_number }}" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item disabled">
+                                                    <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                                </li>
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <!-- end row -->
                     </div>
                     <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
-
                  <!--  successfully modal  -->
                  <div id="success-btn" class="modal fade" tabindex="-1" aria-labelledby="success-btnLabel" aria-hidden="true" data-bs-scroll="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -211,7 +217,6 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
                 <!--  Extra Large modal example -->
                 <div class="modal fade add-new" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-dialog-centered">
