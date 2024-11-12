@@ -100,3 +100,64 @@ class UserProject(models.Model):
     class Meta:
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
+
+class UserPost(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name="user_post",
+        verbose_name="Выбрать пользователя"
+    )
+    created_at = models.DateField(
+        auto_now_add = True,
+        verbose_name = 'Дата создания',
+        blank=True, null=True
+    )
+    like = models.PositiveIntegerField(
+        verbose_name = 'Лайки',
+        blank=True, null=True
+    )
+    article = models.TextField(
+        verbose_name = 'описание поста',
+        blank=True, null=True
+    )
+    image = models.ImageField(
+        upload_to='user_post',
+        verbose_name='Фотография'
+    )
+
+    def __str__(self):
+        return self.article
+    
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+
+class UserComment(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL,
+        related_name="user_comments",
+        verbose_name="Пользователь",
+        blank=True, null=True
+    )
+    profile = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name="profile_comments",
+        verbose_name="оставлен комментарий",
+        blank=True, null=True
+    ) 
+    text = models.TextField(
+        verbose_name = 'Комментарий',
+        blank=True, null=True
+    )
+    created_at = models.DateField(
+        auto_now_add = True,
+        verbose_name = 'Дата создания',
+        blank=True, null=True
+    )
+
+    def __str__(self):
+        return self.text
+    
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'комментарии'

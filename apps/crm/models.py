@@ -38,3 +38,54 @@ class Todo(models.Model):
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
+
+class Team(models.Model):
+    title = models.CharField(
+        max_length = 100,
+        verbose_name = 'Название команды'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add = True, 
+        verbose_name = 'Дата создания'
+    )
+
+    def __str__(self):
+        return self.title 
+    
+    class Meta:
+        verbose_name = 'Команда'
+        verbose_name_plural = 'Команды'
+
+class TeamPerson(models.Model):
+    team = models.ForeignKey(
+        Team, on_delete = models.SET_NULL,
+        related_name = 'team',
+        verbose_name = 'Выберите команду',
+        blank=True, null=True
+    )
+    
+    class Meta:
+        verbose_name = 'Член команды'
+        verbose_name_plural = 'Члены команды'
+
+class TeamPeople(models.Model):
+    team = models.ForeignKey(
+        TeamPerson, on_delete = models.CASCADE,
+        related_name = 'teams',
+        verbose_name = 'Выберите команду',
+    )
+    user = models.ForeignKey(
+        User, on_delete = models.CASCADE,
+        related_name = 'team_person',
+        verbose_name = 'Член команды'
+    )
+    status = models.CharField(
+        max_length = 255,
+        verbose_name = 'Статус'
+    )
+
+    def __str__(self):
+        return self.status
+
+    class Meta:
+        unique_together = ('team', 'user')

@@ -77,7 +77,7 @@
                                                                     <i class="bx bx-dots-vertical text-white font-size-20"></i>
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
-                                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                                    <a class="dropdown-item" href="{% url 'grid_detail' get_user.id %}">Edit</a>
                                                                     <a class="dropdown-item" href="#">Action</a>
                                                                     <a class="dropdown-item" href="#">Remove</a>
                                                                 </div>
@@ -87,11 +87,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- end user-profile-img -->
                                         <div class="p-4 pt-0">
-                                            
                                             <div class="mt-n5 position-relative text-center border-bottom pb-3">
+                                                {% if get_user.image %}
                                                 <img src="{{get_user.image.url}}" alt="" class="avatar-xl rounded-circle img-thumbnail">
+                                                {% else %}
+                                                <img src="{% static 'assets/images/icon/user_default.png' %}" alt="" class="avatar-xl rounded-circle img-thumbnail">
+                                                {% endif %}
                                                 <div class="mt-3">
                                                    <h5 class="mb-1">{{get_user.full_name}}</h5>
                                                     <p class="text-muted mb-0">
@@ -135,7 +137,6 @@
                                                             <td class="text-muted">{{get_user.phone}}</td>
                                                         </tr>
                                                         <!-- end tr -->
-
                                                         <tr>
                                                             <th class="fw-bold">Почта :</th>
                                                             <td class="text-muted">{{get_user.email}}</td>
@@ -160,7 +161,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="pt-2 text-center border-bottom pb-4">
                                                 <a href="" class="btn btn-primary waves-effect waves-light btn-sm">Отправить сообщение <i class="bx bx-send ms-1 align-middle"></i></a>
                                             </div>
@@ -219,7 +219,6 @@
                                                 <h5 class="font-size-16 mb-3">Краткое содержание
                                                 </h5>
                                                 <div class="mt-3">
-                                                    
                                                     <p class="text-muted">
                                                         {{get_user.bio|safe}}
                                                     </p>
@@ -329,85 +328,26 @@
                                     <div class="tab-pane" id="messages" role="tabpanel">
                                         <div class="card">
                                            <div class="card-body">
-
                                             <div class="py-2">
-
                                                 <div class="mx-n4 px-4" data-simplebar style="max-height: 360px;">
-                                                    <div class="border-bottom pb-3">
-                                                        <p class="float-sm-end text-muted font-size-13">12 July, 2021</p>
-                                                        <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.1</div>
-                                                        <p class="text-muted mb-4">Maecenas non vestibulum ante, nec efficitur orci. Duis eu ornare mi, quis bibendum quam. Etiam imperdiet aliquam purus sit amet rhoncus. Vestibulum pretium consectetur leo, in mattis ipsum sollicitudin eget. Pellentesque vel mi tortor.
-                                                            Nullam vitae maximus dui dolor sit amet, consectetur adipiscing elit.</p>
-                                                        <div class="d-flex align-items-start">
-                                                            <div class="flex-grow-1">
-                                                                <div class="d-flex">
-                                                                    <img src="{% static 'assets/images/users/avatar-2.jpg' %}" class="avatar-sm rounded-circle" alt="">
-                                                                    <div class="flex-1 ms-2 ps-1">
-                                                                        <h5 class="font-size-15 mb-0">Samuel</h5>
-                                                                        <p class="text-muted mb-0 mt-1">65 Followers, 86 Reviews</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-        
-                                                            <div class="flex-shrink-0">
-                                                                <ul class="list-inline product-review-link mb-0">
-                                                                    <li class="list-inline-item">
-                                                                        <a href="#"><i class="bx bx-like"></i></a>
-                                                                    </li>
-                                                                    <li class="list-inline-item">
-                                                                        <a href="#"><i class="bx bx-comment-dots"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-    
-                                                    <div class="border-bottom py-3">
-                                                        <p class="float-sm-end text-muted font-size-13">06 July, 2021</p>
-                                                        <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.0</div>
-                                                        <p class="text-muted mb-4">Cras ac condimentum velit. Quisque vitae elit auctor quam egestas congue. Duis eget lorem fringilla, ultrices justo consequat, gravida lorem. Maecenas orci enim, sodales id condimentum et, nisl arcu aliquam velit,
-                                                            sit amet vehicula turpis metus cursus dolor cursus eget dui.</p>
-                                                        <div class="d-flex align-items-start">
-                                                            <div class="flex-grow-1">
-                                                                <div class="d-flex">
-                                                                    <img src="{% static 'assets/images/users/avatar-3.jpg' %}" class="avatar-sm rounded-circle" alt="">
-                                                                    <div class="flex-1 ms-2 ps-1">
-                                                                        <h5 class="font-size-15 mb-0">Joseph</h5>
-                                                                        <p class="text-muted mb-0 mt-1">85 Followers, 102 Reviews</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-        
-                                                            <div class="flex-shrink-0">
-                                                                <ul class="list-inline product-review-link mb-0">
-                                                                    <li class="list-inline-item">
-                                                                        <a href="#"><i class="bx bx-like"></i></a>
-                                                                    </li>
-                                                                    <li class="list-inline-item">
-                                                                        <a href="#"><i class="bx bx-comment-dots"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-    
+                                                    {%  for get_user_comment in get_user.profile_comments.all %}
                                                     <div class="pt-3">
-                                                        <p class="float-sm-end text-muted font-size-13">26 June, 2021</p>
+                                                        <p class="float-sm-end text-muted font-size-13">{{get_user_comment.created_at}}</p>
                                                         <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.2</div>
-                                                        <p class="text-muted mb-4">Aliquam sit amet eros eleifend, tristique ante sit amet, eleifend arcu. Cras ut diam quam. Fusce quis diam eu augue semper ullamcorper vitae sed massa. Mauris lacinia, massa a feugiat mattis, leo massa porta eros, sed congue arcu sem nec orci.
-                                                            In ac consectetur augue. Nullam pulvinar risus non augue tincidunt blandit.</p>
+                                                        <p class="text-muted mb-4">{{get_user_comment.text}}</p>
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-grow-1">
                                                                 <div class="d-flex">
-                                                                    <img src="{% static 'assets/images/users/avatar-6.jpg' %}" class="avatar-sm rounded-circle" alt="">
+                                                                    {% if get_user_comment.user.image %}
+                                                                    <img src="{{get_user_comment.user.image.url}}" class="avatar-sm rounded-circle" alt="">
+                                                                    {% else %}
+                                                                    <img src="{% static 'assets/images/icon/user_default.png' %}" class="avatar-sm rounded-circle" alt="">
+                                                                    {% endif %} 
                                                                     <div class="flex-1 ms-2 ps-1">
-                                                                        <h5 class="font-size-15 mb-0">Paul</h5>
-                                                                        <p class="text-muted mb-0 mt-1">27 Followers, 66 Reviews</p>
+                                                                        <h5 class="font-size-15 mb-0">{{get_user_comment.user.username}}</h5>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
                                                             <div class="flex-shrink-0">
                                                                 <ul class="list-inline product-review-link mb-0">
                                                                     <li class="list-inline-item">
@@ -419,13 +359,13 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        
                                                     </div>
+                                                    {% endfor %}
                                                 </div>
-
                                                 <div class="mt-2">
                                                     <div class="border rounded mt-4">
-                                                        <form action="#">
+                                                        <form method="POST">
+                                                            {% csrf_token %}
                                                             <div class="px-2 py-1 bg-light">
                                                                 <div class="btn-group" role="group">
                                                                     <button type="button" class="btn btn-sm btn-link text-darbodyxt-decoration-none"><i class="bx bx-link"></i></button>
@@ -433,43 +373,37 @@
                                                                     <button type="button" class="btn btn-sm btn-link text-darbodyxt-decoration-none"><i class="bx bx-at"></i></button>
                                                                 </div>
                                                             </div>
-                                                            <textarea rows="3" class="form-control border-0 resize-none" placeholder="Your Message..."></textarea>
+                                                            <textarea rows="3" name="text" class="form-control border-0 resize-none" placeholder="Ваше сообщение..."></textarea>
+                                                            <div class="text-end mt-3">
+                                                                <button type="submit" name="comments" class="btn btn-success w-sm text-truncate ms-2"> Отправить <i class="bx bx-send ms-2 align-middle"></i></button>
+                                                            </div>
                                                         </form>
                                                     </div>
-
-                                                    <div class="text-end mt-3">
-                                                        <button type="button" class="btn btn-success w-sm text-truncate ms-2"> Send <i class="bx bx-send ms-2 align-middle"></i></button>
-                                                    </div>
                                                </div>
-
                                             </div>
-
                                            </div>
                                         </div>
                                     </div>
-
                                     <div class="tab-pane" id="post" role="tabpanel">
                                             <div class="card">
                                                 <div class="card-body"> 
                                                     <div class="mx-n3 px-3" data-simplebar style="max-height: 580px;">
+                                                        {% for get_user_post in get_user.user_post.all  %}
                                                         <div class="blog-post">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="me-3">
-                                                                    <img src="{% static 'assets/images/users/avatar-6.jpg' %}" alt="" class="avatar-md rounded-circle img-thumbnail">
+                                                                    <img src="{{get_user_post.user.image.url}}" alt="" class="avatar-md rounded-circle img-thumbnail">
                                                                 </div>
                                                                 <div class="flex-1">
-                                                                    <h5 class="font-size-16 text-truncate mb-1"><a href="#" class="text-body">Richard Johnson</a></h5>
-                                                                    <p class="font-size-13 text-muted mb-0">24 Mar, 2021</p>
+                                                                    <h5 class="font-size-16 text-truncate mb-1"><a href="#" class="text-body">{{get_user_post.user.full_name}}</a></h5>
+                                                                    <p class="font-size-13 text-muted mb-0">{{get_user_post.created_at}}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="pt-3">
-                                                                <p class="text-muted">Aenean ornare mauris velit. Donec imperdiet, massa sit amet porta maximus, massa justo faucibus nisi,
-                                                                     eget accumsan nunc ipsum nec lacus. Etiam dignissim turpis sit amet lectus porttitor eleifend. Maecenas ornare molestie metus eget feugiat.
-                                                                     Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-    
+                                                                <p class="text-muted">{{get_user_post.article}}</p>
                                                             </div>
                                                             <div class="position-relative mt-3">
-                                                                <img src="{% static 'assets/images/post-1.jpg' %}" alt="" class="img-thumbnail">
+                                                                <img src="{{get_user_post.image.url}}" alt="" class="img-thumbnail">
                                                             </div>
                                                             <div class="pt-3">
                                                                 <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
@@ -482,7 +416,7 @@
                                                                             </li>
                                                                             <li class="list-inline-item me-3">
                                                                                 <a href="javascript: void(0);" class="text-muted">
-                                                                                    <i class="bx bx-like align-middle text-muted me-1"></i> 12 Like
+                                                                                    <i class="bx bx-like align-middle text-muted me-1"></i> {{get_user_post.like}} Like
                                                                                 </a>
                                                                             </li>
                                                                         </ul>
@@ -503,74 +437,30 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="ms-2">
-                                                                                <button type="button" class="btn btn-outline-primary btn-sm waves-effect">Share <i class="bx bx-share-alt align-middle ms-1"></i></button>
+                                                                                <button type="button" class="btn btn-outline-primary btn-sm waves-effect" onclick="copyProfileLink()">Share <i class="bx bx-share-alt align-middle ms-1"></i></button>
                                                                             </div>
+                                                                            
+                                                                            <script>
+                                                                                function copyProfileLink() {
+                                                                                    // Получаем текущий URL или формируем ссылку на профиль
+                                                                                    const profileLink = window.location.href;
+                                                                                    
+                                                                                    // Копируем ссылку в буфер обмена
+                                                                                    navigator.clipboard.writeText(profileLink).then(() => {
+                                                                                        alert("Ссылка скопирована в буфер обмена!");
+                                                                                    }).catch(err => {
+                                                                                        console.error("Ошибка копирования ссылки: ", err);
+                                                                                    });
+                                                                                }
+                                                                            </script>
+                                                                            
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- end blog post --> 
-
-                                                        <div class="blog-post mt-3">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="me-3">
-                                                                    <img src="{% static 'assets/images/users/avatar-5.jpg' %}" alt="" class="avatar-md rounded-circle img-thumbnail">
-                                                                </div>
-                                                                <div class="flex-1">
-                                                                    <h5 class="font-size-16 text-truncate mb-1"><a href="#" class="text-body">James Delgado</a></h5>
-                                                                    <p class="font-size-13 text-muted mb-0">29 July, 2021</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="pt-3">
-                                                                <p class="text-muted">Aenean ornare mauris velit. Donec imperdiet, massa sit amet porta maximus, massa justo faucibus nisi,
-                                                                     eget accumsan nunc ipsum nec lacus. Etiam dignissim turpis sit amet lectus porttitor eleifend. Maecenas ornare molestie metus eget feugiat.
-                                                                     Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-    
-                                                            </div>
-                                                            <div class="position-relative mt-3">
-                                                                <img src="{% static 'assets/images/post-2.jpg' %}" alt="" class="img-thumbnail">
-                                                            </div>
-                                                            <div class="pt-3">
-                                                                <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
-                                                                    <div>
-                                                                        <ul class="list-inline mb-0">
-                                                                            <li class="list-inline-item me-3">
-                                                                                <a href="javascript: void(0);" class="text-muted">
-                                                                                    <i class="bx bx-purchase-tag-alt text-muted me-1"></i> Project
-                                                                                </a>
-                                                                            </li>
-                                                                            <li class="list-inline-item me-3">
-                                                                                <a href="javascript: void(0);" class="text-muted">
-                                                                                    <i class="bx bx-like align-middle text-muted me-1"></i> 12 Like
-                                                                                </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-    
-                                                                    <div>
-                                                                        <div class="d-flex align-items-center">
-                                                                            <div class="avatar-group">
-                                                                                <div class="avatar-group-item">
-                                                                                    <a href="javascript: void(0);" class="d-inline-block">
-                                                                                        <img src="{% static 'assets/images/users/avatar-4.jpg' %}" alt="" class="rounded-circle avatar-sm">
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div class="avatar-group-item">
-                                                                                    <a href="javascript: void(0);" class="d-inline-block">
-                                                                                        <img src="{% static 'assets/images/users/avatar-5.jpg' %}" alt="" class="rounded-circle avatar-sm">
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="ms-2">
-                                                                                <button type="button" class="btn btn-outline-primary btn-sm waves-effect">Share <i class="bx bx-share-alt align-middle ms-1"></i></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- end blog post --> 
+                                                        {% endfor %}
                                                     </div>
                                                         
                                                 </div>
@@ -590,7 +480,7 @@
                             <div class="col-xl-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title mb-0">Weekly Hours</h5>
+                                        <h5 class="card-title mb-0">Еженедельные часы</h5>
                                     </div>
                                     <div class="card-body">
                                         <div id="overview-chart" data-colors='["#1f58c7"]' class="apex-charts" dir="ltr"></div>
@@ -601,86 +491,43 @@
                             <div class="col-xl-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title mb-0">Team Members</h5>
+                                        <h5 class="card-title mb-0">Участники команды</h5>
                                     </div>
 
                                     <div class="card-body pt-1">
                                         <div class="table-responsive">
                                             <table class="table align-middle table-nowrap mb-0">
+                                                {% if team_members %}
                                                 <tbody>
+                                                    {% for team in team_members %}
                                                     <tr>
-                                                        <td style="width: 50px;"><img src="{% static 'assets/images/users/avatar-2.jpg' %}" class="rounded-circle avatar-sm" alt=""></td>
-                                                        <td><h5 class="font-size-14 m-0"><a href="javascript: void(0);" class="text-body">Daniel Canales</a></h5></td>
+                                                        <td>
+                                                            {% if team.user.image %}
+                                                            <img src="{{team.user.image.url}}" class="rounded-circle avatar-sm" alt="">
+                                                            {% else %}
+                                                            <img src="{% static 'assets/images/icon/user_default.png' %}" class="rounded-circle avatar-sm" alt="">
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <h5 class="font-size-14 m-0">
+                                                                <a href="javascript: void(0);" class="text-body">{{team.user.full_name}}</a>
+                                                            </h5>
+                                                        </td>
                                                         <td>
                                                             <div>
-                                                                <a href="javascript: void(0);" class="badge bg-primary-subtle  text-primary font-size-11">Frontend</a>
+                                                                <a href="javascript: void(0);" class="badge bg-primary-subtle text-primary font-size-11">{{team.user.stack}}</a>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <i class="mdi mdi-circle-medium font-size-18 text-success align-middle me-1"></i> Online
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td><img src="{% static 'assets/images/users/avatar-1.jpg' %}" class="rounded-circle avatar-sm" alt=""></td>
-                                                        <td><h5 class="font-size-14 m-0"><a href="javascript: void(0);" class="text-body">Jennifer Walker</a></h5></td>
-                                                        <td>
-                                                            <div>
-                                                                <a href="javascript: void(0);" class="badge bg-primary-subtle  text-primary font-size-11">UI / UX</a>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <i class="mdi mdi-circle-medium font-size-18 text-warning align-middle me-1"></i> Buzy
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="avatar-sm">
-                                                                <span class="avatar-title rounded-circle bg-primary text-white font-size-16">
-                                                                    C
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td><h5 class="font-size-14 m-0"><a href="javascript: void(0);" class="text-body">Carl Mackay</a></h5></td>
-                                                        <td>
-                                                            <div>
-                                                                <a href="javascript: void(0);" class="badge bg-primary-subtle  text-primary font-size-11">Backend</a>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <i class="mdi mdi-circle-medium font-size-18 text-success align-middle me-1"></i> Online
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img src="{% static 'assets/images/users/avatar-4.jpg' %}" class="rounded-circle avatar-sm" alt=""></td>
-                                                        <td><h5 class="font-size-14 m-0"><a href="javascript: void(0);" class="text-body">Janice Cole</a></h5></td>
-                                                        <td>
-                                                            <div>
-                                                                <a href="javascript: void(0);" class="badge bg-primary-subtle  text-primary font-size-11">Frontend</a>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <i class="mdi mdi-circle-medium font-size-18 text-success align-middle me-1"></i> Online
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="avatar-sm">
-                                                                <span class="avatar-title rounded-circle bg-primary text-white font-size-16">
-                                                                    T
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td><h5 class="font-size-14 m-0"><a href="javascript: void(0);" class="text-body">Tony Brafford</a></h5></td>
-                                                        <td>
-                                                            <div>
-                                                                <a href="javascript: void(0);" class="badge bg-primary-subtle  text-primary font-size-11">Backend</a>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <i class="mdi mdi-circle-medium font-size-18 text-secondary align-middle me-1"></i> Offline
-                                                        </td>
-                                                    </tr>
+                                                    {% endfor %}
                                                 </tbody>
+                                                {% else %}
+                                                    <tr><td colspan="4">Этот участник не в вашей команде.</td></tr>
+                                                {% endif %}
+
                                             </table>
                                         </div>
                                     </div>
@@ -782,12 +629,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
-
-                       
-
                     </div>
                     <!-- container-fluid -->
                 </div>
@@ -879,10 +721,7 @@
                             id="layout-position-scrollable" value="scrollable" onchange="document.body.setAttribute('data-layout-scrollable', 'true')">
                         <label class="form-check-label" for="layout-position-scrollable">Scrollable</label>
                     </div>
-
                     <h6 class="mt-4 mb-3">Topbar Type</h6>
-
-            
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="topbar-color"
                             id="topbar-color-light" value="light" onchange="document.body.setAttribute('data-topbar', 'light')">
@@ -893,14 +732,11 @@
                             id="topbar-color-dark" value="dark" onchange="document.body.setAttribute('data-topbar', 'dark')">
                         <label class="form-check-label" for="topbar-color-dark">Dark</label>
                     </div>
-
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="topbar-color"
                             id="topbar-type-hidden" value="hidden" onchange="document.body.setAttribute('data-topbar', 'hidden')">
                         <label class="form-check-label" for="topbar-type-hidden">Hidden</label>
                     </div>
-            
-
                     <div id="sidebar-setting">
                     <h6 class="mt-4 mb-3 sidebar-setting">Sidebar Size</h6>
 
@@ -938,9 +774,7 @@
                         <label class="form-check-label" for="sidebar-color-brand">Brand</label>
                     </div>
                 </div>
-
                     <h6 class="mt-4 mb-3">Direction</h6>
-
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="layout-direction"
                             id="layout-direction-ltr" value="ltr">
@@ -951,9 +785,7 @@
                             id="layout-direction-rtl" value="rtl">
                         <label class="form-check-label" for="layout-direction-rtl">RTL</label>
                     </div>
-
                 </div>
-
             </div> <!-- end slimscroll-menu-->
         </div>
         <!-- /Right-bar -->

@@ -67,16 +67,14 @@
                                     <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
                                         <div>
                                             <ul class="nav nav-pills">
+                                                
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="contacts-list.html" data-bs-toggle="tooltip" data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" href="contacts-grid.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Grid"><i class="bx bx-grid-alt"></i></a>
+                                                    <a class="nav-link active" href="{% url 'contacts_grid'%}" data-bs-toggle="tooltip" data-bs-placement="top" title="Grid"><i class="bx bx-grid-alt"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div>
-                                            <a href="#" data-bs-toggle="modal" data-bs-target=".add-new" class="btn btn-primary"><i class="bx bx-plus me-1"></i> Add New</a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target=".add-new" class="btn btn-primary"><i class="bx bx-plus me-1"></i> Добавить</a>
                                         </div>
                                         <div class="dropdown">
                                             <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -237,9 +235,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Position</label>
+                                                <label class="form-label">Позиция</label>
                                                 <select name="stack" class="form-select">
-                                                    <option selected>Select Position</option>
+                                                    <option selected>Выбрать</option>
                                                     {% for stack_value, stack_name in stack_choices %}
                                                     <option value="{{stack_value}}">{{stack_name}}</option>
                                                     {% endfor %}
