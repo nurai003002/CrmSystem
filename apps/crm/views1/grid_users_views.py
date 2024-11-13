@@ -62,7 +62,6 @@ def delete_item(request, user_id):
     item.delete()
     return redirect('contacts_grid') 
 
-
 @login_required
 def contacts_profile(request, get_user_id):
     title = "Профиль"
@@ -92,14 +91,30 @@ def contacts_profile(request, get_user_id):
 
 def contact_list(request):
     title = "Список пользователей"
+    user = request.user 
     contact_users = User.objects.all()
-
-    paginator = Paginator(contact_users, 20)
-
-    page_number = request.GET.get('page')
+    contact_users_count = contact_users.count()
+    paginator = Paginator(contact_users, 10)  
+    page_number = request.GET.get('page')  
     page_obj = paginator.get_page(page_number)
+
+    if request.method in 'POST':
+        if 'add_contact1' in request.POST:
+            data ={
+                'username': request.POST.get('username'),
+                'stack': request.POST.get('stack'),
+                'email': request.POST.get('email'),
+                'phone': request.POST.get('phone'),
+            }
+
+            contact_users = User(**data)
+            contact_users.save()
+            return redirect('contacts_list')
 
     return render(request, 'applications/contacts/list.html', {
         'title': title,
         'contact_users': page_obj,  
+        'contact_users_count': contact_users_count,
+        'stack_choices': User.STACK,
+        'user':user,
     })

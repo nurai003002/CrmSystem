@@ -2,7 +2,6 @@
 <div id="sidebar-menu">
     <ul class="metismenu list-unstyled" id="side-menu">
         <li class="menu-title" data-key="t-menu">Панель управления</li>
-
        <li>
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{% url 'index' %}" data-key="t-ecommerce">Электронная коммерция</a></li>
@@ -16,8 +15,9 @@
             </a>
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{% url 'contacts_grid' %}" data-key="t-user-grid">Пользователи</a></li>
-                <li><a href="{% url 'contacts_list' %}" data-key="t-user-list">Список пользователей</a></li>
-                <li><a href="{% url 'contacts_profile' user.id %}" data-key="t-user-profile">Профиль</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'contacts_profile' request.user.id %}" data-key="t-user-profile">Профиль</a></li>
+                {% endif %}
             </ul>
         </li>
         <li class="menu-title" data-key="t-applications">Приложения</li>
