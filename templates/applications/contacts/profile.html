@@ -95,7 +95,11 @@
                                                 <img src="{% static 'assets/images/icon/user_default.png' %}" alt="" class="avatar-xl rounded-circle img-thumbnail">
                                                 {% endif %}
                                                 <div class="mt-3">
+                                                    {% if get_user.full_name %}
                                                    <h5 class="mb-1">{{get_user.full_name}}</h5>
+                                                   {% else %}
+                                                   <h5 class="mb-1">ФИО не указан</h5>
+                                                   {% endif %}
                                                     <p class="text-muted mb-0">
                                                         <i class="bx bxs-star text-warning font-size-14"></i>
                                                         <i class="bx bxs-star text-warning font-size-14"></i>
@@ -109,20 +113,29 @@
                                                 <table class="table align-middle table-sm table-nowrap table-borderless table-centered mb-0">
                                                     <tbody>
                                                         <tr>
-                                                            <th class="fw-bold">
-                                                                Стек :</th>
+                                                            <th class="fw-bold">Стек :</th>
+                                                            {% if get_user.stack %}
                                                             <td class="text-muted">{{get_user.stack}}</td>
+                                                            {% else %}
+                                                            <td class="text-muted">Стек не указан</td>
+                                                            {% endif %}
                                                         </tr>
                                                         <!-- end tr -->
                                                         <tr>
-                                                            <th class="fw-bold">
-                                                                Имя пользователя :</th>
+                                                            <th class="fw-bold">Имя пользователя :</th>
+                                                            {% if get_user.username %}
                                                             <td class="text-muted">{{get_user.username}}</td>
+                                                            {% else %}
+                                                            <td class="text-muted">Имя пользователя не указан</td>
+                                                            {% endif %}
                                                         </tr>
                                                         <tr>
-                                                            <th class="fw-bold">
-                                                                Адрес :</th>
+                                                            <th class="fw-bold">Адрес :</th>
+                                                            {% if get_user.address %}
                                                             <td class="text-muted">{{get_user.address}}</td>
+                                                            {% else %}
+                                                            <td class="text-muted">Адрес не указан</td>
+                                                            {% endif %}
                                                         </tr>
                                                         <!-- end tr -->
                                                         <!-- end tr -->
@@ -132,9 +145,12 @@
                                                         </tr>
                                                         <!-- end tr -->
                                                         <tr>
-                                                            <th class="fw-bold">Номер телефона
-                                                                 :</th>
+                                                            <th class="fw-bold">Номер телефона:</th>
+                                                            {% if get_user.phone %}
                                                             <td class="text-muted">{{get_user.phone}}</td>
+                                                            {% else %}
+                                                            <td class="text-muted">Номер телефона не указан</td>
+                                                            {% endif %}
                                                         </tr>
                                                         <!-- end tr -->
                                                         <tr>
@@ -162,7 +178,7 @@
                                                 </div>
                                             </div>
                                             <div class="pt-2 text-center border-bottom pb-4">
-                                                <a href="" class="btn btn-primary waves-effect waves-light btn-sm">Отправить сообщение <i class="bx bx-send ms-1 align-middle"></i></a>
+                                                <a href="{% url 'grid_detail' get_user.id %}" class="btn btn-primary waves-effect waves-light btn-sm">Редактировать профиль<i class="bx bx-send ms-1 align-middle"></i></a>
                                             </div>
 
                                             <div class="mt-3 pt-1 text-center">
@@ -392,7 +408,11 @@
                                                         <div class="blog-post">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="me-3">
+                                                                    {% if get_user_post.user.image %}
                                                                     <img src="{{get_user_post.user.image.url}}" alt="" class="avatar-md rounded-circle img-thumbnail">
+                                                                    {% else %}
+                                                                    <img src="{% static 'assets/images/icon/user_default.png' %}" alt="" class="avatar-md rounded-circle img-thumbnail">
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="flex-1">
                                                                     <h5 class="font-size-16 text-truncate mb-1"><a href="#" class="text-body">{{get_user_post.user.full_name}}</a></h5>
