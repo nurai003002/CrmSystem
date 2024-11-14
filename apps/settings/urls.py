@@ -7,7 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('sale/', views.sales, name='sales'),
     
-    
     path('manager/', views.manager, name='manager'),
     path('chat/', views.chat, name='chat'),
     
@@ -26,13 +25,6 @@ urlpatterns = [
     
     # maps
     path('components/maps-google/', views.maps_google, name='maps_google'),
-
-    # pages/auth
-    path('auth/recoverpw/', views.recoverpw, name='recoverpw'),
-    path('auth/lock-screen/', views.lock_screen, name='lock_screen'),
-    path('auth/confirm_mail/', views.confirm_mail, name='confirm_mail'),
-    path('auth/verification/', views.verification, name='verification'),
-    path('auth/two-verification/', views.two_verification, name='two_verification'),
 
     # pages/utility
     path('utility/timeline/', views.timeline, name='timeline'),
