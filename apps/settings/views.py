@@ -49,21 +49,6 @@ def maps_google(request):
     return render(request, 'components/maps/google.html', locals())
 
 
-# pages/auth
-def recoverpw(request):
-    return render(request, 'pages/auth/recoverpw.html', locals())
-
-def lock_screen(request):
-    return render(request, 'pages/auth/lock-screen.html', locals())
-
-def confirm_mail(request):
-    return render(request, 'pages/auth/confirm-mail.html', locals())
-
-def verification(request):
-    return render(request, 'pages/auth/verification.html', locals())
-
-def two_verification(request):
-    return render(request, 'pages/auth/two-verification.html', locals())
 
 # pages/utility
 def timeline(request):
