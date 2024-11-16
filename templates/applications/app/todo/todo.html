@@ -114,7 +114,11 @@
                                                             <div class="avatar-group">
                                                                 <div class="avatar-group-item">
                                                                     <a href="javascript: void(0);" class="d-inline-block">
+                                                                        {% if taks.user.image %}
                                                                         <img src="{{task.user.image.url}}" alt="" class="rounded-circle avatar-sm">
+                                                                        {% else %}
+                                                                        <img style="height: auto;" src="{% static 'assets/images/icon/user_default.png' %}" alt="" class="rounded-circle avatar-sm">
+                                                                        {% endif %}
                                                                     </a>
                                                                     <p>{{task.user.username}}</p>
                                                                 </div>
@@ -252,7 +256,7 @@
                                         <select class="form-select" name="users">
                                             {% for user in users %}
                                             <option value="{{ user.id }}">
-                                                {% if user.image.url %}
+                                                {% if user.image %}
                                                 <img src="{{ user.image.url }}" alt="{{ user.username }}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
                                                 {% else %}
                                                 <img src="{% static 'assets/images/icon/default.jpg' %}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
@@ -261,7 +265,6 @@
                                             </option>
                                             {% endfor %}
                                         </select>
-                                    </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -431,9 +434,7 @@
                         <label class="form-check-label" for="sidebar-color-brand">Brand</label>
                     </div>
                 </div>
-
                     <h6 class="mt-4 mb-3">Direction</h6>
-
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="layout-direction"
                             id="layout-direction-ltr" value="ltr">
@@ -444,16 +445,12 @@
                             id="layout-direction-rtl" value="rtl">
                         <label class="form-check-label" for="layout-direction-rtl">RTL</label>
                     </div>
-
                 </div>
-
             </div> <!-- end slimscroll-menu-->
         </div>
         <!-- /Right-bar -->
-
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
-
         <!-- chat offcanvas -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivity" aria-labelledby="offcanvasActivityLabel">
             <div class="offcanvas-header border-bottom">

@@ -32,11 +32,52 @@
                                         <div class="mt-4">
                                             <a href="{% url 'two_verification' %}" class="btn btn-primary w-100">Подтвердить почту</a>
                                         </div>
-                                    </div>
+                                    </div> 
 
                                     <div class="mt-4 text-center">
-                                        <p class="mb-0">Не получили код? <a href="#" class="text-primary fw-semibold"> Переотправить </a> </p>
+                                        <p class="mb-0">
+                                            Не получили код? 
+                                            <a href="#" id="resend-code-link" class="text-primary fw-semibold">Переотправить</a>
+                                        </p>
+                                        <div id="resend-message" class="text-success mt-2" style="display: none;"></div>
                                     </div>
+                                    <script>
+                                    document.getElementById('resend-code-link').addEventListener('click', function (event) {
+                                        event.preventDefault(); 
+                                    
+                                        const messageElement = document.getElementById('resend-message');
+                                    
+                                        fetch("{% url 'recoverpw' %}", {
+                                            method: 'POST',
+                                            headers: {
+                                                'X-CSRFToken': '{{ csrf_token }}',
+                                                'Content-Type': 'application/x-www-form-urlencoded'
+                                            },
+                                            body: new URLSearchParams({
+                                                'reset_password': true,
+                                                'email': '{{ request.session.reset_email }}' 
+                                            })
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                messageElement.innerText = 'Код был отправлен повторно.';
+                                                messageElement.style.display = 'block';
+                                                messageElement.style.color = 'green';
+                                            } else {
+                                                messageElement.innerText = data.error || 'Ошибка при переотправке кода.';
+                                                messageElement.style.display = 'block';
+                                                messageElement.style.color = 'red';
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Ошибка:', error);
+                                            messageElement.innerText = 'Произошла ошибка. Попробуйте позже.';
+                                            messageElement.style.display = 'block';
+                                            messageElement.style.color = 'red';
+                                        });
+                                    });
+                                    </script>
                                 </div>
                             </div>
                         </div>

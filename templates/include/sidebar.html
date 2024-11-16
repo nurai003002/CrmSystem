@@ -8,19 +8,6 @@
                 <li><a href="{% url 'sales' %}" data-key="t-sales">Продажи</a></li>
             </ul>
         </li>
-        <li>
-            <a href="javascript: void(0);">
-                <i class="bx bx-user-pin icon nav-icon"></i>
-                <span class="menu-item" data-key="t-authentication">Авторизация</span>
-                <span class="badge rounded-pill bg-info">8</span>
-            </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="{% url 'user_login' %}" data-key="t-login">Войти</a></li>
-                <li><a href="{% url 'user_register' %}" data-key="t-register">Регистрация</a></li>
-                <!-- надо сделать так чтобы если он зарегистрирован то эта кнопка выходила если нет то тоже не выходила -->
-                <li><a href="{% url 'user_logout' %}" data-key="t-logout">Выйти</a></li>
-            </ul>   
-        </li>
         <li class="menu-title" data-key="t-applications">Приложения</li>
         <li>
             <a href="{% url 'calendar' %}">
@@ -62,6 +49,21 @@
                 <li><a href="{% url 'add_product' %}" data-key="t-add-product">Добавить товар</a></li>
                 <li><a href="{% url 'add_category' %}" data-key="t-add-product">Добавить категорий</a></li>
             </ul>
+        </li>
+        <li>
+            <a href="javascript: void(0);">
+                <i class="bx bx-user-pin icon nav-icon"></i>
+                <span class="menu-item" data-key="t-authentication">Авторизация</span>
+                <span class="badge rounded-pill bg-info">8</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'user_logout' %}" data-key="t-logout">Выйти</a></li>
+                {% else %}
+                <li><a href="{% url 'user_login' %}" data-key="t-login">Войти</a></li>
+                <li><a href="{% url 'user_register' %}" data-key="t-register">Регистрация</a></li>
+                {% endif %}
+            </ul>   
         </li>
         <li>
             <a href="javascript: void(0);" class="has-arrow">
