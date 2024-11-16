@@ -212,8 +212,9 @@ JAZZMIN_UI_TWEAKS = {
 }
 AUTH_USER_MODEL = 'users.User'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True  # Использовать TLS для защищенного соединения
 EMAIL_HOST = 'smtp.gmail.com'  # Адрес SMTP сервера Gmail
 EMAIL_PORT = 587  # Порт для подключения к SMTP серверу Gmail
-EMAIL_HOST_USER = 'nuraj9663@gmail.com'
-EMAIL_HOST_PASSWORD = 'ваш пароль'
+EMAIL_HOST_USER = 'bullabratan@gmail.com'
+EMAIL_HOST_PASSWORD = 'spoc twnz dgex hjxr'
