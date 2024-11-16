@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, logout, login
-import json
+import json, random
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 from apps.users.models import User
 
@@ -31,7 +32,6 @@ def register(request):
             
             if errors:
                 return JsonResponse({'success': False, 'errors': errors})
-                
             
             user = User(username=username, email=email, first_name=full_name)
             user.is_staff = True 
@@ -44,16 +44,22 @@ def register(request):
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':
-        if 'login_button' in request.POST:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Некорректные данные'})
 
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('index')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': True})
+        else:
+            if not User.objects.filter(username=username).exists():
+                return JsonResponse({'success': False, 'error': 'Неверное имя пользователя', 'field': 'username'})
             else:
-                return JsonResponse({'success': False, 'error': 'Неправильное имя пользователя или пароль'})
+                return JsonResponse({'success': False, 'error': 'Неверный пароль', 'field': 'password'})
     
     
     return render(request, 'pages/users/login.html', locals())
@@ -64,6 +70,31 @@ def logout_view(request):
 
 # pages/auth
 def recoverpw(request):
+    if request.method == 'POST':
+        if 'reset_password' in request.POST:
+            email = request.POST.get('email')
+            
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Пользователь с таким email не найден.'})
+
+            reset_code = random.randint(1000, 9999)
+
+            request.session['reset_email'] = email
+            request.session['reset_code'] = reset_code
+
+            send_mail(
+                'Сброс пароля',
+                f'Ваш код для сброса пароля: {reset_code}',
+                'noreply@yourdomain.com',
+                [email],
+                fail_silently=False,
+            )
+            
+            return JsonResponse({'success': True, 'message': 'Код отправлен на вашу почту.'})
+        
+            
     return render(request, 'pages/auth/recoverpw.html', locals())
 
 def lock_screen(request):
@@ -75,5 +106,50 @@ def confirm_mail(request):
 def verification(request):
     return render(request, 'pages/auth/verification.html', locals())
 
+
 def two_verification(request):
-    return render(request, 'pages/auth/two-verification.html', locals())
+    if request.method == 'POST':
+        entered_code = ''.join([
+            request.POST.get('digit1'),
+            request.POST.get('digit2'),
+            request.POST.get('digit3'),
+            request.POST.get('digit4')
+        ])
+        stored_code = request.session.get('reset_code')
+        email = request.session.get('reset_email')
+
+        if str(entered_code) == str(stored_code):
+            return redirect('new_password')
+        else:
+            return render(request, 'pages/auth/two-verification.html', {
+                'error': 'Неверный код. Попробуйте снова.'
+            })
+
+    return render(request, 'pages/auth/two-verification.html')
+
+
+def new_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        email = request.session.get('reset_email')  
+        
+        if new_password != confirm_password:
+            return render(request, 'pages/auth/new_password.html', {
+                'error': 'Пароли не совпадают.'
+            })
+
+        try:
+            user = User.objects.get(email=email)
+            user.set_password(new_password)  
+            user.save()
+
+            login(request, user)
+
+            return redirect('index')
+        except User.DoesNotExist:
+            return render(request, 'pages/auth/new_password.html', {
+                'error': 'Пользователь не найден.'
+            })
+
+    return render(request, 'pages/auth/new_password.html')
