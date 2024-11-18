@@ -12,7 +12,6 @@
                         <img src="{% static 'assets/images/logo-dark-sm.png' %}" alt="" height="26">
                     </span>
                 </a>
-
                 <a href="index.html" class="logo logo-light">
                     <span class="logo-lg">
                         <img src="{% static 'assets/images/logo-light.png' %}" alt="" height="30">
@@ -22,55 +21,43 @@
                     </span>
                 </a>
             </div>
-
             <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn">
                 <i class="bx bx-menu align-middle"></i>
             </button>
-
             <!-- start page title -->
             <div class="page-title-box align-self-center d-none d-md-block">
-                <h4 class="page-title mb-0">Hi, Welcome Back!</h4>
+                <h4 class="page-title mb-0">Добро пожаловать!</h4>
             </div>
-            
             <!-- end page title -->
-
         </div>
-
         <div class="d-flex">
-
             <div class="dropdown d-inline-block language-switch ms-2">
                 <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="header-lang-img" src="{% static 'assets/images/flags/us.jpg' %}" alt="Header Language" height="18">
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-        
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="eng">
                         <img src="{% static 'assets/images/flags/us.jpg' %}" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
                     </a>
-
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp">
                         <img src="{% static 'assets/images/flags/spain.jpg' %}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
                     </a>
-
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr">
                         <img src="{% static 'assets/images/flags/germany.jpg' %}" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
                     </a>
-
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it">
                         <img src="{% static 'assets/images/flags/italy.jpg' %}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
                     </a>
-
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru">
                         <img src="{% static 'assets/images/flags/russia.jpg' %}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                     </a>
                 </div>
             </div>
-
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,7 +74,6 @@
                     </form>
                 </div>
             </div>
-
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown-v"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -181,24 +167,58 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown-v"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{% static 'assets/images/users/avatar-3.jpg' %}"
+                    {% if user.is_authenticated %}
+                    {% if user.image %}
+                    <img class="rounded-circle header-profile-user" src="{{user.image.url}}"
                     alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-2 fw-medium font-size-15">Martin Gurley</span>
+                    {% else %}
+                    <img style="height: auto;" class="rounded-circle header-profile-user" src="{% static 'assets/images/icon/user_default.png' %}"
+                    alt="Header Avatar">
+                    {% endif %}
+                    <span class="d-none d-xl-inline-block ms-2 fw-medium font-size-15">{{ user.username }}</span>
+                    {% else %}
+                    <h6 class="mb-0">Guest</h6>
+                    {% endif %}
                 </button>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
                     <div class="p-3 border-bottom">
-                        <h6 class="mb-0">Martin Gurley</h6>
-                        <p class="mb-0 font-size-11 text-muted">martin.gurley@email.com</p>
+                        {% if user.is_authenticated %}
+                        <h6 class="mb-0">{{ user.username }}</h6>
+                            <p class="mb-0 font-size-11 text-muted">{{ user.email }}</p>
+                        {% else %}
+                            <h6 class="mb-0">Guest</h6>
+                        {% endif %}
                     </div>
-                    <a class="dropdown-item" href="contacts-profile.html"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Profile</span></a>
-                    <a class="dropdown-item" href="apps-chat.html"><i class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Messages</span></a>
-                    <a class="dropdown-item" href="pages-faqs.html"><i class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Help</span></a>
-                    <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-2"></i> <span class="align-middle me-3">Settings</span><span class="badge bg-success-subtle text-success  ms-auto">New</span></a>
-                    <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Lock screen</span></a>
+                    <a class="dropdown-item" href="{% url 'contacts_profile' user.id %}"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Профиль</span></a>
+                    <a class="dropdown-item" href="apps-chat.html"><i class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Написать</span></a>
+                    <a class="dropdown-item" href="pages-faqs.html"><i class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Поддержка</span></a>
+                    <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-2"></i> <span class="align-middle me-3">Настройки</span><span class="badge bg-success-subtle text-success  ms-auto">New</span></a>
+                    <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Экран блокировки</span></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="auth-logout.html"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Logout</span></a>
+                    <a class="dropdown-item" href="{% url 'user_logout' %}"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Выйти</span></a>
                 </div>
             </div>
         </div>
     </div>
 </header>
+<div class="vertical-menu">
+    <!-- LOGO -->
+    <div class="navbar-brand-box">
+        <a href="{% url 'index' %}" class="logo logo-dark">
+            <span class="logo-lg">
+                <img src="{{setting.logo.url}}" alt="" height="28">
+            </span>
+        </a>
+    </div>
+
+    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn">
+        <i class="bx bx-menu align-middle"></i>
+    </button>
+
+    <div data-simplebar class="sidebar-menu-scroll">
+
+        <!--- Sidemenu -->
+        {% include 'include/sidebar.html' %}
+        <!-- Sidebar -->
+    </div>
+</div>

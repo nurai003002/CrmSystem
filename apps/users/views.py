@@ -106,7 +106,6 @@ def confirm_mail(request):
 def verification(request):
     return render(request, 'pages/auth/verification.html', locals())
 
-
 def two_verification(request):
     if request.method == 'POST':
         entered_code = ''.join([

@@ -74,16 +74,31 @@ class Services(models.Model):
         verbose_name = 'Сервис'
         verbose_name_plural = 'Сервисы'
         
+        
 class Calendar(models.Model):
-    event_name = models.CharField(
+    STATUS_CHOICES = [
+        ('Срочный', 'Срочный'),
+        ('Темный', 'Темный'),
+        ('Приватный', 'Приватный'),
+        ('Встречи', 'Встречи'),
+        ('По желанию', 'По желанию'),
+        ('Успешно', 'Успешно'),
+    ]
+    event = models.CharField(
         max_length = 500,
-        verbose_name = 'Название событии'
+        verbose_name = 'Событие'
+    )
+    event_status = models.CharField(
+        max_length = 255,
+        choices = STATUS_CHOICES,
+        verbose_name = 'Статус события'
     )
 
     def __str__(self):
-        return self.event_name
+        return self.event
     
     class Meta:
-        verbose_name = 'Календарь'
-        verbose_name_plural = 'Календарь'
+        verbose_name = 'Планы (Календарь)'
+        verbose_name_plural = 'Планы (Календарь)'
         
+
