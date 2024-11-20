@@ -89,3 +89,4 @@ class TeamPeople(models.Model):
 
     class Meta:
         unique_together = ('team', 'user')
+

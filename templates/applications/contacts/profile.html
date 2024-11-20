@@ -92,7 +92,7 @@
                                                 {% if get_user.image %}
                                                 <img src="{{get_user.image.url}}" alt="" class="avatar-xl rounded-circle img-thumbnail">
                                                 {% else %}
-                                                <img src="{% static 'assets/images/icon/user_default.png' %}" alt="" class="avatar-xl rounded-circle img-thumbnail">
+                                                <img style="height: auto; width: 100px;"  src="{% static 'assets/images/icon/user_default.png' %}" alt="" class="avatar-xl rounded-circle img-thumbnail">
                                                 {% endif %}
                                                 <div class="mt-3">
                                                     {% if get_user.full_name %}

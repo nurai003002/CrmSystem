@@ -19,4 +19,6 @@ urlpatterns = [
 
     path('contacts/profile/<int:get_user_id>/', grid_users_views.contacts_profile, name='contacts_profile'),
     path('contacts/list/', grid_users_views.contact_list, name='contacts_list'),
+
+ 
 ]
