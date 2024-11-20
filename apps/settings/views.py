@@ -13,8 +13,6 @@ def sales(request):
 def manager(request):
     return render(request, 'applications/app/apps-file-manager.html', locals())
 
-def chat(request):
-    return render(request, 'applications/app/apps-chat.html', locals())
 
 # invoices
 def invoice_list(request):

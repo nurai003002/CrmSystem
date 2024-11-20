@@ -189,7 +189,7 @@
                             <h6 class="mb-0">Guest</h6>
                         {% endif %}
                     </div>
-                    <a class="dropdown-item" href="{% url 'contacts_profile' user.id %}"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Профиль</span></a>
+                    <a class="dropdown-item" href="{% url 'contacts_profile' get_user_id=user.id %}"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Профиль</span></a>
                     <a class="dropdown-item" href="apps-chat.html"><i class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Написать</span></a>
                     <a class="dropdown-item" href="pages-faqs.html"><i class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Поддержка</span></a>
                     <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-2"></i> <span class="align-middle me-3">Настройки</span><span class="badge bg-success-subtle text-success  ms-auto">New</span></a>

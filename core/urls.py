@@ -29,6 +29,7 @@ urlpatterns = [
     path('secondary/', include("apps.secondary.urls")),
     path('products/', include("apps.products.urls")),
     path('cart/', include("apps.cart.urls")),
+    path('chat/', include("apps.chat.urls")),
     path('cms/', include("apps.cms.urls")),
     path('crm/', include("apps.crm.urls")),
 

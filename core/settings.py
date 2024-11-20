@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'mptt',
+    'channels',
     'jazzmin',
     'ckeditor',
     'django.contrib.admin',
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.billings',
     'apps.settings',
     'apps.cart',
+    'apps.chat',
     'apps.crm',
     'apps.cms',
 ]
@@ -84,6 +85,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+ASGI_APPLICATION = 'core.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],  # Убедись, что Redis запущен на этом порту
+        },
+    },
+}
 
 
 # Database

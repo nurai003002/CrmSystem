@@ -8,7 +8,6 @@ urlpatterns = [
     path('sale/', views.sales, name='sales'),
     
     path('manager/', views.manager, name='manager'),
-    path('chat/', views.chat, name='chat'),
     
     # invoices
     path('invoices/list/', views.invoice_list, name='invoice_list'),
