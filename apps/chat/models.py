@@ -47,6 +47,9 @@ class ChatMessage(models.Model):
         auto_now_add=True,
         blank=True, null=True
     )
+    is_read = models.BooleanField(
+        default=False
+    )
     
     def __str__(self):
         return f"From {self.sender} to {self.receiver}: {self.content[:20]}"
