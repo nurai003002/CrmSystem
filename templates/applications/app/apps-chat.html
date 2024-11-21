@@ -97,17 +97,16 @@
                                                                 <a href="?user_id={{ user.id }}">
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="flex-shrink-0 user-img online align-self-center me-3">
-                                                                            <!-- Здесь выводим аватарку пользователя -->
-                                                                            <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" class="rounded-circle avatar-sm" alt="">
+                                                                            <img style="height: 30px;" src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" class="rounded-circle avatar-sm" alt="">
                                                                             <span class="user-status"></span>
                                                                         </div>
                                                                         <div class="flex-grow-1 overflow-hidden">
-                                                                            <!-- Имя пользователя -->
                                                                             <h5 class="text-truncate font-size-14 mb-0">{{ user.username }}</h5>
                                                                         </div>
                                                                         <div class="flex-shrink-0">
-                                                                            <!-- Можно добавить какое-нибудь уведомление, если есть новые сообщения -->
-                                                                            <span class="badge bg-danger rounded-pill">1</span>
+                                                                            {% if user.unread_messages > 0 %}
+                                                                                <span class="badge bg-danger rounded-pill">{{ user.unread_messages }}</span>
+                                                                            {% endif %}
                                                                         </div>
                                                                     </div>
                                                                 </a>
@@ -292,10 +291,11 @@
                                     <!-- Шапка -->
                                     <div class="p-3 px-lg-4 border-bottom">
                                         <div class="row">
+                                            {% if other_user %}
                                             <div class="col-xl-4 col-7">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-shrink-0 avatar me-3 d-sm-block d-none">
-                                                        <img src="{% if other_user.profile.image %}{{ other_user.profile.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" alt="" class="img-fluid d-block rounded-circle">
+                                                        <img style="height: 40px; width: 40px;" src="{% if other_user.image %}{{ other_user.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" alt="" class="img-fluid d-block rounded-circle">
                                                     </div>
                                                     <div class="flex-grow-1">
                                                         <h5 class="font-size-16 mb-1 text-truncate"><a href="#" class="text-reset">{{ other_user.username }}</a></h5>
@@ -303,6 +303,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% else %}
+                                            <div class="col-xl-4 col-7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 avatar me-3 d-sm-block d-none">
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <h5 class="font-size-16 mb-1 text-truncate"><a href="#" class="text-reset"></a></h5>
+                                                        <p class="text-muted text-truncate mb-0"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
                                             <div class="col-xl-8 col-5">
                                                 <ul class="list-inline user-chat-nav text-end mb-0">
                                                     <li class="list-inline-item">
@@ -335,30 +347,43 @@
                                             </div>
                                         </div>
                                     </div>
-                            
-                                    <!-- Сообщения -->
-                                    <div class="chat-conversation p-3" data-simplebar>
+                                    <div class="chat-conversation p-3" data-simplebar id="chat-messages">
                                         <ul class="list-unstyled mb-0">
                                             {% for message in messages %}
                                                 <li class="mb-4 {% if message.sender == request.user %}text-end{% else %}text-start{% endif %}">
                                                     <div class="d-flex {% if message.sender == request.user %}justify-content-end{% else %}justify-content-start{% endif %}">
                                                         {% if message.sender != request.user %}
-                                                            <img src="{% if message.sender.profile.image %}{{ message.sender.profile.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" class="rounded-circle avatar-sm me-3" alt="">
+                                                            <img src="{% if message.sender.image %}{{ message.sender.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" class="rounded-circle avatar-sm me-3" alt="">
                                                         {% endif %}
                                                         <div class="message-box bg-light p-3 rounded {% if message.sender == request.user %}text-white bg-primary{% endif %}">
                                                             <p style="color: black;" class="mb-0">{{ message.content }}</p>
                                                             <span class="text-muted small">{{ message.timestamp }}</span>
                                                         </div>
                                                         {% if message.sender == request.user %}
-                                                            <img src="{% if message.sender.profile.image %}{{ message.sender.profile.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" class="rounded-circle avatar-sm ms-3" alt="">
+                                                            <img src="{% if message.sender.image %}{{ message.sender.image.url }}{% else %}{% static 'assets/images/icon/user_default.png' %}{% endif %}" class="rounded-circle avatar-sm ms-3" alt="">
                                                         {% endif %}
                                                     </div>
                                                 </li>
                                             {% endfor %}
                                         </ul>
                                     </div>
-                            
-                                    <!-- Форма отправки сообщения -->
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            var chatMessages = document.getElementById("chat-messages");
+                                            if (chatMessages) {
+                                                // Автоматически прокрутить вниз
+                                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                                            }
+                                        });
+                                    </script>
+                                    
+                                    <style>
+                                    .chat-conversation {
+                                        height: 500px; /* Высота окна чата */
+                                        overflow-y: auto; /* Скроллинг для контейнера */
+                                    }
+                                    
+                                    </style>
                                     <div class="p-3 border-top">
                                         <form method="POST" action="">
                                             {% csrf_token %}

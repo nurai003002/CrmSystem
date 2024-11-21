@@ -141,7 +141,10 @@
                                             </div>
                                             <div class="d-flex gap-2 pt-4">
                                                 <a type="button" href="{% url 'contacts_profile' user.id %}" class="btn btn-subtle-primary btn-sm w-50"><i class="bx bx-user me-1"></i> Профиль</a>
-                                                <button type="button" class="btn btn-primary btn-sm w-50"><i class="bx bx-message-square-dots me-1"></i> Написать</button>
+                                                <a type="button" href="{% url 'chat' %}?user_id={{ user.id }}" class="btn btn-primary btn-sm w-50">
+                                                    <i class="bx bx-message-square-dots me-1"></i> Написать
+                                                </a>
+                                                
                                             </div>
                                         </div>
                                     </div>
