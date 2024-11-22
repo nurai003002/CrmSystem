@@ -50,6 +50,20 @@ class ChatMessage(models.Model):
     is_read = models.BooleanField(
         default=False
     )
+    is_deleted_for_sender = models.BooleanField(
+        default=False
+    )  
+    is_deleted_for_recipient = models.BooleanField(
+        default=False
+    ) 
+
+    def visible_for_user(self, user):
+        """Проверяет, должно ли сообщение быть видно пользователю."""
+        if user == self.sender and self.is_deleted_for_sender:
+            return False
+        if user == self.recipient and self.is_deleted_for_recipient:
+            return False
+        return True
     
     def __str__(self):
         return f"From {self.sender} to {self.receiver}: {self.content[:20]}"

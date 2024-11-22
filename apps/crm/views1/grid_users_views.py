@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 from apps.users.models import User, UserComment
 from apps.crm import models as crm_models
 
 def contact_grid(request):
     title = "Пользователи"
-    users = User.objects.all()
+    users = User.objects.exclude(id=request.user.id)
     paginator = Paginator(users, 10)  
     page_number = request.GET.get('page')  
     page_obj = paginator.get_page(page_number)
@@ -16,13 +17,12 @@ def contact_grid(request):
     user_count = users.count()
     if request.method in 'POST':
         if 'add_contact' in request.POST:
-            data ={
+            data = {
                 'username': request.POST.get('username'),
                 'stack': request.POST.get('stack'),
                 'email': request.POST.get('email'),
                 'phone': request.POST.get('phone'),
             }
-
             contact = User(**data)
             contact.save()
             return redirect('contacts_grid')
@@ -32,11 +32,15 @@ def contact_grid(request):
                    'users': users,
                    'user_count': user_count,
                    'page_obj': page_obj,
-                    'stack_choices': User.STACK})
+                   'stack_choices': User.STACK,
+                   'get_user': request.user})
+
 
 def grid_detail(request, grid_id):
     title = "Информация пользователя"
     user = get_object_or_404(User, id=grid_id)  
+    if request.user.id != grid_id:
+        return HttpResponseForbidden("Вы не можете редактировать чужой профиль.")
 
     if request.method == 'POST':
         if 'data_user' in request.POST:
@@ -45,6 +49,7 @@ def grid_detail(request, grid_id):
             user.stack = request.POST.get('stack')
             user.bio = request.POST.get('bio')
             user.email = request.POST.get('email')
+            user.address = request.POST.get('address')
             user.phone = request.POST.get('phone')
             if 'image' in request.FILES:
                 user.image = request.FILES['image']
@@ -54,7 +59,7 @@ def grid_detail(request, grid_id):
     return render(request, 'applications/contacts/grid/grid_detail.html', {
         'title': title,
         'user': user,
-        'stack_choices': User.STACK
+        'stack_choices': User.STACK,
     })
     
 def delete_item(request, user_id):

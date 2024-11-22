@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q, Count
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 from apps.settings.models import Setting
 from apps.users.models import User
@@ -56,3 +59,35 @@ def chat(request):
             'recent_users': recent_users,
         }
         return render(request, 'applications/app/apps-chat.html', context)
+  
+  
+def chat_message_delete(request, message_id):
+    if request.method != "POST":
+        return JsonResponse({'error': 'Неверный метод запроса.'}, status=405)
+
+    try:
+        # Загружаем данные из POST-запроса
+        data = json.loads(request.body)
+        delete_for_all = data.get('delete_for_all', False)
+        
+        # Ищем сообщение
+        message = get_object_or_404(ChatMessage, id=message_id)
+
+        # Проверка прав: пользователь должен быть отправителем или получателем
+        if request.user != message.sender and request.user != message.recipient:
+            return JsonResponse({'error': 'Нет прав для удаления.'}, status=403)
+
+        if delete_for_all:
+            # Удалить для всех
+            message.delete()
+            return JsonResponse({'success': 'Сообщение удалено для всех.'})
+        else:
+            # Удалить только для текущего пользователя
+            if request.user == message.sender:
+                message.is_deleted_for_sender = True
+            elif request.user == message.recipient:
+                message.is_deleted_for_recipient = True
+            message.save()
+            return JsonResponse({'success': 'Сообщение удалено для вас.'})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
