@@ -20,7 +20,6 @@ def products(request):
     filter_type = request.GET.get('filter')
     color_filter = request.GET.getlist('color')
     
-
     if category_id:
         products = models.Products.objects.filter(category_id=category_id)
     else:
@@ -76,11 +75,41 @@ def orders(request):
     else:
         free_delivery = True
     
-    paginator = Paginator(billings, 1)
+    billings = Billing.objects.all().order_by('-created')  # Убедитесь, что данные отсортированы
+    paginator = Paginator(billings, 10)  # 10 записей на страницу
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)  
-    
-    return render(request, 'applications/products/orders.html', locals())
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'applications/products/orders/orders.html', locals())
+
+def orders_detail(request, order_id):
+    title = "Детали биллинга"
+    if request.method == "POST" :
+        if 'edit_order' in request.POST:
+            data = {
+                'billing': request.POST.get('billing'),
+                'billing_receipt_type': request.POST.get('billing_receipt_type'),
+                # 'title': request.POST.get('title'),
+                # 'category': models.Category.objects.get(id=request.POST.get('choices_category')) if request.POST.get('choices_category') else None,
+                # 'description': request.POST.get('description'),
+                # 'color': request.POST.get('color'),  
+                # 'status': request.POST.get('status'),
+                # 'is_new': request.POST.get('is_new') == 'on',
+                # 'brand': request.POST.get('brand'), 
+                # 'image': request.FILES.get('image'),
+                # 'material': request.POST.get('material'),
+                # 'cost_price': request.POST.get('cost_price'),
+                # 'price': request.POST.get('price'),
+                # 'old_price': request.POST.get('old_price'),
+                # 'quantity': request.POST.get('quantity'),
+                # 'manufacturer': request.POST.get('manufacturer'),
+                # 'discount': request.POST.get('discount') or None
+            }
+            
+            product = Billing(**data)
+            product.save()
+            return redirect('orders')
+    return render(request, 'applications/products/orders/orders_detail.html', locals())
 
 @require_POST
 def delete_cart_item(request, cart_item_id):
@@ -108,36 +137,41 @@ def checkout(request):
     title = "Заказать"
     delivery_cost = 250
     cart_items = CartItem.objects.all()
-    
+
+    # Рассчитываем цены
     for item in cart_items:
         item.item_price = item.product.price * item.quantity
-    total_price_first = sum(item['total'] if isinstance(item, dict) else item.total for item in cart_items)
-    total_price = sum(item.item_price for item in cart_items)  
-    if total_price < 15000:
-        total_price += delivery_cost
-    else:
-        free_delivery = True
 
-    if request.method == "POST":
+    total_price_first = sum(item.item_price for item in cart_items) if cart_items else 0
+    total_price = total_price_first
+    
+    if cart_items:
+        if total_price < 15000:
+            total_price += delivery_cost
+        else:
+            free_delivery = True
+
+    if request.method == "POST" and cart_items:  
         if 'checkout_oparation' in request.POST:
             data = {
                 'first_name': request.POST.get('first_name'),
                 'email': request.POST.get('email'),
-                'phone': request.POST.get('phone'),  
+                'phone': request.POST.get('phone'),
                 'region': request.POST.get('region'),
                 'street': request.POST.get('street'),
                 'apartment': request.POST.get('apartment'),
                 'country': request.POST.get('country'),
-                'city': request.POST.get('city'), 
+                'city': request.POST.get('city'),
                 'zip_code': request.POST.get('zip_code'),
             }
             
             product = Billing(**data)
             product.save()
             
-            cart_items.delete()  
+            cart_items.delete() 
             
             return redirect('orders')
+
     return render(request, 'applications/products/checkout.html', locals())
 
 def customers(request):

@@ -134,7 +134,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-xl-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
@@ -171,53 +170,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for billing in billings %}
-                                    <div id="billing-{{ billing.id }}">
-                                        <tr>
-                                            <td><input type="checkbox">
-                                                <td>{{ billing.formatted_id }}</td>
-                                                <td>{{billing.product.title}}</td>
-                                                <td>{{billing.created}}</td>
-                                                <td>{{total_price}}сом</td>
-                                                <td><span class="badge badge-paid">{{billing.billing_payment_status}}</span></td>
-                                                <td><i class="fas fa-credit-card"></i> {{billing.billing_payment}}</td>
-                                                <td><a href="#" class="btn btn-blue">View Details</a></td>
-                                                <td>
-                                                    <a href="#" class="btn-icon"><i class="fas fa-edit"></i></a>
-                                                    <a href="" class="btn-icon delete-billing" data-billing-id="{{ billing.id }}">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </td>
-                                            </td>
-                                        </tr>
-                                    </div>
+                                    {% for billing in page_obj %}
+                                    <tr id="billing-{{ billing.id }}">
+                                        <td><input type="checkbox"></td>
+                                        <td><a href="{% url 'orders_detail' billing.id %}">{{ billing.id }}</a></td>
+                                        <td>{{ billing.product.title }}</td>
+                                        <td>{{ billing.created }}</td>
+                                        <td>{{ total_price }} сом</td>
+                                        <td><span class="badge badge-paid">{{ billing.billing_payment_status }}</span></td>
+                                        <td><i class="fas fa-credit-card"></i> {{ billing.billing_payment }}</td>
+                                        <td><a href="#" class="btn btn-blue">View Details</a></td>
+                                        <td>
+                                            <a href="{% url 'orders_detail' billing.id %}" class="btn-icon"><i class="fas fa-edit"></i></a>
+                                            <a href="#" class="btn-icon delete-billing" data-billing-id="{{ billing.id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     {% endfor %}
-                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                                    <script>
-                                    $(document).on('click', '.delete-billing', function(event) {
-                                        event.preventDefault();
-                                        const billingId = $(this).data('billing-id');
-                                        $.ajax({
-                                            url: `{% url 'delete_billing' billing_id=0 %}`.replace("0", billingId),
-                                            type: 'POST',
-                                            headers: {
-                                                'X-CSRFToken': '{{ csrf_token }}'
-                                            },
-                                            success: function(response) {
-                                                if (response.success) {
-                                                    location.reload(); // Перезагрузка страницы после успешного удаления
-                                                } else {
-                                                    alert("Не удалось удалить биллинг.");
-                                                }
-                                            },
-                                            error: function() {
-                                                alert("Произошла ошибка. Попробуйте снова.");
-                                            }
-                                        });
-                                    });
-                                    </script>
                                 </tbody>
                             </table>
+                            
+                            <!-- Пагинация -->
                             <ul class="pagination pagination-rounded mb-sm-0 float-sm-end">
                                 {% if page_obj.has_previous %}
                                     <li class="page-item">
@@ -230,13 +204,15 @@
                                         <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
                                     </li>
                                 {% endif %}
-                                
+                            
                                 {% for num in page_obj.paginator.page_range %}
-                                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                                        <a href="?page={{ num }}" class="page-link">{{ num }}</a>
-                                    </li>
+                                    {% if num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                            <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
-                                
+                            
                                 {% if page_obj.has_next %}
                                     <li class="page-item">
                                         <a href="?page={{ page_obj.next_page_number }}" class="page-link">
@@ -249,6 +225,7 @@
                                     </li>
                                 {% endif %}
                             </ul>
+                            
                             
                         </div>
                         <!-- end row -->
