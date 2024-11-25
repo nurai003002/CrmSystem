@@ -353,7 +353,6 @@
                                                     {%  for get_user_comment in get_user.profile_comments.all %}
                                                     <div class="pt-3">
                                                         <p class="float-sm-end text-muted font-size-13">{{get_user_comment.created_at}}</p>
-                                                        <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.2</div>
                                                         <p class="text-muted mb-4">{{get_user_comment.text}}</p>
                                                         <div class="d-flex align-items-start">
                                                             <div class="flex-grow-1">
@@ -386,13 +385,6 @@
                                                     <div class="border rounded mt-4">
                                                         <form method="POST">
                                                             {% csrf_token %}
-                                                            <div class="px-2 py-1 bg-light">
-                                                                <div class="btn-group" role="group">
-                                                                    <button type="button" class="btn btn-sm btn-link text-darbodyxt-decoration-none"><i class="bx bx-link"></i></button>
-                                                                    <button type="button" class="btn btn-sm btn-link text-darbodyxt-decoration-none"><i class="bx bx-smile"></i></button>
-                                                                    <button type="button" class="btn btn-sm btn-link text-darbodyxt-decoration-none"><i class="bx bx-at"></i></button>
-                                                                </div>
-                                                            </div>
                                                             <textarea rows="3" name="text" class="form-control border-0 resize-none" placeholder="Ваше сообщение..."></textarea>
                                                             <div class="text-end mt-3">
                                                                 <button type="submit" name="comments" class="btn btn-success w-sm text-truncate ms-2"> Отправить <i class="bx bx-send ms-2 align-middle"></i></button>

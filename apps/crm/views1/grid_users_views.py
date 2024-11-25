@@ -67,9 +67,11 @@ def delete_item(request, user_id):
     item.delete()
     return redirect('contacts_grid') 
 
-@login_required
+@login_required(login_url='login')
 def contacts_profile(request, get_user_id):
     title = "Профиль"
+    if not request.user.is_authenticated:
+        return redirect('index')
     get_user = User.objects.get(id=get_user_id)
     post_url = request.build_absolute_uri(reverse('contacts_profile', args=[get_user_id])) 
     

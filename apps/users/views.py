@@ -41,6 +41,12 @@ def register(request):
 
     return render(request, 'pages/users/register.html', locals())
 
+def check_user_status(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'is_authenticated': True})
+    else:
+        return JsonResponse({'is_authenticated': False})
+    
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':

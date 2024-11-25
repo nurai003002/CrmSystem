@@ -188,18 +188,23 @@
                                                                 </div>
                                                                 <div class="row text-center mt-4 pt-1">
                                                                     <div class="col-sm-6">
+                                                                        {% if user.is_authenticated %}
                                                                         <div class="d-grid">
                                                                             <a href="{% url 'add_to_cart' products_detail.id %}?quantity=1" class="btn btn-primary waves-effect waves-light mt-2 me-1">
                                                                                 <i class="bx bx-cart me-2"></i> В корзину
                                                                             </a>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="d-grid">
-                                                                            <button type="button" class="btn btn-light waves-effect  mt-2 waves-light">
-                                                                                <i class="bx bx-shopping-bag me-2"></i>Купить
-                                                                            </button>
-                                                                        </div>
+                                                                        {% else %}
+                                                                        <p class="cart_title">войдите чтобы добавить в корзину</p>
+                                                                        <a href="{% url 'user_register' %}" class="btn btn-primary waves-effect waves-light">
+                                                                            Войти
+                                                                        </a>
+                                                                        {% endif %}
+                                                                        <style>
+                                                                            .cart_title {
+                                                                                font-size: 8px;
+                                                                            }
+                                                                        </style>
                                                                     </div>
                                                                 </div>
                                                             </div>

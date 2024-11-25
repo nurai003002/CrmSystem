@@ -7,6 +7,7 @@ urlpatterns = [
     path('auth/login/', views.login_view, name='user_login'),
     path('auth/register/', views.register, name='user_register'),
     path('auth/logout/', views.logout_view, name='user_logout'),
+    path('check_user_status/', views.check_user_status, name='check_user_status'),
 
     # pages/auth
     path('auth/recoverpw/', views.recoverpw, name='recoverpw'),

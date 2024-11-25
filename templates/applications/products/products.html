@@ -821,12 +821,11 @@
                                                                         <i class="bx bxs-star text-warning font-size-12"></i>
                                                                         <i class="bx bxs-star-half text-warning font-size-12"></i>
                                                                     </p>
-                                                                    <!-- Кнопка для добавления в корзину -->
-                                                                    <a href="{% url 'add_to_cart' product.id %}?quantity=1" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart" onclick="showModal(event)">
+                                                                    <a href="{% url 'add_to_cart' product.id %}?quantity=1" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart" onclick="checkUserStatus(event)">
                                                                         <i class="mdi mdi-cart-outline text-white font-size-16"></i>
                                                                     </a>
-
-                                                                    <!-- Модальное окно -->
+                                                                    
+                                                                    <!-- Модальное окно для добавления в корзину -->
                                                                     <div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog">
                                                                             <div class="modal-content">
@@ -835,21 +834,62 @@
                                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                 </div>
                                                                                 <div class="modal-body">
-                                                                                    Товар  был успешно добавлен в вашу корзину.
+                                                                                    Товар был успешно добавлен в вашу корзину.
                                                                                 </div>
                                                                                 <div class="modal-footer">
                                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                                                    <a href="{% url 'cart' %}" class="btn btn-primary">Перейти в корзину</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <!-- Модальное окно для незарегистрированного пользователя -->
+                                                                    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="loginRequiredModalLabel">Авторизация требуется</h5>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Чтобы добавить товар в корзину, вам нужно войти в аккаунт.
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <a href="{% url 'user_login' %}" class="btn btn-primary">Войти</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <script>
-                                                                    function showModal(event) {
-                                                                        event.preventDefault(); 
-                                                                        var modal = new bootstrap.Modal(document.getElementById('addToCartModal'));
-                                                                        modal.show();
-                                                                    }
+                                                                        function checkUserStatus(event) {
+                                                                            event.preventDefault(); // Предотвращение перехода по ссылке
+                                                                    
+                                                                            // AJAX-запрос для проверки статуса пользователя
+                                                                            fetch("{% url 'check_user_status' %}", {
+                                                                                method: "GET",
+                                                                                headers: {
+                                                                                    "X-CSRFToken": "{{ csrf_token }}"
+                                                                                }
+                                                                            })
+                                                                            .then(response => response.json())
+                                                                            .then(data => {
+                                                                                if (data.is_authenticated) {
+                                                                                    // Если пользователь авторизован, показываем модальное окно об успешном добавлении
+                                                                                    var modal = new bootstrap.Modal(document.getElementById('addToCartModal'));
+                                                                                    modal.show();
+                                                                                } else {
+                                                                                    // Если пользователь не авторизован, показываем модальное окно о необходимости входа
+                                                                                    var modal = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+                                                                                    modal.show();
+                                                                                }
+                                                                            })
+                                                                            .catch(error => {
+                                                                                console.error("Ошибка при проверке статуса пользователя:", error);
+                                                                            });
+                                                                        }
                                                                     </script>
+                                                                    
                                                                     <h5 class="font-size-20 text-primary mt-3 mb-0">{{ product.price }} сом 
                                                                         {% if product.old_price %}
                                                                         <del class="text-muted font-size-15 fw-medium ps-1">{{ product.old_price }} сом</del>
