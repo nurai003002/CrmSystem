@@ -44,27 +44,27 @@ class Billing(models.Model):
     billing_type = models.CharField(
         max_length=100, choices=BillingTypeChoices.choices,
         default=BillingTypeChoices.LEADGENERATION,
-        verbose_name=_('Тип биллинга')
+        verbose_name='Тип биллинга'
     )
     billing_receipt_type = models.CharField(
         max_length=100, choices=BillingReceiptTypeChoices.choices,
         default=BillingReceiptTypeChoices.UNKNOWN,
-        verbose_name=_('Вид получения товара'),
+        verbose_name='Вид получения товара',
     )
     billing_status = models.CharField(
         max_length=100, choices=BillingStatusChoices.choices,
         default=BillingStatusChoices.INBACKET,
-        verbose_name=_('Статус заказа')
+        verbose_name='Статус заказа'
     )
     billing_payment_status = models.CharField(
         max_length=100, choices=BillingPaymentStatusChoices.choices,
         default=BillingPaymentStatusChoices.PERFORMED,
-        verbose_name=_('Статус оплаты')
+        verbose_name='Статус оплаты'
     )
     billing_payment = models.CharField(
         max_length=100, choices=BillingPaymentChoices.choices,
         default=BillingPaymentChoices.UNKNOWN,
-        verbose_name=_('Способы оплаты')
+        verbose_name='Способы оплаты'
     )
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL,
@@ -133,7 +133,7 @@ class Billing(models.Model):
         verbose_name="Скидка",
         default=0, blank=True, null=True
     )
-    delivery_date_time = models.DateTimeField(
+    delivery_date_time = models.DateField(
         verbose_name="Дата время доставки",
         blank=True, null=True
     )
