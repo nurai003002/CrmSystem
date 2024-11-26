@@ -9,6 +9,7 @@ from apps.products import models
 from apps.cms.models import Slider, Services
 from apps.cart.models import CartItem
 from apps.billings.models import Billing, BillingProduct
+from apps.users.models import User
 
 # ecommerce
 def products(request):
@@ -75,8 +76,8 @@ def orders(request):
     else:
         free_delivery = True
     
-    billings = Billing.objects.all().order_by('-created')  # Убедитесь, что данные отсортированы
-    paginator = Paginator(billings, 10)  # 10 записей на страницу
+    billings = Billing.objects.all().order_by('-created') 
+    paginator = Paginator(billings, 10)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -84,32 +85,48 @@ def orders(request):
 
 def orders_detail(request, order_id):
     title = "Детали биллинга"
-    if request.method == "POST" :
+    billings = get_object_or_404(Billing, id=order_id)
+    users = User.objects.all()
+
+    if request.method == "POST":
         if 'edit_order' in request.POST:
-            data = {
-                'billing': request.POST.get('billing'),
-                'billing_receipt_type': request.POST.get('billing_receipt_type'),
-                # 'title': request.POST.get('title'),
-                # 'category': models.Category.objects.get(id=request.POST.get('choices_category')) if request.POST.get('choices_category') else None,
-                # 'description': request.POST.get('description'),
-                # 'color': request.POST.get('color'),  
-                # 'status': request.POST.get('status'),
-                # 'is_new': request.POST.get('is_new') == 'on',
-                # 'brand': request.POST.get('brand'), 
-                # 'image': request.FILES.get('image'),
-                # 'material': request.POST.get('material'),
-                # 'cost_price': request.POST.get('cost_price'),
-                # 'price': request.POST.get('price'),
-                # 'old_price': request.POST.get('old_price'),
-                # 'quantity': request.POST.get('quantity'),
-                # 'manufacturer': request.POST.get('manufacturer'),
-                # 'discount': request.POST.get('discount') or None
-            }
-            
-            product = Billing(**data)
-            product.save()
+            billings.billing_type = request.POST.get('billing_type_choices')
+            billings.billing_receipt_type = request.POST.get('billing_receipt_type_choices')
+            billings.billing_payment_status = request.POST.get('billing_payment_status')
+            billings.billing_status = request.POST.get('billing_status')
+            billings.billing_payment = request.POST.get('billing_payment')
+            billings.user = User.objects.get(id=request.POST.get('users'))
+            billings.email = request.POST.get('email')
+            billings.first_name = request.POST.get('first_name')
+            billings.last_name = request.POST.get('last_name')
+            billings.phone = request.POST.get('phone')
+            billings.payment_code = request.POST.get('payment_code')
+            billings.country = request.POST.get('country')
+            billings.city = request.POST.get('city')
+            billings.region = request.POST.get('region')
+            billings.street = request.POST.get('street')
+            billings.apartment = request.POST.get('apartment')
+            billings.zip_code = request.POST.get('zip_code')
+            billings.delivery_price = request.POST.get('delivery_price')
+            billings.discount_price = request.POST.get('discount_price')
+            billings.delivery_date_time = request.POST.get('delivery_date_time')
+            billings.client_gave_money = request.POST.get('client_gave_money')
+            billings.change_price = request.POST.get('change_price')
+            billings.total_price = request.POST.get('total_price')
+
+            billings.save()
             return redirect('orders')
-    return render(request, 'applications/products/orders/orders_detail.html', locals())
+        
+    return render(request, 'applications/products/orders/orders_detail.html', {
+                'title': title,
+                'users': users,
+                'billings': billings,
+                'billing_type_choices':Billing.BillingTypeChoices.choices,
+                'billing_receipt_type_choices':Billing.BillingReceiptTypeChoices.choices,
+                'billing_payment_status':Billing.BillingPaymentStatusChoices.choices,
+                'billing_payment':Billing.BillingPaymentChoices.choices,
+                'billing_status':Billing.BillingStatusChoices.choices,
+            })
 
 @require_POST
 def delete_cart_item(request, cart_item_id):

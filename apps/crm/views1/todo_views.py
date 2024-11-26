@@ -38,17 +38,15 @@ def todo_detail(request, task_id):
 
     if request.method == 'POST':
         if 'save_task' in request.POST:
-            # Обновляем данные задачи
             task.task = request.POST.get('task')
             task.description = request.POST.get('description')
             task.status = request.POST.get('choices_category')
             task.date = request.POST.get('date')
             task.user = User.objects.get(id=request.POST.get('users'))
             task.save()
-            return redirect('todo')  # Возвращаемся к списку задач после сохранения
+            return redirect('todo')  
 
         elif 'delete_task' in request.POST:
-            # Удаление задачи
             task.delete()
             return redirect('todo')
 
