@@ -824,7 +824,6 @@
                                                                     <a href="{% url 'add_to_cart' product.id %}?quantity=1" class="product-buy-icon bg-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Add To Cart" onclick="checkUserStatus(event)">
                                                                         <i class="mdi mdi-cart-outline text-white font-size-16"></i>
                                                                     </a>
-                                                                    
                                                                     <!-- Модальное окно для добавления в корзину -->
                                                                     <div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog">
@@ -843,7 +842,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    
                                                                     <!-- Модальное окно для незарегистрированного пользователя -->
                                                                     <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog">
@@ -889,7 +887,6 @@
                                                                             });
                                                                         }
                                                                     </script>
-                                                                    
                                                                     <h5 class="font-size-20 text-primary mt-3 mb-0">{{ product.price }} сом 
                                                                         {% if product.old_price %}
                                                                         <del class="text-muted font-size-15 fw-medium ps-1">{{ product.old_price }} сом</del>
@@ -906,7 +903,6 @@
                                             document.addEventListener('DOMContentLoaded', function () {
                                                 const categoryLinks = document.querySelectorAll('.category-link');
                                                 const productItems = document.querySelectorAll('.product-item');
-                                            
                                                 categoryLinks.forEach(link => {
                                                     link.addEventListener('click', function (e) {
                                                         e.preventDefault();
@@ -973,30 +969,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
-
                 {% include 'include/footer.html' %}
             </div>
             <!-- end main content-->
-
         </div>
         <!-- END layout-wrapper -->
-
         <!-- Right Sidebar -->
         <a href="#" class="right-bar-toggle layout-setting-btn" id="right-bar-toggle">
             <i class="bx bx-cog icon-sm font-size-18"></i> <span>Settings</span>
         </a>
-
         <!-- Right Sidebar -->
         <div class="right-bar">
             <div data-simplebar class="h-100">
