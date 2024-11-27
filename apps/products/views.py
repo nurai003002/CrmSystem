@@ -4,6 +4,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 from apps.products import models
 from apps.cms.models import Slider, Services
@@ -143,12 +145,15 @@ def delete_cart_item(request, cart_item_id):
 
 @require_POST
 def delete_billing(request, billing_id):
-    print("Запрос на удаление получен для ID:", billing_id)  
+    if not request.user.is_authenticated:  
+        return JsonResponse({"success": False, "error": "Пользователь не авторизован."})
 
-    billing = get_object_or_404(Billing, id=billing_id)
-    billing.delete()
-    print("Биллинг удален:", billing_id)  
-    return JsonResponse({"success": True})
+    try: 
+        billing = Billing.objects.get(id=billing_id)
+        billing.delete()  
+        return JsonResponse({'success': True})  
+    except Billing.DoesNotExist:
+        return JsonResponse({'success': False, 'error': "Товар не найден."})  
 
 def checkout(request):
     title = "Заказать"

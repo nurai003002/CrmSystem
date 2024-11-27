@@ -101,157 +101,268 @@
                                     <div class="p-4 border-top">
                                         <form method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
-                                            <div class="mb-3">
-                                                <label for="choices-single-category" class="form-label">Тип биллинга</label>
-                                                <select class="form-control" data-trigger name="billing_type_choices" id="choices-single-category">
-                                                    {% for billing_type_value, billing_type_name in billing_type_choices %}
-                                                    <option value="{{ billing_type_value }}" 
-                                                        {% if billing_type_value == billings.billing_type %}selected{% endif %}>
-                                                        {{ billing_type_name }}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing-name">Тип биллинга</label>
+                                                        <select class="form-control" data-trigger name="billing_type_choices" id="choices-single-category">
+                                                            {% for billing_type_value, billing_type_name in billing_type_choices %}
+                                                            <option value="{{ billing_type_value }}" 
+                                                                {% if billing_type_value == billings.billing_type %}selected{% endif %}>
+                                                                {{ billing_type_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing-email-address">Вид получения товара</label>
+                                                        <select class="form-control" data-trigger name="billing_receipt_type_choices" id="choices-single-category">
+                                                            {% for billing_receipt_type_value, billing_receipt_type_name in billing_receipt_type_choices %}
+                                                            <option value="{{ billing_receipt_type_value }}" 
+                                                                {% if billing_receipt_type_value == billings.billing_receipt_type %}selected{% endif %}>
+                                                                {{ billing_receipt_type_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing-phone">Статус заказа</label>
+                                                        <select class="form-control" data-trigger name="billing_status" id="choices-single-category">
+                                                            {% for billing_status_value, billing_status_name in billing_status %}
+                                                            <option value="{{ billing_status_value }}" 
+                                                                {% if billing_status_value == billings.billing_status %}selected{% endif %}>
+                                                                {{ billing_status_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-category" class="form-label">Вид получения товара</label>
-                                                <select class="form-control" data-trigger name="billing_receipt_type_choices" id="choices-single-category">
-                                                    {% for billing_receipt_type_value, billing_receipt_type_name in billing_receipt_type_choices %}
-                                                    <option value="{{ billing_receipt_type_value }}" 
-                                                        {% if billing_receipt_type_value == billings.billing_receipt_type %}selected{% endif %}>
-                                                        {{ billing_receipt_type_name }}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing-name">Статус оплаты</label>
+                                                        <select class="form-control" data-trigger name="billing_payment_status" id="choices-single-category">
+                                                            {% for billing_payment_status_value, billing_payment_status_name in billing_payment_status %}
+                                                            <option value="{{ billing_payment_status_value }}" 
+                                                                {% if billing_payment_status_value == billings.billing_payment_status %}selected{% endif %}>
+                                                                {{ billing_payment_status_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing-email-address">Способы оплаты</label>
+                                                        <select class="form-control" data-trigger name="billing_payment" id="choices-single-category">
+                                                            {% for billing_payment_value, billing_payment_name in billing_payment %}
+                                                            <option value="{{ billing_payment_value }}" 
+                                                                {% if billing_payment_value == billings.billing_payment %}selected{% endif %}>
+                                                                {{ billing_payment_name }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing-phone">Исполнитель</label>
+                                                        <select class="form-select" name="users">
+                                                            {% for user in users %}
+                                                            <option value="{{ user.id }}" {% if billings.user and billings.user.id == user.id %}selected{% endif %}>
+                                                                {% if user.image.url %}
+                                                                <img src="{{ user.image.url }}" alt="{{ user.username }}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
+                                                                {% else %}
+                                                                <img src="{% static 'assets/images/icon/default.jpg' %}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
+                                                                {% endif %} 
+                                                                {{ user.username }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-category" class="form-label">Статус заказа</label>
-                                                <select class="form-control" data-trigger name="billing_status" id="choices-single-category">
-                                                    {% for billing_status_value, billing_status_name in billing_status %}
-                                                    <option value="{{ billing_status_value }}" 
-                                                        {% if billing_status_value == billings.billing_status %}selected{% endif %}>
-                                                        {{ billing_status_name }}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-category" class="form-label">Статус оплаты</label>
-                                                <select class="form-control" data-trigger name="billing_payment_status" id="choices-single-category">
-                                                    {% for billing_payment_status_value, billing_payment_status_name in billing_payment_status %}
-                                                    <option value="{{ billing_payment_status_value }}" 
-                                                        {% if billing_payment_status_value == billings.billing_payment_status %}selected{% endif %}>
-                                                        {{ billing_payment_status_name }}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="choices-single-category" class="form-label">Способы оплаты</label>
-                                                <select class="form-control" data-trigger name="billing_payment" id="choices-single-category">
-                                                    {% for billing_payment_value, billing_payment_name in billing_payment %}
-                                                    <option value="{{ billing_payment_value }}" 
-                                                        {% if billing_payment_value == billings.billing_payment %}selected{% endif %}>
-                                                        {{ billing_payment_name }}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="CreateTask-Team-Member">Исполнитель</label>
-                                                <select class="form-select" name="users">
-                                                    {% for user in users %}
-                                                    <option value="{{ user.id }}" {% if billings.user and billings.user.id == user.id %}selected{% endif %}>
-                                                        {% if user.image.url %}
-                                                        <img src="{{ user.image.url }}" alt="{{ user.username }}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billingemail">Почта</label>
+                                                        <input id="billingemail" name="email" placeholder="Введите вашу почту*" type="email" class="form-control" value="{{ billings.email }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="first_name">Имя</label>
+                                                        <input id="first_name" name="first_name" placeholder="Введите ваше имя*" type="text" class="form-control" value="{{ billings.first_name }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="last_name">Фамилия</label>
+                                                        {% if billings.last_name %}
+                                                        <input id="last_name" name="last_name" placeholder="Введите вашу фамилию*" type="text" class="form-control" value="{{ billings.last_name }}">
                                                         {% else %}
-                                                        <img src="{% static 'assets/images/icon/default.jpg' %}" class="rounded-circle avatar-sm" style="width: 20px; height: 20px; margin-right: 10px;">
-                                                        {% endif %} 
-                                                        {{ user.username }}
-                                                    </option>
-                                                    {% endfor %}
-                                                </select>
+                                                        <input id="last_name" name="last_name" placeholder="Введите вашу фамилию*" type="text" class="form-control">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="billingemail">Почта</label>
-                                                <input id="billingemail" name="email" placeholder="Введите вашу почту*" type="email" class="form-control" value="{{ billings.email }}">
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="phone">Телефонный номер</label>
+                                                        <input id="phone" name="phone" placeholder="Введите номер*" type="text" class="form-control" value="{{ billings.phone }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="payment_code">Код оплаты биллинга</label>
+                                                        <input id="payment_code" name="payment_code" placeholder="Введите код биллинга*" type="text" class="form-control" value="{{ billings.payment_code }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="country">Страна</label>
+                                                        <input id="country" name="country" placeholder="Введите страну*" type="text" class="form-control" value="{{ billings.country }}">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="first_name">Имя</label>
-                                                <input id="first_name" name="first_name" placeholder="Введите ваше имя*" type="text" class="form-control" value="{{ billings.first_name }}">
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="city">Город</label>
+                                                        <input id="city" name="city" placeholder="Введите город*" type="text" class="form-control" value="{{ billings.city }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                            
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="region">Регион</label>
+                                                        <input id="region" name="region" placeholder="Введите регион*" type="text" class="form-control" value="{{ billings.region }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="street">Улица</label>
+                                                        <input id="street" name="street" placeholder="Введите улиицу*" type="text" class="form-control" value="{{ billings.street }}">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="last_name">Фамилия</label>
-                                                {% if billings.last_name %}
-                                                <input id="last_name" name="last_name" placeholder="Введите вашу фамилию*" type="text" class="form-control" value="{{ billings.last_name }}">
-                                                {% else %}
-                                                <input id="last_name" name="last_name" placeholder="Введите вашу фамилию*" type="text" class="form-control">
-                                                {% endif %}
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="apartment">Квартира</label>
+                                                        <input id="apartment" name="apartment" placeholder="Введите квартиру*" type="text" class="form-control" value="{{ billings.apartment }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="zip_code">Индекс</label>
+                                                        <input id="zip_code" name="zip_code" placeholder="Введите квартиру*" type="number" class="form-control" value="{{ billings.zip_code }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="delivery_price">Стоимость доставки</label>
+                                                        <input id="delivery_price" name="delivery_price" placeholder="Введите cтоимость доставки*" type="number" class="form-control" value="{{ billings.delivery_price }}">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="phone">Телефонный номер</label>
-                                                <input id="phone" name="phone" placeholder="Введите номер*" type="text" class="form-control" value="{{ billings.phone }}">
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="discount_price">Скидка</label>
+                                                        <input id="discount_price" name="discount_price" placeholder="Введите cкидка*" type="number" class="form-control" value="{{ billings.discount_price }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="delivery_date_time">Дата время доставки</label>
+                                                        {% if billings.delivery_date_time %}
+                                                        <input id="delivery_date_time" name="delivery_date_time" placeholder="Введите дату*" type="date" class="form-control" value="{{ billings.delivery_date_time }}">
+                                                        {% else %}
+                                                        <input id="delivery_date_time" name="delivery_date_time" placeholder="Введите дату*" type="date" class="form-control">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="client_gave_money">Клиент дал денег</label>
+                                                        <input id="client_gave_money" name="client_gave_money" placeholder="Клиент дал денег*" type="number" class="form-control" value="{{ billings.client_gave_money }}">
+                                                    </div> 
+                                                </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="payment_code">Код оплаты биллинга</label>
-                                                <input id="payment_code" name="payment_code" placeholder="Введите код биллинга*" type="text" class="form-control" value="{{ billings.payment_code }}">
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="change_price">Сдача клиенту</label>
+                                                        <input id="change_price" name="change_price" placeholder="Сдача клиенту*" type="number" class="form-control" value="{{ billings.change_price }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="total_price">Итоговая сумма</label>
+                                                        <input id="total_price" name="total_price" placeholder="Сдача клиенту*" type="number" class="form-control" value="{{ billings.total_price }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="col text-end">
+                                                            <a href="javascript:void(0);" class="btn btn-danger delete-billing" data-billing-id="{{ billing.id }}">
+                                                                <i class="bx bx-x me-1"></i> Удалить
+                                                            </a>
+                                                        <button style="border-radius: 10px;" class="btn btn-success" name="edit_order" data-bs-toggle="modal" data-bs-target="#success-btn">
+                                                            <i class="bx bx-file me-1"></i> Сохранить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                <script>
+                                                    $(document).on('click', '.delete-billing', function(event) {
+                                                    event.preventDefault();
+
+                                                    const billingId = $(this).data('billing-id'); 
+                                                    console.log("Billing ID: ", billingId); 
+
+                                                    if (!billingId) {
+                                                        alert("Ошибка: не удалось определить ID для удаления.");
+                                                        return;
+                                                    }
+
+                                                    $.ajax({
+                                                        url: `{% url 'delete_billing' 0 %}`.replace("0", billingId), 
+                                                        type: 'POST',
+                                                        headers: {
+                                                            'X-CSRFToken': '{{ csrf_token }}' 
+                                                        },
+                                                        success: function(response) {
+                                                            if (response.success) {
+                                                                location.reload(); 
+                                                            } else {
+                                                                alert(response.error || "Не удалось удалить товар.");
+                                                            }
+                                                        },
+                                                        error: function() {
+                                                            alert("Произошла ошибка. Попробуйте снова.");
+                                                        }
+                                                    });
+                                                });
+
+                                                </script>
+                                                
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="country">Страна</label>
-                                                <input id="country" name="country" placeholder="Введите страну*" type="text" class="form-control" value="{{ billings.country }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="city">Город</label>
-                                                <input id="city" name="city" placeholder="Введите город*" type="text" class="form-control" value="{{ billings.city }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="region">Регион</label>
-                                                <input id="region" name="region" placeholder="Введите регион*" type="text" class="form-control" value="{{ billings.region }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="street">Улица</label>
-                                                <input id="street" name="street" placeholder="Введите улиицу*" type="text" class="form-control" value="{{ billings.street }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="apartment">Квартира</label>
-                                                <input id="apartment" name="apartment" placeholder="Введите квартиру*" type="text" class="form-control" value="{{ billings.apartment }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="zip_code">Индекс</label>
-                                                <input id="zip_code" name="zip_code" placeholder="Введите квартиру*" type="number" class="form-control" value="{{ billings.zip_code }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="delivery_price">Стоимость доставки</label>
-                                                <input id="delivery_price" name="delivery_price" placeholder="Введите cтоимость доставки*" type="number" class="form-control" value="{{ billings.delivery_price }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="discount_price">Скидка</label>
-                                                <input id="discount_price" name="discount_price" placeholder="Введите cкидка*" type="number" class="form-control" value="{{ billings.discount_price }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="delivery_date_time">Дата время доставки</label>
-                                                {% if billings.delivery_date_time %}
-                                                <input id="delivery_date_time" name="delivery_date_time" placeholder="Введите дату*" type="date" class="form-control" value="{{ billings.delivery_date_time }}">
-                                                {% else %}
-                                                <input id="delivery_date_time" name="delivery_date_time" placeholder="Введите дату*" type="date" class="form-control">
-                                                {% endif %}
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="client_gave_money">Клиент дал денег</label>
-                                                <input id="client_gave_money" name="client_gave_money" placeholder="Клиент дал денег*" type="number" class="form-control" value="{{ billings.client_gave_money }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="change_price">Сдача клиенту</label>
-                                                <input id="change_price" name="change_price" placeholder="Сдача клиенту*" type="number" class="form-control" value="{{ billings.change_price }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label" for="total_price">Итоговая сумма</label>
-                                                <input id="total_price" name="total_price" placeholder="Сдача клиенту*" type="number" class="form-control" value="{{ billings.total_price }}">
-                                            </div>
-                                            <div class="col text-end">
-                                                <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Удалить </a>
-                                                <button href="" class="btn btn-success"  name="edit_order" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Сохнарить</button>
-                                            </div> 
                                         </form>
+                                        
                                     </div>
                                 </div>
                             </div>
