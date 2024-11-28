@@ -1,7 +1,8 @@
 from django.urls import path
 
 from apps.cart.views import cart, add_to_cart, remove_from_cart
-from apps.products.views import delete_billing, delete_cart_item
+from apps.products.views import delete_cart_item
+from apps.billings.views import delete_billing
 
 urlpatterns = [ 
     path('', cart, name='cart'),

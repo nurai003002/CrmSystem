@@ -160,6 +160,7 @@
                                         <th>Название биллинга</th>
                                         <th>Дата</th>
                                         <th>Итог</th>
+                                        <th>Статус биллинга</th>
                                         <th>Статус оплаты</th>
                                         <th>Метод оплаты</th>
                                         <th>Детальный</th>
@@ -170,15 +171,16 @@
                                     {% for billing in page_obj %}
                                     <tr id="billing-{{ billing.id }}">
                                         <td><input type="checkbox"></td>
-                                        <td><a href="{% url 'orders_detail' billing.id %}">{{ billing.id }}</a></td>
+                                        <td><a href="{% url 'orders_detail' billing.id %}">#DS02{{ billing.id }}</a></td>
                                         <td>{{ billing.product.title }}</td>
                                         <td>{{ billing.created }}</td>
                                         <td>{{ total_price }} сом</td>
+                                        <td><span class="badge badge-paid">{{ billing.billing_status }}</span></td>
                                         <td><span class="badge badge-paid">{{ billing.billing_payment_status }}</span></td>
                                         <td><i class="fas fa-credit-card"></i> {{ billing.billing_payment }}</td>
                                         <td><a href="{% url 'orders_detail' billing.id %}" class="btn btn-blue">View Details</a></td>
                                         <td>
-                                            <a href="{% url 'orders_detail' billing.id %}" class="btn-icon"><i class="fas fa-edit"></i></a>
+                                            <a href="{% url 'orders_edit' billing.id %}" class="btn-icon"><i class="fas fa-edit"></i></a>
                                             <a href="" class="btn-icon delete-billing" data-billing-id="{{ billing.id }}">
                                                 <i class="fas fa-trash"></i>
                                             </a>
