@@ -180,10 +180,16 @@ class BillingProduct(models.Model):
     price = models.PositiveBigIntegerField(
         verbose_name="Итоговая цена товара", default=0
     )
+    total = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2,
+        verbose_name="Итоговая цена товаров",
+        blank=True, null=True
+    )
     status = models.BooleanField(
         verbose_name="Статус", default=False
     )
-    created = models.DateTimeField(
+    created = models.DateField(
         auto_now_add=True, verbose_name="Дата создания"
     )
 

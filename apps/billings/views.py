@@ -92,7 +92,39 @@ def delete_billing(request, billing_id):
 
 def order_detail(request, order_id):
     title = "Детали биллинга"
+    delivery_cost = 250  
+    free_delivery = False  
     get_billing = get_object_or_404(Billing, id=order_id)
-    users = User.objects.all()  
-    
-    return render(request, 'applications/products/orders/detail.html', locals())
+    users = User.objects.all()
+    billing_products = BillingProduct.objects.filter(billing=get_billing)
+
+    products_with_total = []
+    for item in billing_products:
+        item_total = item.product.price * item.quantity
+        products_with_total.append({
+            'product': item.product,
+            'quantity': item.quantity,
+            'total_price': item_total
+        })
+
+    subtotal = sum(product['total_price'] for product in products_with_total)
+
+    if subtotal > 1500:
+        delivery_cost = 0
+        free_delivery = True
+
+    discount = 25.50
+
+    total_price = subtotal - discount + delivery_cost 
+
+    return render(request, 'applications/products/orders/detail.html', {
+        'title': title,
+        'get_billing': get_billing,
+        'users': users,
+        'products_with_total': products_with_total,
+        'subtotal': subtotal,
+        'discount': discount,
+        'delivery_cost': delivery_cost,
+        'free_delivery': free_delivery, 
+        'total_price': total_price,
+    })

@@ -36,7 +36,7 @@ def products(request):
     if color_filter:
         products = products.filter(color__in=color_filter)
 
-    paginator = Paginator(products, 1)  
+    paginator = Paginator(products, 10)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -82,7 +82,6 @@ def checkout(request):
     delivery_cost = 250
     cart_items = CartItem.objects.all()
 
-    # Рассчитываем цены
     for item in cart_items:
         item.item_price = item.product.price * item.quantity
 
