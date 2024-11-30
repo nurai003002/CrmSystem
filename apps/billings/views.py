@@ -26,6 +26,10 @@ def orders(request):
         free_delivery = True
     
     billings = Billing.objects.all().order_by('-created') 
+    active_billings_count = Billing.objects.filter(billing_status="В корзине").count()
+    un_fulfilled_billings_count = Billing.objects.filter(billing_status="Неизвестно").count()
+    pending_replace_billings_count = Billing.objects.filter(billing_status="Оформлен").count()
+    fulfilled_billings_count = Billing.objects.filter(billing_status="Доставлен").count()
     paginator = Paginator(billings, 10)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

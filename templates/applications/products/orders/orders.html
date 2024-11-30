@@ -85,8 +85,8 @@
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col-6">
-                                                <p class="text-muted text-truncate mb-0 pb-1">Active Orders</p>
-                                                <h4 class="mb-0 mt-2">5263</h4>
+                                                <p class="text-muted text-truncate mb-0 pb-1">Активные billings</p>
+                                                <h4 class="mb-0 mt-2">{{ active_billings_count }}</h4>
                                             </div>
                                             <div class="col-6">
                                                 <div class="overflow-hidden">
@@ -97,13 +97,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                const rows = document.querySelectorAll('table tbody tr');
+                                
+                                const activeBillings = Array.from(rows).filter(row => {
+                                    const billingStatus = row.querySelector('td:nth-child(5)').innerText;
+                                    return billingStatus.trim() === "В корзине";
+                                });
+                                
+                                document.getElementById('active-orders-count').innerText = activeBillings.length;
+                            </script>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col-6">
-                                                <p class="text-muted text-truncate mb-0 pb-1">UnFulfilled</p>
-                                                <h4 class="mb-0 mt-2">3265</h4>
+                                                <p class="text-muted text-truncate mb-0 pb-1">Невыполненный</p>
+                                                <h4 class="mb-0 mt-2">{{un_fulfilled_billings_count}}</h4>
                                             </div>
                                             <div class="col-6">
                                                 <div class="overflow-hidden">
@@ -119,8 +129,8 @@
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col-6">
-                                                <p class="text-muted text-truncate mb-0 pb-1">Pending Replace</p>
-                                                <h4 class="mb-0 mt-2">2452</h4>
+                                                <p class="text-muted text-truncate mb-0 pb-1">Ожидает замены</p>
+                                                <h4 class="mb-0 mt-2">{{pending_replace_billings_count}}</h4>
                                             </div>
                                             <div class="col-6">
                                                 <div class="overflow-hidden">
@@ -136,8 +146,8 @@
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col-6">
-                                                <p class="text-muted text-truncate mb-0 pb-1">Fulfilled</p>
-                                                <h4 class="mb-0 mt-2">6534</h4>
+                                                <p class="text-muted text-truncate mb-0 pb-1">Выполнено</p>
+                                                <h4 class="mb-0 mt-2">{{fulfilled_billings_count}}</h4>
                                             </div>
                                             <div class="col-6">
                                                 <div class="overflow-hidden">
