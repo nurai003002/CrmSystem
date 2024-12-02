@@ -190,7 +190,7 @@ class BillingProduct(models.Model):
         verbose_name="Статус", default=False
     )
     created = models.DateField(
-        auto_now_add=True, verbose_name="Дата создания"
+       verbose_name="Дата создания"
     )
 
     def __str__(self):
