@@ -151,7 +151,7 @@ class UserComment(models.Model):
         verbose_name = 'Комментарий',
         blank=True, null=True
     )
-    created_at = models.DateField(
+    created = models.DateField(
         auto_now_add = True,
         verbose_name = 'Дата создания',
         blank=True, null=True
