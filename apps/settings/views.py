@@ -6,21 +6,48 @@ from datetime import timedelta, date
 
 from apps.settings.models import Sales
 from apps.billings.models import BillingProduct
+from apps.users.models import User
 # Create your views here.
 
-# dashboard
+def get_visitor_stats(period):
+    today = now()
+
+    if period == 'yearly':
+        start_date = today - timedelta(days=365)
+        previous_start_date = start_date - timedelta(days=365)
+    elif period == 'monthly':
+        start_date = today - timedelta(days=30)
+        previous_start_date = start_date - timedelta(days=30)
+    elif period == 'weekly':
+        start_date = today - timedelta(days=7)
+        previous_start_date = start_date - timedelta(days=7)
+    else:  # Today
+        start_date = today.replace(hour=0, minute=0, second=0, microsecond=0)
+        previous_start_date = start_date - timedelta(days=1)
+
+    current_count = User.objects.filter(date_joined__gte=start_date).count()
+    previous_count = User.objects.filter(date_joined__gte=previous_start_date, date_joined__lt=start_date).count()
+
+    percentage_change = 0
+    if previous_count > 0:
+        percentage_change = ((current_count - previous_count) / previous_count) * 100
+
+    return {
+        'current_count': current_count,
+        'previous_count': previous_count,
+        'percentage_change': round(percentage_change, 2),
+    }
+
 def index(request):
     title = 'Главная'
     today = date.today()
     week_ago = today - timedelta(days=7)
 
-    # Фильтруем завершенные биллинги
+    # Получаем данные о продажах
     completed_billings = BillingProduct.objects.filter(status=True)
 
-    # Общая сумма продаж
     total_sales = completed_billings.aggregate(total=Sum('total'))['total'] or 0
 
-    # Продажи за текущую и прошлую неделю
     sales_this_week = completed_billings.filter(created__range=(week_ago, today)).aggregate(
         total=Sum('total')
     )['total'] or 0
@@ -29,41 +56,97 @@ def index(request):
         total=Sum('total')
     )['total'] or 0
 
-    # Процент изменения
-    percent_change = ((sales_this_week - sales_last_week) / sales_last_week * 100) if sales_last_week else 0
+    percent_change = calculate_percentage(sales_this_week, sales_last_week)
 
-    # Данные для графика (продажи по дням за последнюю неделю)
     daily_sales = completed_billings.filter(created__range=(week_ago, today)).values('created').annotate(
         daily_total=Sum('total')
     )
     sales_data = [day['daily_total'] for day in daily_sales]
-    
 
-    return render(request, 'applications/dashboard/index.html', locals())
+    orders_this_week = completed_billings.filter(created__range=(week_ago, today)).count()
+    orders_last_week = completed_billings.filter(created__range=(week_ago - timedelta(days=7), week_ago)).count()
+    orders_percent_change = calculate_percentage(orders_this_week, orders_last_week)
+    orders_direction = "up" if orders_percent_change > 0 else "down"
+    orders_color = "success" if orders_percent_change > 0 else "danger"
 
+    visitor_stats_today = get_visitor_stats('today')
+    visitors_today = visitor_stats_today['current_count']
+    visitors_percent_change = visitor_stats_today['percentage_change']
+    visitors_color = 'success' if visitors_percent_change >= 0 else 'danger'
+    visitors_direction = 'up' if visitors_percent_change >= 0 else 'down'
+
+    context = {
+        'title': title,
+        'total_sales': total_sales,
+        'sales_this_week': sales_this_week,
+        'sales_last_week': sales_last_week,
+        'percent_change': percent_change,
+        'sales_data': sales_data,
+        'orders_this_week': orders_this_week,
+        'orders_last_week': orders_last_week,
+        'orders_percent_change': orders_percent_change,
+        'orders_direction': orders_direction,
+        'orders_color': orders_color,
+        'visitors_today': visitors_today,
+        'visitors_percent_change': visitors_percent_change,
+        'visitors_color': visitors_color,
+        'visitors_direction': visitors_direction,
+    }
+
+    return render(request, 'applications/dashboard/index.html', context)
+
+
+def get_orders_data(request, period):
+    if period == 'yearly':
+        start_date = now() - timedelta(days=365)
+        previous_start_date = start_date - timedelta(days=365)
+    elif period == 'monthly':
+        start_date = now() - timedelta(days=30)
+        previous_start_date = start_date - timedelta(days=30)
+    elif period == 'weekly':
+        start_date = now() - timedelta(days=7)
+        previous_start_date = start_date - timedelta(days=7)
+    else:  
+        start_date = now() - timedelta(days=1)
+        previous_start_date = start_date - timedelta(days=1)
+
+    current_orders_count = BillingProduct.objects.filter(
+        created__gte=start_date
+    ).count()
+
+    previous_orders_count = BillingProduct.objects.filter(
+        created__gte=previous_start_date,
+        created__lt=start_date
+    ).count()
+
+    percentage_change = calculate_percentage(current_orders_count, previous_orders_count)
+
+    data = {
+        'current_orders_count': current_orders_count,
+        'previous_orders_count': previous_orders_count,
+        'percentage_change': percentage_change
+    }
+
+    return JsonResponse(data)
 
 def sales_data(request, period):
-    # Получаем данные о продажах за текущий период
     if period == 'yearly':
         start_date = now() - timedelta(days=365)
     elif period == 'monthly':
         start_date = now() - timedelta(days=30)
     elif period == 'weekly':
         start_date = now() - timedelta(days=7)
-    else:  # today
+    else: 
         start_date = now() - timedelta(days=1)
     
     sales_current_period = BillingProduct.objects.filter(
         created__gte=start_date
     ).aggregate(total_sales=Sum('total'))['total_sales'] or 0
 
-    # Получаем данные о продажах за предыдущий период
     previous_sales = get_previous_sales_data(period)
 
-    # Вычисляем процент изменения
     percentage = calculate_percentage(sales_current_period, previous_sales)
 
-    # Получаем данные для графика
     sales_graph = BillingProduct.objects.filter(
         created__gte=start_date
     ).values('created').annotate(total_sales=Sum('total'))
@@ -80,7 +163,6 @@ def sales_data(request, period):
 
 
 def get_previous_sales_data(period):
-    # Определяем дату начала предыдущего периода
     if period == 'yearly':
         start_date = now() - timedelta(days=365)
         previous_start_date = start_date - timedelta(days=365)
