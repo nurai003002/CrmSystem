@@ -1,49 +1,22 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.utils.timezone import now
 from datetime import timedelta, date
 
 from apps.settings.models import Sales
 from apps.billings.models import BillingProduct
 from apps.users.models import User
+from apps.products.models import Products
 # Create your views here.
-
-def get_visitor_stats(period):
-    today = now()
-
-    if period == 'yearly':
-        start_date = today - timedelta(days=365)
-        previous_start_date = start_date - timedelta(days=365)
-    elif period == 'monthly':
-        start_date = today - timedelta(days=30)
-        previous_start_date = start_date - timedelta(days=30)
-    elif period == 'weekly':
-        start_date = today - timedelta(days=7)
-        previous_start_date = start_date - timedelta(days=7)
-    else:  # Today
-        start_date = today.replace(hour=0, minute=0, second=0, microsecond=0)
-        previous_start_date = start_date - timedelta(days=1)
-
-    current_count = User.objects.filter(date_joined__gte=start_date).count()
-    previous_count = User.objects.filter(date_joined__gte=previous_start_date, date_joined__lt=start_date).count()
-
-    percentage_change = 0
-    if previous_count > 0:
-        percentage_change = ((current_count - previous_count) / previous_count) * 100
-
-    return {
-        'current_count': current_count,
-        'previous_count': previous_count,
-        'percentage_change': round(percentage_change, 2),
-    }
 
 def index(request):
     title = 'Главная'
+    popular_products = Products.objects.filter(rating__gte=4)
+    loyal_customers = User.objects.annotate(order_count=Count('billing_user')).filter(order_count__gt=0).order_by('-order_count')[:5]
     today = date.today()
     week_ago = today - timedelta(days=7)
 
-    # Получаем данные о продажах
     completed_billings = BillingProduct.objects.filter(status=True)
 
     total_sales = completed_billings.aggregate(total=Sum('total'))['total'] or 0
@@ -88,13 +61,44 @@ def index(request):
         'orders_direction': orders_direction,
         'orders_color': orders_color,
         'visitors_today': visitors_today,
+        'loyal_customers': loyal_customers,
         'visitors_percent_change': visitors_percent_change,
         'visitors_color': visitors_color,
         'visitors_direction': visitors_direction,
+        'popular_products': popular_products,
     }
 
     return render(request, 'applications/dashboard/index.html', context)
 
+
+def get_visitor_stats(period):
+    today = now()
+
+    if period == 'yearly':
+        start_date = today - timedelta(days=365)
+        previous_start_date = start_date - timedelta(days=365)
+    elif period == 'monthly':
+        start_date = today - timedelta(days=30)
+        previous_start_date = start_date - timedelta(days=30)
+    elif period == 'weekly':
+        start_date = today - timedelta(days=7)
+        previous_start_date = start_date - timedelta(days=7)
+    else:  # Today
+        start_date = today.replace(hour=0, minute=0, second=0, microsecond=0)
+        previous_start_date = start_date - timedelta(days=1)
+
+    current_count = User.objects.filter(date_joined__gte=start_date).count()
+    previous_count = User.objects.filter(date_joined__gte=previous_start_date, date_joined__lt=start_date).count()
+
+    percentage_change = 0
+    if previous_count > 0:
+        percentage_change = ((current_count - previous_count) / previous_count) * 100
+
+    return {
+        'current_count': current_count,
+        'previous_count': previous_count,
+        'percentage_change': round(percentage_change, 2),
+    }
 
 def get_orders_data(request, period):
     if period == 'yearly':
