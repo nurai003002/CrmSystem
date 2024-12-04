@@ -41,34 +41,33 @@ class Category(models.Model):
         verbose_name = 'Дочерняя категория'
         verbose_name_plural = 'Дочерняя категория'
 
-
 class Products(models.Model):
     COLOR_CHOICES = [
-    ('BLACK', 'BLACK'),
-    ('GREEN', 'GREEN'),
-    ('WHITE', 'WHITE'),
-    ('PURPLE', 'PURPLE'),
-    ('BLUE', 'BLUE'),
-    ('GRAY', 'GRAY'),
-    ('RED', 'RED'),
-    ('YELLOW', 'YELLOW'),
+        ('BLACK', 'BLACK'),
+        ('GREEN', 'GREEN'),
+        ('WHITE', 'WHITE'),
+        ('PURPLE', 'PURPLE'),
+        ('BLUE', 'BLUE'),
+        ('GRAY', 'GRAY'),
+        ('RED', 'RED'),
+        ('YELLOW', 'YELLOW'),
     ]
     STATUS_CHOICES = (
         ('в наличии', 'В наличии'),
         ('нет в наличии', 'нет в наличии'),
     )
     title = models.CharField(
-        max_length = 255,
-        verbose_name = 'Название продукта'
+        max_length=255,
+        verbose_name='Название продукта'
     )
     category = models.ForeignKey(
         Category, related_name="category_products",
         on_delete=models.SET_NULL,
         verbose_name="Категория товара",
         blank=True, null=True
-    ) 
+    )
     description = RichTextField(
-        verbose_name = 'Описание',
+        verbose_name='Описание',
         blank=True, null=True
     )
     color = models.CharField(
@@ -83,7 +82,7 @@ class Products(models.Model):
         quality=100, default='no_image.jpg',
         upload_to='product_images/',
         verbose_name="Основная фотография",
-        blank = True, null = True
+        blank=True, null=True
     )
     status = models.CharField(
         max_length=255,
@@ -91,12 +90,12 @@ class Products(models.Model):
         verbose_name='Статус'
     )
     brand = models.CharField(
-        max_length = 255,
-        verbose_name = 'Бренд'
+        max_length=255,
+        verbose_name='Бренд'
     )
     material = models.CharField(
-        max_length = 255,
-        verbose_name = 'Материал'
+        max_length=255,
+        verbose_name='Материал'
     )
     cost_price = models.PositiveIntegerField(
         verbose_name="Себестоимость",
@@ -110,20 +109,24 @@ class Products(models.Model):
         blank=True, null=True
     )
     quantity = models.IntegerField(
-        verbose_name = 'Количество продукта',
+        verbose_name='Количество продукта',
         blank=True, null=True
     )
     manufacturer = models.CharField(
-        max_length = 255,
-        verbose_name = 'Производитель'
+        max_length=255,
+        verbose_name='Производитель'
     )
     discount = models.PositiveIntegerField(
         verbose_name="Скидка на продукт",
         blank=True, null=True
     )
+    rating = models.PositiveSmallIntegerField(
+        choices=[(i, str(i)) for i in range(1, 6)],
+        verbose_name="Рейтинг", default=0
+    )
     created_at = models.DateTimeField(
-        auto_now_add = True,
-        verbose_name = 'Дата создания'
+        auto_now_add=True,
+        verbose_name='Дата создания'
     )
 
     def __str__(self):
@@ -171,10 +174,6 @@ class ProductsFeature(models.Model):
         verbose_name = "Характиристика торава"
         verbose_name_plural = "Характиристики товаров"
 
-# rating = models.PositiveSmallIntegerField(
-#         choices=[(i, str(i)) for i in range(1, 6)],
-#         verbose_name="Звезды", default=0
-#     )
         
 class ProductReview(models.Model):
     user = models.ForeignKey(

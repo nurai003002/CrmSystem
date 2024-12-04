@@ -168,7 +168,7 @@ class Billing(models.Model):
 class BillingProduct(models.Model):
     billing = models.ForeignKey(
         Billing, on_delete=models.CASCADE, 
-        related_name='billing_products', verbose_name="Биллинг"
+        related_name='products_billings', verbose_name="Биллинг"
     )
     product = models.ForeignKey(
         Products, on_delete=models.CASCADE, 
