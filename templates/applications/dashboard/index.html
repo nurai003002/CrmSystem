@@ -472,15 +472,14 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="flex-grow-1 overflow-hidden">
-                                                <h5 class="card-title mb-4 text-truncate">Top Selling Categories</h5>
+                                                <h5 class="card-title mb-4 text-truncate">Самые продаваемые <br> категории</h5>
                                             </div>
                                             <div class="flex-shrink-0 ms-2">
                                                 <div class="dropdown">
                                                     <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                        <span class="fw-semibold">Sort By:</span> <span
-                                                            class="text-muted">Weekly<i
-                                                                class="mdi mdi-chevron-down ms-1"></i></span>
+                                                       aria-haspopup="true" aria-expanded="false">
+                                                        <span class="fw-semibold">Sort By:</span>
+                                                        <span class="text-muted">Weekly<i class="mdi mdi-chevron-down ms-1"></i></span>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item" href="#">Yearly</a>
@@ -490,64 +489,75 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div id="saleing-categories" data-colors='["#1f58c7", "#4976cf","#6a92e1", "#e6ecf9"]' class="apex-charts" dir="ltr"></div> 
-
+                                        <div id="new-chart" data-colors='["#1f58c7", "#4976cf","#6a92e1", "#e6ecf9"]' class="apex-charts" dir="ltr"></div> 
                                         <div class="row mt-3 pt-1">
+                                            {% for category in categories %}
                                             <div class="col-md-6">
                                                 <div class="px-2 mt-2">
-                                                    <div class="d-flex align-items-center mt-sm-0 mt-2">
-                                                        <i class="mdi mdi-circle font-size-10 text-primary"></i>
-                                                        <div class="flex-grow-1 ms-2 overflow-hidden">
-                                                            <p class="font-size-15 mb-1 text-truncate">Men Fashion</p>
-                                                        </div>
-                                                        <div class="flex-shrink-0 ms-2">
-                                                            <span class="fw-bold">34.3%</span>
-                                                        </div>
-                                                    </div>
-
                                                     <div class="d-flex align-items-center mt-2">
-                                                        <i class="mdi mdi-circle font-size-10 text-success"></i>
+                                                        <i class="mdi mdi-circle font-size-10" style="color: {{ category.color }}"></i>
                                                         <div class="flex-grow-1 ms-2 overflow-hidden">
-                                                            <p class="font-size-15 mb-0 text-truncate">Women Clothing</p>
+                                                            <p class="font-size-15 mb-1 text-truncate">{{ category.title }}</p>
                                                         </div>
                                                         <div class="flex-shrink-0 ms-2">
-                                                            <span class="fw-bold">25.7%</span>
+                                                            <span class="fw-bold">{{ category.percent }}%</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-6">
-                                                <div class="px-2 mt-2">
-                                                    <div class="d-flex align-items-center mt-sm-0 mt-2">
-                                                        <i class="mdi mdi-circle font-size-10 text-info"></i>
-                                                        <div class="flex-grow-1 ms-2 overflow-hidden">
-                                                            <p class="font-size-15 mb-1 text-truncate">Beauty Products</p>
-                                                        </div>
-                                                        <div class="flex-shrink-0 ms-2">
-                                                            <span class="fw-bold">18.6%</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="d-flex align-items-center mt-2">
-                                                        <i class="mdi mdi-circle font-size-10 text-secondary"></i>
-                                                        <div class="flex-grow-1 ms-2 overflow-hidden">
-                                                            <p class="font-size-15 mb-0 text-truncate">Others Products</p>
-                                                        </div>
-                                                        <div class="flex-shrink-0 ms-2">
-                                                            <span class="fw-bold">21.4%</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var chartData = JSON.parse('{{ chart_data|safe }}');
+                                    var labels = chartData.map(data => data.label);
+                                    var values = chartData.map(data => data.percent);
+                        
+                                    var options = {
+                                        chart: {
+                                            type: 'donut',
+                                        },
+                                        series: values, 
+                                        labels: labels,
+                                        colors: ['#1f58c7', '#4976cf', '#6a92e1', '#e6ecf9'],
+                                        plotOptions: {
+                                            pie: {
+                                                donut: {
+                                                    size: '70%', 
+                                                    labels: {
+                                                        show: true,
+                                                        name: {
+                                                            show: true,
+                                                            fontSize: '20px',
+                                                            color: '#263238',
+                                                            offsetY: -10
+                                                        },
+                                                        value: {
+                                                            show: true,
+                                                            fontSize: '16px',
+                                                            color: '#263238',
+                                                            offsetY: 10
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        legend: {
+                                            show: true,
+                                            position: 'bottom'
+                                        }
+                                    };
+
+                                    // Отображение только одного графика (например, у которого id "new-chart")
+                                    var chart = new ApexCharts(document.querySelector("#new-chart"), options);
+                                    chart.render();
+                                });
+                            </script>
                         </div>
                         <!-- end row -->
-
                         <div class="row"> 
                                 <div class="col-xl-7">
                                     <div class="card">
@@ -616,7 +626,6 @@
                                                                         <td>86k</td>
                                                                         <td>$6,985.94</td>
                                                                     </tr>
-                    
                                                                     <tr>
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
@@ -629,7 +638,6 @@
                                                                         <td>86k</td>
                                                                         <td>$5,685.47</td>
                                                                     </tr>
-                    
                                                                     <tr>
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
@@ -651,12 +659,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-xxl-5">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex flex-wrap align-items-center mb-3">
-                                                <h5 class="card-title me-2">Invoice List</h5>
+                                                <h5 class="card-title me-2">Список заказов</h5>
                                                 <div class="ms-auto">
                                                     <div class="dropdown">
                                                         <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -681,14 +688,15 @@
                                                                         <label class="form-check-label" for="checkAll"></label>
                                                                     </div>
                                                                 </th>
-                                                                <th>#Invoice</th>
-                                                                <th style="width: 190px;">User Name</th>
-                                                                <th>Date</th>
-                                                                <th>Status</th>
-                                                                <th>Action</th>
+                                                                <th>#Заказы</th>
+                                                                <th style="width: 190px;">Имя</th>
+                                                                <th>Дата</th>
+                                                                <th>Статус</th>
+                                                                <th>Действия</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            {% for billing in billing_product %}
                                                             <tr>
                                                                 <td>
                                                                     <div class="form-check font-size-16">
@@ -696,22 +704,43 @@
                                                                         <label class="form-check-label"></label>
                                                                     </div>
                                                                 </td>
-                                                                <td class="fw-semibold">#562354</td>
+                                                                <td class="fw-semibold">#{{billing.id}}</td>
                                                                 <td style="width: 190px;">
                                                                     <div class="d-flex align-items-center">
-                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/users/avatar-1.jpg' %}" alt="">
+                                                                        {% if billing.user.image %}
+                                                                        <img class="rounded-circle avatar-sm" src="{{billing.user.image.url}}" alt="">
+                                                                        {% else %}
+                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/icon/user_default.png' %}" alt="">
+                                                                        {% endif %}
                                                                         <div class="flex-grow-1 ms-3">
-                                                                            Neal Matthews
+                                                                            {{billing.user.username}}
                                                                         </div>
                                                                     </div>
                                                                 </td>
+                                                                {% if billing.delivery_date_time %}
                                                                 <td>
-                                                                10 Dec
+                                                                    {{billing.delivery_date_time}}
                                                                 </td>
+                                                                {% else %}
                                                                 <td>
-                                                                    <div class="badge bg-success-subtle text-success  font-size-12">Paid</div>
+                                                                дата не указана
                                                                 </td>
-                                                                
+                                                                {% endif %}
+                                                                {% if billing.billing_payment_status == 'Оплачен' %}
+                                                                <td>
+                                                                    <div class="badge bg-success-subtle text-success  font-size-12">{{billing.billing_payment_status}}</div>
+                                                                </td>
+                                                                {% endif  %}
+                                                                {% if billing.billing_payment_status == 'Не оплачен' %}
+                                                                <td>
+                                                                    <div class="badge bg-danger-subtle text-danger  font-size-12">{{billing.billing_payment_status}}</div>
+                                                                </td>
+                                                                {% endif %}
+                                                                {% if billing.billing_payment_status == 'В исполнении' %}
+                                                                <td>
+                                                                    <div id="in_process" class="badge rounded-pill bg-secondary-subtle text-secondary  font-size-11">{{billing.billing_payment_status}}</div>
+                                                                </td>
+                                                                {% endif %}
                                                                 <td>
                                                                     <div class="dropdown">
                                                                         <a class="text-muted dropdown-toggle font-size-18" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
@@ -726,197 +755,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>   
-                                                            
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="form-check font-size-16">
-                                                                        <input type="checkbox" class="form-check-input">
-                                                                        <label class="form-check-label"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="fw-semibold">#485625</td>
-                                                                <td style="width: 190px;">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="">
-                                                                        <div class="flex-grow-1 ms-3">
-                                                                            Connie Franco
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                10 Dec
-                                                                </td>
-                                                                <td>
-                                                                    <div class="badge bg-success-subtle text-success  font-size-12">Paid</div>
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <div class="dropdown">
-                                                                        <a class="text-muted dropdown-toggle font-size-18" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                                        </a>
-                    
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                                            <a class="dropdown-item" href="#">Print</a>
-                                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>  
-    
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="form-check font-size-16">
-                                                                        <input type="checkbox" class="form-check-input">
-                                                                        <label class="form-check-label"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="fw-semibold">#321458</td>
-                                                                <td style="width: 190px;">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/users/avatar-3.jpg' %}" alt="">
-                                                                        <div class="flex-grow-1 ms-3">
-                                                                            Adella Perez
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                12 Dec
-                                                                </td>
-                                                                <td>
-                                                                    <div class="badge bg-danger-subtle text-danger  font-size-12">Unpaid</div>
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <div class="dropdown">
-                                                                        <a class="text-muted dropdown-toggle font-size-18" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                                        </a>
-                    
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                                            <a class="dropdown-item" href="#">Print</a>
-                                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> 
-    
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="form-check font-size-16">
-                                                                        <input type="checkbox" class="form-check-input">
-                                                                        <label class="form-check-label"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="fw-semibold">#214569</td>
-                                                                <td style="width: 190px;">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/users/avatar-4.jpg' %}" alt="">
-                                                                        <div class="flex-grow-1 ms-3">
-                                                                            Theresa Mayers
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                21 Dec
-                                                                </td>
-                                                                <td>
-                                                                    <div class="badge bg-success-subtle text-success  font-size-12">Paid</div>
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <div class="dropdown">
-                                                                        <a class="text-muted dropdown-toggle font-size-18" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                                        </a>
-                    
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                                            <a class="dropdown-item" href="#">Print</a>
-                                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> 
-    
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="form-check font-size-16">
-                                                                        <input type="checkbox" class="form-check-input">
-                                                                        <label class="form-check-label"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="fw-semibold">#565423</td>
-                                                                <td style="width: 190px;">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/users/avatar-5.jpg' %}" alt="">
-                                                                        <div class="flex-grow-1 ms-3">
-                                                                            Oliver Gonzales
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                25 Dec
-                                                                </td>
-                                                                <td>
-                                                                    <div class="badge bg-danger-subtle text-danger  font-size-12">Unpaid</div>
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <div class="dropdown">
-                                                                        <a class="text-muted dropdown-toggle font-size-18" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                                        </a>
-                    
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                                            <a class="dropdown-item" href="#">Print</a>
-                                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> 
-    
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="form-check font-size-16">
-                                                                        <input type="checkbox" class="form-check-input">
-                                                                        <label class="form-check-label"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="fw-semibold">#565423</td>
-                                                                <td style="width: 190px;">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <img class="rounded-circle avatar-sm" src="{% static 'assets/images/users/avatar-6.jpg' %}" alt="">
-                                                                        <div class="flex-grow-1 ms-3">
-                                                                            Willie Verner
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                30 Dec
-                                                                </td>
-                                                                <td>
-                                                                    <div class="badge bg-success-subtle text-success  font-size-12">Paid</div>
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <div class="dropdown">
-                                                                        <a class="text-muted dropdown-toggle font-size-18" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                                        </a>
-                    
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                                            <a class="dropdown-item" href="#">Print</a>
-                                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> 
-                                                            
+                                                            {% endfor %}
                                                         </tbody>
                                                     </table>
                                                 </div>

@@ -3,15 +3,36 @@ from django.http import JsonResponse
 from django.db.models import Sum, Count
 from django.utils.timezone import now
 from datetime import timedelta, date
+import json
 
 from apps.settings.models import Sales
-from apps.billings.models import BillingProduct
+from apps.billings.models import BillingProduct, Billing
 from apps.users.models import User
-from apps.products.models import Products
+from apps.products.models import Products, Category
 # Create your views here.
 
 def index(request):
     title = 'Главная'
+    billing_product = Billing.objects.all()
+    categories = Category.objects.annotate(
+        product_count=Count('category_products')
+    ).order_by('-product_count')
+
+    total_products = sum(category.product_count for category in categories)
+    
+    chart_data = [
+        {
+            "label": category.title,
+            "value": category.product_count,
+            "percent": round((category.product_count / total_products) * 100, 1) if total_products > 0 else 0,
+        }
+        for category in categories
+    ]
+    total_products = sum(category.product_count for category in categories)
+
+    for category in categories:
+        category.percent = round((category.product_count / total_products) * 100, 1) if total_products > 0 else 0
+
     popular_products = Products.objects.filter(rating__gte=4)
     loyal_customers = User.objects.annotate(order_count=Count('billing_user')).filter(order_count__gt=0).order_by('-order_count')[:5]
     today = date.today()
@@ -60,6 +81,10 @@ def index(request):
         'orders_percent_change': orders_percent_change,
         'orders_direction': orders_direction,
         'orders_color': orders_color,
+        'categories': categories,
+        'billing_product': billing_product,
+        'total_products': total_products,
+        'chart_data': json.dumps(chart_data),
         'visitors_today': visitors_today,
         'loyal_customers': loyal_customers,
         'visitors_percent_change': visitors_percent_change,
