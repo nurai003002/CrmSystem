@@ -6,6 +6,7 @@
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{% url 'index' %}" data-key="t-ecommerce">Электронная коммерция</a></li>
                 <li><a href="{% url 'sales' %}" data-key="t-sales">Продажи</a></li>
+                <li><a href="{% url 'faqs' %}" data-key="t-faqs">FAQs</a></li>
             </ul>
         </li>
         <li class="menu-title" data-key="t-applications">Приложения</li>
@@ -82,10 +83,6 @@
                 <i class="bx bx-receipt icon nav-icon"></i>
                 <span class="menu-item" data-key="t-invoices">Счета</span>
             </a>
-            <ul class="sub-menu" aria-expanded="false">
-                <li><a href="{% url 'invoice_list' %}" data-key="t-invoice-list">Список счетов</a></li>
-                <li><a href="{% url 'list_detail' %}" data-key="t-invoice-detail">Детали счетов</a></li>
-            </ul>
         </li>
         <li class="menu-title" data-key="t-layouts">Layouts</li>
         <li>
@@ -137,7 +134,7 @@
             </a>
             <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{% url 'timeline' %}" data-key="t-timeline">График</a></li>
-                <li><a href="{% url 'faqs' %}" data-key="t-faqs">FAQs</a></li>
+               
                 <li><a href="{% url 'pricing' %}" data-key="t-pricing">Ценообразование</a></li>
                 <li><a href="{% url 'pages_404' %}" data-key="t-error-404">Error 404</a></li>
                 <li><a href="{% url 'pages_500' %}" data-key="t-error-500">Error 500</a></li>

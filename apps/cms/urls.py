@@ -1,5 +1,7 @@
 from django.urls import path
 
-urlpatterns = [
+from apps.cms import views
 
+urlpatterns = [
+    path('faqs/', views.faqs, name='faqs'),
 ]
