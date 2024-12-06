@@ -31,3 +31,4 @@ class Sales(models.Model):
 
     def __str__(self):
         return f"{self.date}: {self.amount}"
+

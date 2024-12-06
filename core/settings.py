@@ -46,7 +46,6 @@ INSTALLED_APPS = [
 
     # apps
     'apps.users',
-    'apps.secondary',
     'apps.products',
     'apps.billings',
     'apps.settings',

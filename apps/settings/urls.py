@@ -9,10 +9,6 @@ urlpatterns = [
     
     path('manager/', views.manager, name='manager'),
     
-    # invoices
-    path('invoices/list/', views.invoice_list, name='invoice_list'),
-    path('invoices/detail/', views.list_detail, name='list_detail'),
-    
     # components/tables
     path('components/basic-tables/', views.basic_table, name='basic_table'),
     path('components/advanced-tables/', views.advanced_table, name='advanced_table'),
@@ -27,7 +23,6 @@ urlpatterns = [
 
     # pages/utility
     path('utility/timeline/', views.timeline, name='timeline'),
-    path('utility/faqs/', views.faqs, name='faqs'),
     path('utility/404/', views.pages_404, name='pages_404'),
     path('utility/pages_500/', views.pages_500, name='pages_500'),
     path('utility/pricing/', views.pricing, name='pricing'),

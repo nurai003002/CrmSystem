@@ -102,3 +102,20 @@ class Calendar(models.Model):
         verbose_name_plural = 'Планы (Календарь)'
         
 
+class FAQ(models.Model):
+    question = models.CharField(
+        max_length = 255,
+        verbose_name = 'Вопрос'
+    )
+    answer = models.TextField(
+        verbose_name = 'Ответы',
+        blank=True, null=True
+    )
+    
+    def __str__(self):
+        return f"{self.question} - {self.answer}"
+    
+    class Meta:
+        verbose_name = 'Часто задаваемый вопрос'
+        verbose_name_plural = 'Часто задаваемые вопросы'
+        

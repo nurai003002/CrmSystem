@@ -231,15 +231,6 @@ def sales(request):
 def manager(request):
     return render(request, 'applications/app/apps-file-manager.html', locals())
 
-
-# invoices
-def invoice_list(request):
-    return render(request, 'applications/invoices/list.html', locals())
-
-def list_detail(request):
-    return render(request, 'applications/invoices/detail.html', locals())
-
-
 #components/tables
 def basic_table(request):
     return render(request, 'components/tables/tables-basic.html', locals())
@@ -269,9 +260,6 @@ def maps_google(request):
 # pages/utility
 def timeline(request):
     return render(request, 'pages/utility/timeline.html', locals())
-
-def faqs(request):
-    return render(request, 'pages/utility/faqs.html', locals())
 
 def pricing(request):
     return render(request, 'pages/utility/pricing.html', locals())
